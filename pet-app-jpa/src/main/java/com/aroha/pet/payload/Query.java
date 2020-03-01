@@ -15,8 +15,18 @@ public class Query {
     private String feedBackDate;
     private String feedback;
     private String mentorName;
+  
 
-    public String getSqlStr() {
+    public Query() {
+		super();
+	}
+
+	public Query(String exceptionStr) {
+		super();
+		this.exceptionStr = exceptionStr;
+	}
+
+	public String getSqlStr() {
         return sqlStr;
     }
 

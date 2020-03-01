@@ -1,6 +1,7 @@
 package com.aroha.pet.model;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.time.Instant;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,122 +13,109 @@ import javax.persistence.Lob;
  *
  * @author Jaydeep
  */
-@Entity
 public class QuestionQueryInfo implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @Lob
-    private String sqlStr;
-    @Lob
-    private String resultStr;
-    @Lob
-    private String exceptionStr;
-    private String scenario;
-    private int questionId;
-    @Lob
-    private String answer;
-    private Instant createdAt;
-    private String feedback;
-    private String mentorName;
-    private String feedbackDate;
+	private String sqlStr;
+	@Lob
+	private String resultStr;
+	@Lob
+	private String exceptionStr;
+	private String scenario;
+	private int questionId;
+	@Lob
+	private String answer;
+	private Timestamp createdAt;
+	private String feedback;
+	private String mentorName;
+	private Timestamp feedbackDate;
 
-    public QuestionQueryInfo(String exceptionStr) {
-        this.exceptionStr = exceptionStr;
-    }
+	public QuestionQueryInfo(String exceptionStr) {
+		this.exceptionStr = exceptionStr;
+	}
 
-    public QuestionQueryInfo() {
-    }
+	public QuestionQueryInfo() {
+	}
 
-    public int getId() {
-        return id;
-    }
+	public String getSqlStr() {
+		return sqlStr;
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public void setSqlStr(String sqlStr) {
+		this.sqlStr = sqlStr;
+	}
 
-    public String getSqlStr() {
-        return sqlStr;
-    }
+	public String getResultStr() {
+		return resultStr;
+	}
 
-    public void setSqlStr(String sqlStr) {
-        this.sqlStr = sqlStr;
-    }
+	public void setResultStr(String resultStr) {
+		this.resultStr = resultStr;
+	}
 
-    public String getResultStr() {
-        return resultStr;
-    }
+	public String getExceptionStr() {
+		return exceptionStr;
+	}
 
-    public void setResultStr(String resultStr) {
-        this.resultStr = resultStr;
-    }
+	public void setExceptionStr(String exceptionStr) {
+		this.exceptionStr = exceptionStr;
+	}
 
-    public String getExceptionStr() {
-        return exceptionStr;
-    }
+	public String getScenario() {
+		return scenario;
+	}
 
-    public void setExceptionStr(String exceptionStr) {
-        this.exceptionStr = exceptionStr;
-    }
+	public void setScenario(String scenario) {
+		this.scenario = scenario;
+	}
 
-    public String getScenario() {
-        return scenario;
-    }
+	public int getQuestionId() {
+		return questionId;
+	}
 
-    public void setScenario(String scenario) {
-        this.scenario = scenario;
-    }
+	public void setQuestionId(int questionId) {
+		this.questionId = questionId;
+	}
 
-    public int getQuestionId() {
-        return questionId;
-    }
+	public String getAnswer() {
+		return answer;
+	}
 
-    public void setQuestionId(int questionId) {
-        this.questionId = questionId;
-    }
+	public void setAnswer(String answer) {
+		this.answer = answer;
+	}
 
-    public String getAnswer() {
-        return answer;
-    }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
 
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
+	public Timestamp getCreatedAt() {
+		return createdAt;
+	}
 
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
+	public void setCreatedAt(Timestamp createdAt) {
+		this.createdAt = createdAt;
+	}
 
-    public String getFeedback() {
-        return feedback;
-    }
+	public void setFeedbackDate(Timestamp feedbackDate) {
+		this.feedbackDate = feedbackDate;
+	}
 
-    public void setFeedback(String feedback) {
-        this.feedback = feedback;
-    }
+	public String getFeedback() {
+		return feedback;
+	}
 
-    public String getMentorName() {
-        return mentorName;
-    }
+	public void setFeedback(String feedback) {
+		this.feedback = feedback;
+	}
 
-    public void setMentorName(String mentorName) {
-        this.mentorName = mentorName;
-    }
+	public String getMentorName() {
+		return mentorName;
+	}
 
-    public String getFeedbackDate() {
-        return feedbackDate;
-    }
+	public void setMentorName(String mentorName) {
+		this.mentorName = mentorName;
+	}
 
-    public void setFeedbackDate(String feedbackDate) {
-        this.feedbackDate = feedbackDate;
-    }
-
- 
+	public Timestamp getFeedbackDate() {
+		return feedbackDate;
+	}
 
 }

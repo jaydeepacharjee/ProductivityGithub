@@ -61,14 +61,14 @@ public class FeedBackController {
         return ResponseEntity.ok(feedService.getQuestionResponse(created_by, createdAt, domainId, functionId, scenarioId));
     }
 
-    @RequestMapping(value = "/exceptionAnalysis", method = RequestMethod.POST)
-    public ResponseEntity<?> checkException(@RequestParam String createdAt, @RequestParam long created_by) {
-        if (feedService.checkException(created_by, createdAt).isEmpty()) {
-            return ResponseEntity.ok("No Data");
-        }
-
-        return ResponseEntity.ok(feedService.checkException(created_by, createdAt));
-    }
+//    @RequestMapping(value = "/exceptionAnalysis", method = RequestMethod.POST)
+//    public ResponseEntity<?> checkException(@RequestParam String createdAt, @RequestParam long created_by) {
+//        if (feedService.checkException(created_by, createdAt).isEmpty()) {
+//            return ResponseEntity.ok("No Data");
+//        }
+//
+//        return ResponseEntity.ok(feedService.checkException(created_by, createdAt));
+//    }
 
     //    Capture Mentor Feedback
     @PostMapping("/saveMentorFeedback")

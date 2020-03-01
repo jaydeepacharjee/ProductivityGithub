@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
  */
 public class Message {
 
-    private HttpStatus status;
+    private int status;
     private List<Query> queryResponse = new ArrayList<>();
 
     public List<Query> getQueryResponse() {
@@ -21,11 +21,13 @@ public class Message {
         this.queryResponse = queryResponse;
     }
 
-	public HttpStatus getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(HttpStatus status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
+
+
 }

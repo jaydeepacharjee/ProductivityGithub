@@ -1,5 +1,6 @@
 package com.aroha.pet.repository;
 
+import com.aroha.pet.model.QueryInfo;
 import com.aroha.pet.model.QuestionQueryInfo;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Repository;
  * @author Jaydeep
  */
 @Repository
-public interface QuestionQueryInfoRepository extends JpaRepository<QuestionQueryInfo, Integer> {
+public interface QuestionQueryInfoRepository extends JpaRepository<QueryInfo, Integer> {
 
     /*
     @Query(value = "select q.id as id,q.scenario,q.sql_str,q.exception_str,q.created_at,q.question_id,m.feedback,"
@@ -21,7 +22,6 @@ public interface QuestionQueryInfoRepository extends JpaRepository<QuestionQuery
     public List<QuestionQueryInfo> getReport(long created_by, String createdAt,int questionId);
      */
     @Query(value = " select\r\n" + 
-    		"q.id as id,\r\n" + 
     		"q.scenario,\r\n" + 
     		"q.sql_str,\r\n" + 
     		"q.exception_str,\r\n" + 
@@ -29,7 +29,7 @@ public interface QuestionQueryInfoRepository extends JpaRepository<QuestionQuery
     		"q.question_id,\r\n" + 
     		"m.feedback,\r\n" + 
     		"m.mentor_name,\r\n" + 
-    		"m.created_at as feedback_date,\r\n" + 
+    		"m.created_at as feedbackDate,\r\n" + 
     		"qus.answer,\r\n" + 
     		"q.result_str as resultStr \r\n" + 
     		"from\r\n" + 
@@ -39,11 +39,11 @@ public interface QuestionQueryInfoRepository extends JpaRepository<QuestionQuery
     		"inner join function f on f.function_id=s.function_id inner join domain d on d.domain_id=f.domain_id\r\n" + 
     		"left join question qus on q.question_id=qus.question_id where  q.question_id=?3 and\r\n" + 
     		"DATE(q.created_at)=DATE(?2) and q.created_by=?1 order by scenario;", nativeQuery = true)
-    public List<QuestionQueryInfo> getReport(long created_by, String createdAt,int questionId);
+    public List<Object[]> getReport(long created_by, String createdAt,int questionId);
 //    public List<QuestionQueryInfo> getReport(long created_by, String createdAt, int questionId);
 
-    @Query("select new com.aroha.pet.model.QuestionQueryInfo(q.exceptionStr) from "
-            + "QueryInfo q where q.createdBy=?1 and Date(q.createdAt)=Date(?2)")
-    public List<QuestionQueryInfo> getException(long created_by, String createdAt);
+//    @Query("select new com.aroha.pet.payload.Query(q.exceptionStr) from "
+//            + "QueryInfo q where q.createdBy=?1 and Date(q.createdAt)=Date(?2)")
+//    public List<Query> getException(long created_by, String createdAt);
 
 }
