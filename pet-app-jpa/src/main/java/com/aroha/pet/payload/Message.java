@@ -11,13 +11,13 @@ import org.springframework.http.HttpStatus;
 public class Message {
 
     private int status;
-    private List<Query> queryResponse = new ArrayList<>();
+    private List<QueryObject> queryResponse = new ArrayList<>();
 
-    public List<Query> getQueryResponse() {
+    public List<QueryObject> getQueryResponse() {
         return queryResponse;
     }
 
-    public void setQueryResponse(List<Query> queryResponse) {
+    public void setQueryResponse(List<QueryObject> queryResponse) {
         this.queryResponse = queryResponse;
     }
 

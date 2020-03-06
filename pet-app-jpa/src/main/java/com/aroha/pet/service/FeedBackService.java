@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.aroha.pet.model.FeedBack;
 import com.aroha.pet.model.QueryInfo;
-import com.aroha.pet.model.QuestionQueryInfo;
 import com.aroha.pet.model.User;
 import com.aroha.pet.payload.DomainResponsePayload;
 import com.aroha.pet.payload.FeedBackStatusPayload;
@@ -18,7 +17,7 @@ import com.aroha.pet.payload.FunctionResponsePayload;
 import com.aroha.pet.payload.MentorFeedback;
 import com.aroha.pet.payload.MentorFeedbackResponse;
 import com.aroha.pet.payload.Message;
-import com.aroha.pet.payload.Query;
+import com.aroha.pet.payload.QueryObject;
 import com.aroha.pet.payload.QuestionResponsePayload;
 import com.aroha.pet.payload.Result;
 import com.aroha.pet.payload.ScenarioResponsePayload;
@@ -79,9 +78,9 @@ public class FeedBackService {
 	public Message showAnalysis(long created_by, String createdAt, int questionId) {
 		List<Object[]> list = quesRepo.getReport(created_by, createdAt, questionId);
 		Message message = new Message();
-		List<Query> queryList = new ArrayList<>();
+		List<QueryObject> queryList = new ArrayList<>();
 		for(Object[]object:list) {
-			Query queryObj = new Query();
+			QueryObject queryObj = new QueryObject();
 			queryObj.setScenario((String)object[0]);
 			queryObj.setSqlStr((String)object[1]);
 
@@ -182,47 +181,47 @@ public class FeedBackService {
 		return questionName;
 	}
 
-//	public HashMap<String, Result> checkException(long created_by, String createdAt) {
-//		HashMap<String, Result> map = new HashMap<>();
-//		List<Query> list = quesRepo.getException(created_by, createdAt);
-//		Iterator<QuestionQueryInfo> itr = list.iterator();
-//		while (itr.hasNext()) {
-//			QuestionQueryInfo query = itr.next();
-//			if (query.getExceptionStr() != null) {
-//				String temp1 = query.getExceptionStr();
-//				String temp3 = "";
-//				if (temp1.indexOf("(") == 0) {
-//					int pos1 = temp1.lastIndexOf(")");
-//					String temp2 = temp1.substring(pos1 + 1).trim();
-//					temp3 = temp2.replaceAll(" ", "_").replaceAll("'", "");
-//					if (!map.containsKey(temp3)) {
-//						Result res = new Result();
-//						res.setCount(1);
-//						map.put(temp3, res);
-//					} else {
-//						Result res = map.get(temp3);
-//						int c = res.getCount();
-//						res.setCount(++c);
-//						map.put(temp3, res);
-//					}
-//				} else {
-//					String temp4 = temp1.replaceAll(" ", "_").replaceAll("'", "");
-//					if (!map.containsKey(temp4)) {
-//						Result res = new Result();
-//						res.setCount(1);
-//						map.put(temp4, res);
-//					} else {
-//						Result res = map.get(temp4);
-//						int c = res.getCount();
-//						res.setCount(++c);
-//						map.put(temp4, res);
-//					}
-//				}
-//
-//			}
-//		}
-//		return map;
-//	}
+	public HashMap<String, Result> checkException(long created_by, String createdAt) {
+		HashMap<String, Result> map = new HashMap<>();
+		List<QueryObject> list = quesRepo.getException(created_by, createdAt);
+		Iterator<QueryObject> itr = list.iterator();
+		while (itr.hasNext()) {
+			QueryObject query = itr.next();
+			if (query.getExceptionStr() != null) {
+				String temp1 = query.getExceptionStr();
+				String temp3 = "";
+				if (temp1.indexOf("(") == 0) {
+					int pos1 = temp1.lastIndexOf(")");
+					String temp2 = temp1.substring(pos1 + 1).trim();
+					temp3 = temp2.replaceAll(" ", "_").replaceAll("'", "");
+					if (!map.containsKey(temp3)) {
+						Result res = new Result();
+						res.setCount(1);
+						map.put(temp3, res);
+					} else {
+						Result res = map.get(temp3);
+						int c = res.getCount();
+						res.setCount(++c);
+						map.put(temp3, res);
+					}
+				} else {
+					String temp4 = temp1.replaceAll(" ", "_").replaceAll("'", "");
+					if (!map.containsKey(temp4)) {
+						Result res = new Result();
+						res.setCount(1);
+						map.put(temp4, res);
+					} else {
+						Result res = map.get(temp4);
+						int c = res.getCount();
+						res.setCount(++c);
+						map.put(temp4, res);
+					}
+				}
+
+			}
+		}
+		return map;
+	}
 
 	//    Mentor FeedbackService
 	public String saveFeedback(MentorFeedback feed, UserPrincipal user) {

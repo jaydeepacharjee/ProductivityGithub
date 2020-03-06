@@ -14,8 +14,13 @@ import com.aroha.pet.model.Role;
 import com.aroha.pet.model.RoleName;
 import com.aroha.pet.model.User;
 import com.aroha.pet.payload.ForgetPassword;
+import com.aroha.pet.payload.UsersListPayload;
 import com.aroha.pet.repository.RoleRepository;
 import com.aroha.pet.repository.UserRepository;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 
 /**
  *
@@ -59,8 +64,39 @@ public class UserService {
     //		return userRepository.findById(id);
     //	}
 
-    public List<User> findByRoles(String roleName) {
-        return userRepository.findByRoles(roleName);
+    public List<UsersListPayload> findByRoles(String roleName) {
+//        return userRepository.findByRoles(roleName);
+        List<User> userList = userRepository.findByRoles(roleName);
+        List<UsersListPayload> list = new ArrayList<>();
+        Iterator<User> itr = userList.iterator();
+        while (itr.hasNext()) {
+            User userObj = itr.next();
+            UsersListPayload userPayload = new UsersListPayload();
+            userPayload.setId(userObj.getId());
+            userPayload.setName(userObj.getName());
+            userPayload.setEmail(userObj.getEmail());
+            userPayload.setPhoneNo(userObj.getPhoneNo());
+            userPayload.setAltPhoneNo(userObj.getAltPhoneNo());
+            userPayload.setPrimarySkills(userObj.getPrimarySkills());
+            userPayload.setSecondarySkills(userObj.getSecondarySkills());
+            userPayload.setAddress(userObj.getAddress());
+
+            String doj = userObj.getDateOfJoin();
+            if (doj != null) {
+                Date date = null;
+                try {
+                    date = new SimpleDateFormat("yyyy-mm-dd").parse(doj);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                SimpleDateFormat formatter=new SimpleDateFormat("dd MMMM yyyy");
+                userPayload.setDateOfJoin(formatter.format(date));
+            }
+            userPayload.setSoe(userObj.getSoe());
+            userPayload.setSoeRef(userObj.getSoeRef());
+            list.add(userPayload);
+        }
+        return list;
     }
 
     public List<User> getAllUsers() {

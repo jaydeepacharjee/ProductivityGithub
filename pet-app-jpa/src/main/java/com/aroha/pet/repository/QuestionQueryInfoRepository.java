@@ -1,7 +1,7 @@
 package com.aroha.pet.repository;
 
 import com.aroha.pet.model.QueryInfo;
-import com.aroha.pet.model.QuestionQueryInfo;
+import com.aroha.pet.payload.QueryObject;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -42,8 +42,8 @@ public interface QuestionQueryInfoRepository extends JpaRepository<QueryInfo, In
     public List<Object[]> getReport(long created_by, String createdAt,int questionId);
 //    public List<QuestionQueryInfo> getReport(long created_by, String createdAt, int questionId);
 
-//    @Query("select new com.aroha.pet.payload.Query(q.exceptionStr) from "
-//            + "QueryInfo q where q.createdBy=?1 and Date(q.createdAt)=Date(?2)")
-//    public List<Query> getException(long created_by, String createdAt);
+    @Query("select new com.aroha.pet.payload.QueryObject(q.exceptionStr) from "
+            + "QueryInfo q where q.createdBy=?1 and Date(q.createdAt)=Date(?2)")
+    public List<QueryObject> getException(long created_by, String createdAt);
 
 }

@@ -4,7 +4,7 @@ package com.aroha.pet.payload;
  *
  * @author Jaydeep
  */
-public class Query {
+public class QueryObject {
 
     private String scenario;
     private String sqlStr;
@@ -17,11 +17,11 @@ public class Query {
     private String mentorName;
   
 
-    public Query() {
+    public QueryObject() {
 		super();
 	}
 
-	public Query(String exceptionStr) {
+	public QueryObject(String exceptionStr) {
 		super();
 		this.exceptionStr = exceptionStr;
 	}

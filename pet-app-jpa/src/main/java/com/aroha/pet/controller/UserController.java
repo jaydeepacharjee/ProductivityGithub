@@ -27,6 +27,7 @@ import com.aroha.pet.payload.SignUpRequest;
 import com.aroha.pet.payload.UserIdentityAvailability;
 import com.aroha.pet.payload.UserProfile;
 import com.aroha.pet.payload.UserSummary;
+import com.aroha.pet.payload.UsersListPayload;
 import com.aroha.pet.security.CurrentUser;
 import com.aroha.pet.security.UserPrincipal;
 import com.aroha.pet.service.DBService;
@@ -55,8 +56,6 @@ public class UserController {
         UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName(), currentUser.getAuthorities());
         return ResponseEntity.ok(userSummary);
     }
-    
-
 
     @GetMapping("/user/checkEmailAvailability")
     public ResponseEntity<UserIdentityAvailability> checkEmailAvailability(@RequestParam(value = "email") String email) {
@@ -77,7 +76,7 @@ public class UserController {
 
     @GetMapping("/users/list/{userType}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MENTOR')") // just for example
-    public ResponseEntity<List<User>> getUsersByType(@PathVariable(value = "userType") String userType) {
+    public ResponseEntity<List<UsersListPayload>> getUsersByType(@PathVariable(value = "userType") String userType) {
         String roleName = "";
         if (userType.contains("learner")) {
             roleName = "ROLE_USER";
@@ -186,10 +185,10 @@ public class UserController {
             return ResponseEntity.ok(ex.getMessage());
         }
     }
-    
+
     @GetMapping("/allUsers")
-    public ResponseEntity<?>getAllUsers(){
-    	return ResponseEntity.ok(userService.getAllUsers());
+    public ResponseEntity<?> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
 }
