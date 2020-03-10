@@ -303,9 +303,11 @@ public class FeedBackService {
     // Clear notification
     public void clearNotification(UserPrincipal user) {
         List<FeedBack> list = mentorFeedbackRepo.getMentorFeedback(user.getId());
-        for (FeedBack f : list) {
+        list.stream().map((f) -> {
             f.setNotification(0);
+            return f;
+        }).forEachOrdered((f) -> {
             mentorFeedbackRepo.save(f);
-        }
+        });
     }
 }

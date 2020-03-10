@@ -253,7 +253,7 @@ public class DBService {
             ResultSetMetaData metadata = rs.getMetaData();
             int numColumns = metadata.getColumnCount();
             for (int i = 1; i <= numColumns; i++) {
-                columnList.put(metadata.getColumnName(i), metadata.getColumnTypeName(i) + "_" + metadata.getColumnDisplaySize(i)); //+metadata.getColumnClassName(i)
+                columnList.put(metadata.getColumnName(i), metadata.getColumnTypeName(i) + "(" + metadata.getColumnDisplaySize(i)+")"); //+metadata.getColumnClassName(i)
             }
         } catch (Exception ex) {
             logger.error("Get table column list connection is failed " + ex.getMessage());

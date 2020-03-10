@@ -80,16 +80,18 @@ public class UserService {
             userPayload.setPrimarySkills(userObj.getPrimarySkills());
             userPayload.setSecondarySkills(userObj.getSecondarySkills());
             userPayload.setAddress(userObj.getAddress());
-
-            String doj = userObj.getDateOfJoin();
-            if (doj != null) {
+            
+ 
+            if (userObj.getDateOfJoin() != null) {
                 Date date = null;
                 try {
-                    date = new SimpleDateFormat("yyyy-mm-dd").parse(doj);
+                    date = new SimpleDateFormat("yyyy-MM-dd").parse(userObj.getDateOfJoin());
+                    System.out.println("Date of join is: " + date);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-                SimpleDateFormat formatter=new SimpleDateFormat("dd MMMM yyyy");
+                // System.out.println("Date is: "+date);
+                SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");
                 userPayload.setDateOfJoin(formatter.format(date));
             }
             userPayload.setSoe(userObj.getSoe());

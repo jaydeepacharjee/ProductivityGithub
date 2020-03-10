@@ -66,6 +66,7 @@ public class QueryInfoService {
 
     //         Testing purpose
     public void getAllQuestions() {
+        System.out.println("------------------- I am here ----------------");
         List<QueryInfo> query = queryInfoRepository.findAll();
         List<Question> question = quesRepo.findAll();
         for (int i = 0; i < query.size(); i++) {

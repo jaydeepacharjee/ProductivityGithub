@@ -22,7 +22,7 @@ import com.aroha.pet.security.UserPrincipal;
 import com.aroha.pet.service.DBService;
 import com.aroha.pet.service.QueryInfoService;
 import com.aroha.pet.service.UserService;
-import org.springframework.web.bind.annotation.RequestMethod;
+
 
 /**
  *
@@ -36,7 +36,7 @@ public class DataBaseInfoController {
     @Autowired
     DBService dbService;
     @Autowired
-    UserService userService;   
+    UserService userService;
     @Autowired
     QueryInfoService quesrService;
 
@@ -100,35 +100,10 @@ public class DataBaseInfoController {
 
     }
 
-    /*	@PostMapping("/connect")
-	public ResponseEntity<?> testConnection(@Valid @RequestBody DbInfo dbInfo, @CurrentUser UserPrincipal currentUser) {
-		SqlRequest sqlReq = new SqlRequest();
-		sqlReq.setDbInfo(dbInfo);
-		String scenario="";
-		if (dbInfo.getDbType().equalsIgnoreCase("MYSQL")) {
-			sqlReq.setSql("select curdate()");
-		} else if (dbInfo.getDbType().equalsIgnoreCase("mariadb")) {
-			sqlReq.setSql("select curdate()");
-		} else if (dbInfo.getDbType().equalsIgnoreCase("oracle")) {
-			sqlReq.setSql("select * from emp");
-		}
-		else if (dbInfo.getDbType().equalsIgnoreCase("postgresql")) {
-			sqlReq.setSql("select * from emp");
-		}
-		else if (dbInfo.getDbType().equalsIgnoreCase("mssql")) {
-			sqlReq.setSql("SELECT  [s_id] ,[s_name],[s_phone]  FROM [test1].[dbo].[student]");
-		}
-		else {
-			throw new RuntimeException("Connect is Implemented only for MySQL and Oracle");
-		}
-		SqlResponse sqlRes = dbService.executeQuery(dbInfo, sqlReq.getSql(), currentUser,scenario);
-		return ResponseEntity.ok(sqlRes.getStatus());
-	}
-     */
-    @RequestMapping(value = "/checkQuestion", method = RequestMethod.POST)
+   @GetMapping("/quetionId")     
     public ResponseEntity<?> checkQuestionForId() {
-        
+        System.out.println("---- Just Inside----");
         quesrService.getAllQuestions();
-        return ResponseEntity.ok("Ok");
+        return ResponseEntity.ok("Question Id Updated");
     }
 }

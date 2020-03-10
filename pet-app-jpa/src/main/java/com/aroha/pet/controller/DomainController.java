@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +31,8 @@ import com.aroha.pet.service.ScenarioService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import java.io.FileInputStream;
-import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -144,7 +144,10 @@ public class DomainController {
             if (file != null) {
                 String path = file.getOriginalFilename();
                 File csv1 = new File(path);
-                try (InputStream in = new FileInputStream(csv1)) {
+                String absolute = csv1.getPath();
+                System.out.println(absolute);
+
+                try (FileInputStream in = new FileInputStream(csv1)) {
                     CSV csv = new CSV(true, ',', in);
                     List< String> fieldNames = null;
                     if (csv.hasNext()) {
@@ -160,7 +163,6 @@ public class DomainController {
                         list.add(obj);
                     }
                     mapper.enable(SerializationFeature.INDENT_OUTPUT);
-                    //mapper.writeValue(System.out, list);
                     question.setAnswer(mapper.writeValueAsString(list));
 
                 }
@@ -190,17 +192,6 @@ public class DomainController {
         return ResponseEntity.ok(domainService.getDomain());
     }
 
-	//	 Update Question
-/*
-     @RequestMapping(value = "/updateQuestion", method = RequestMethod.POST)
-     public ResponseEntity<?> updateQuestion(@RequestBody Question question,@CurrentUser  UserPrincipal user) {
-
-     if (user.isLearnerRole()) {
-     throw new RuntimeException("Only Admin and mentor can update the question");
-     }
-     return ResponseEntity.ok(questionService.checkQuestion(question));
-     }
-     */
     @RequestMapping(value = "/updateDomain", method = RequestMethod.POST)
     public ResponseEntity<?> updateDomain(@RequestBody DomainRequest domainRequest, @CurrentUser UserPrincipal user) {
 

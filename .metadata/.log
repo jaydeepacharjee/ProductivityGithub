@@ -1,20 +1,20 @@
-!SESSION 2020-03-05 06:46:52.410 -----------------------------------------------
+!SESSION 2020-03-09 00:14:04.421 -----------------------------------------------
 eclipse.buildId=4.5.1.202001211336-RELEASE
-java.version=1.8.0_241
+java.version=1.8.0_221
 java.vendor=Oracle Corporation
-BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_IN
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_IN
 Framework arguments:  -product org.springframework.boot.ide.branding.sts4
-Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.springframework.boot.ide.branding.sts4
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.springframework.boot.ide.branding.sts4
 
-!ENTRY org.eclipse.jface 2 0 2020-03-05 06:47:29.127
+!ENTRY org.eclipse.jface 2 0 2020-03-09 00:15:27.290
 !MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
-!SUBENTRY 1 org.eclipse.jface 2 0 2020-03-05 06:47:29.127
+!SUBENTRY 1 org.eclipse.jface 2 0 2020-03-09 00:15:27.290
 !MESSAGE A conflict occurred for CTRL+SHIFT+T:
 Binding(CTRL+SHIFT+T,
 	ParameterizedCommand(Command(org.eclipse.jdt.ui.navigate.open.type,Open Type,
 		Open a type in a Java editor,
 		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@731ab49b,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@6032622,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
@@ -22,10 +22,191 @@ Binding(CTRL+SHIFT+T,
 	ParameterizedCommand(Command(org.eclipse.lsp4e.symbolinworkspace,Go to Symbol in Workspace,
 		,
 		Category(org.eclipse.lsp4e.category,Language Servers,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@23358740,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@5cc075da,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
 
-!ENTRY org.eclipse.ui 2 2 2020-03-05 06:49:37.464
+!ENTRY org.eclipse.egit.ui 2 0 2020-03-09 00:15:34.893
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\jaydeep'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.egit.core 4 0 2020-03-09 00:15:56.352
+!MESSAGE Failed to load index for repository [RepositoryHandle:Repository[F:\ProductivityAPPtESTING gITHUB\ProductivityTesting\.git]]
+!STACK 0
+org.eclipse.jgit.errors.CorruptObjectException: Invalid path: .metadata/.plugins/org.eclipse.core.runtime/.settings/org.springframework.ide.eclipse.boot.dash:Cloud Foundry.prefs
+	at org.eclipse.jgit.dircache.DirCacheEntry.<init>(DirCacheEntry.java:202)
+	at org.eclipse.jgit.dircache.DirCache.readFrom(DirCache.java:503)
+	at org.eclipse.jgit.dircache.DirCache.read(DirCache.java:429)
+	at org.eclipse.jgit.dircache.DirCache.read(DirCache.java:221)
+	at org.eclipse.jgit.dircache.DirCache.read(DirCache.java:193)
+	at org.eclipse.jgit.lib.Repository.readDirCache(Repository.java:1262)
+	at org.eclipse.egit.core.RepositoryHandle.readDirCache(RepositoryHandle.java:312)
+	at org.eclipse.jgit.submodule.SubmoduleWalk.forIndex(SubmoduleWalk.java:129)
+	at org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry.lambda$1(IndexDiffCacheEntry.java:166)
+	at org.eclipse.egit.core.UnitOfWork.run(UnitOfWork.java:81)
+	at org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry.<init>(IndexDiffCacheEntry.java:165)
+	at org.eclipse.egit.core.internal.indexdiff.IndexDiffCache.getIndexDiffCacheEntry(IndexDiffCache.java:240)
+	at org.eclipse.egit.ui.internal.resources.ResourceStateFactory.getIndexDiffDataOrNull(ResourceStateFactory.java:143)
+	at org.eclipse.egit.ui.internal.resources.ResourceStateFactory.getIndexDiffDataOrNull(ResourceStateFactory.java:104)
+	at org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator.decorateResource(GitLightweightDecorator.java:223)
+	at org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator.decorate(GitLightweightDecorator.java:201)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorDefinition.decorate(LightweightDecoratorDefinition.java:247)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager$LightweightRunnable.run(LightweightDecoratorManager.java:105)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.decorate(LightweightDecoratorManager.java:360)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.getDecorations(LightweightDecoratorManager.java:346)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.ensureResultCached(DecorationScheduler.java:386)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.run(DecorationScheduler.java:362)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.eclipse.jgit.errors.CorruptObjectException: char ':' not allowed in Windows filename
+	at org.eclipse.jgit.lib.ObjectChecker.scanPathSegment(ObjectChecker.java:728)
+	at org.eclipse.jgit.lib.ObjectChecker.checkPathSegment(ObjectChecker.java:821)
+	at org.eclipse.jgit.lib.ObjectChecker.checkPath(ObjectChecker.java:803)
+	at org.eclipse.jgit.util.SystemReader.checkPath(SystemReader.java:586)
+	at org.eclipse.jgit.dircache.DirCacheEntry.checkPath(DirCacheEntry.java:835)
+	at org.eclipse.jgit.dircache.DirCacheEntry.<init>(DirCacheEntry.java:199)
+	... 23 more
+
+!ENTRY org.eclipse.egit.core 4 0 2020-03-09 00:15:56.570
+!MESSAGE Failed to load index for repository [RepositoryHandle:Repository[F:\ProductivityAPPtESTING gITHUB\ProductivityTesting\.git]]
+!STACK 0
+org.eclipse.jgit.errors.CorruptObjectException: Invalid path: .metadata/.plugins/org.eclipse.core.runtime/.settings/org.springframework.ide.eclipse.boot.dash:Cloud Foundry.prefs
+	at org.eclipse.jgit.dircache.DirCacheEntry.<init>(DirCacheEntry.java:202)
+	at org.eclipse.jgit.dircache.DirCache.readFrom(DirCache.java:503)
+	at org.eclipse.jgit.dircache.DirCache.read(DirCache.java:429)
+	at org.eclipse.jgit.dircache.DirCache.read(DirCache.java:221)
+	at org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry.<init>(IndexDiffCacheEntry.java:192)
+	at org.eclipse.egit.core.internal.indexdiff.IndexDiffCache.getIndexDiffCacheEntry(IndexDiffCache.java:240)
+	at org.eclipse.egit.ui.internal.resources.ResourceStateFactory.getIndexDiffDataOrNull(ResourceStateFactory.java:143)
+	at org.eclipse.egit.ui.internal.resources.ResourceStateFactory.getIndexDiffDataOrNull(ResourceStateFactory.java:104)
+	at org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator.decorateResource(GitLightweightDecorator.java:223)
+	at org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator.decorate(GitLightweightDecorator.java:201)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorDefinition.decorate(LightweightDecoratorDefinition.java:247)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager$LightweightRunnable.run(LightweightDecoratorManager.java:105)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.decorate(LightweightDecoratorManager.java:360)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.getDecorations(LightweightDecoratorManager.java:346)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.ensureResultCached(DecorationScheduler.java:386)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.run(DecorationScheduler.java:362)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.eclipse.jgit.errors.CorruptObjectException: char ':' not allowed in Windows filename
+	at org.eclipse.jgit.lib.ObjectChecker.scanPathSegment(ObjectChecker.java:728)
+	at org.eclipse.jgit.lib.ObjectChecker.checkPathSegment(ObjectChecker.java:821)
+	at org.eclipse.jgit.lib.ObjectChecker.checkPath(ObjectChecker.java:803)
+	at org.eclipse.jgit.util.SystemReader.checkPath(SystemReader.java:586)
+	at org.eclipse.jgit.dircache.DirCacheEntry.checkPath(DirCacheEntry.java:835)
+	at org.eclipse.jgit.dircache.DirCacheEntry.<init>(DirCacheEntry.java:199)
+	... 17 more
+
+!ENTRY org.eclipse.ui 2 2 2020-03-09 00:17:14.933
+!MESSAGE Invalid property category path: org.springframework.ide.eclipse.beans.ui.properties.ProjectPropertyPage (bundle: org.springframework.ide.eclipse.xml.namespaces, propertyPage: org.springframework.ide.eclipse.beans.ui.namespaces.projectPropertyPage)
+!SESSION 2020-03-09 10:34:52.850 -----------------------------------------------
+eclipse.buildId=4.5.1.202001211336-RELEASE
+java.version=1.8.0_221
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_IN
+Framework arguments:  -product org.springframework.boot.ide.branding.sts4
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.springframework.boot.ide.branding.sts4
+
+!ENTRY org.eclipse.jface 2 0 2020-03-09 10:35:21.612
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2020-03-09 10:35:21.612
+!MESSAGE A conflict occurred for CTRL+SHIFT+T:
+Binding(CTRL+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.navigate.open.type,Open Type,
+		Open a type in a Java editor,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@11120583,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(CTRL+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.lsp4e.symbolinworkspace,Go to Symbol in Workspace,
+		,
+		Category(org.eclipse.lsp4e.category,Language Servers,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@2bf0c70d,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY org.eclipse.egit.ui 2 0 2020-03-09 10:35:37.630
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\jaydeep'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.egit.core 4 0 2020-03-09 10:35:40.939
+!MESSAGE Failed to load index for repository [RepositoryHandle:Repository[F:\ProductivityAPPtESTING gITHUB\ProductivityTesting\.git]]
+!STACK 0
+org.eclipse.jgit.errors.CorruptObjectException: Invalid path: .metadata/.plugins/org.eclipse.core.runtime/.settings/org.springframework.ide.eclipse.boot.dash:Cloud Foundry.prefs
+	at org.eclipse.jgit.dircache.DirCacheEntry.<init>(DirCacheEntry.java:202)
+	at org.eclipse.jgit.dircache.DirCache.readFrom(DirCache.java:503)
+	at org.eclipse.jgit.dircache.DirCache.read(DirCache.java:429)
+	at org.eclipse.jgit.dircache.DirCache.read(DirCache.java:221)
+	at org.eclipse.jgit.dircache.DirCache.read(DirCache.java:193)
+	at org.eclipse.jgit.lib.Repository.readDirCache(Repository.java:1262)
+	at org.eclipse.egit.core.RepositoryHandle.readDirCache(RepositoryHandle.java:312)
+	at org.eclipse.jgit.submodule.SubmoduleWalk.forIndex(SubmoduleWalk.java:129)
+	at org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry.lambda$1(IndexDiffCacheEntry.java:166)
+	at org.eclipse.egit.core.UnitOfWork.run(UnitOfWork.java:81)
+	at org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry.<init>(IndexDiffCacheEntry.java:165)
+	at org.eclipse.egit.core.internal.indexdiff.IndexDiffCache.getIndexDiffCacheEntry(IndexDiffCache.java:240)
+	at org.eclipse.egit.ui.internal.resources.ResourceStateFactory.getIndexDiffDataOrNull(ResourceStateFactory.java:143)
+	at org.eclipse.egit.ui.internal.resources.ResourceStateFactory.getIndexDiffDataOrNull(ResourceStateFactory.java:104)
+	at org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator.decorateResource(GitLightweightDecorator.java:223)
+	at org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator.decorate(GitLightweightDecorator.java:201)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorDefinition.decorate(LightweightDecoratorDefinition.java:247)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager$LightweightRunnable.run(LightweightDecoratorManager.java:105)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.decorate(LightweightDecoratorManager.java:360)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.getDecorations(LightweightDecoratorManager.java:346)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.ensureResultCached(DecorationScheduler.java:386)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.run(DecorationScheduler.java:362)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.eclipse.jgit.errors.CorruptObjectException: char ':' not allowed in Windows filename
+	at org.eclipse.jgit.lib.ObjectChecker.scanPathSegment(ObjectChecker.java:728)
+	at org.eclipse.jgit.lib.ObjectChecker.checkPathSegment(ObjectChecker.java:821)
+	at org.eclipse.jgit.lib.ObjectChecker.checkPath(ObjectChecker.java:803)
+	at org.eclipse.jgit.util.SystemReader.checkPath(SystemReader.java:586)
+	at org.eclipse.jgit.dircache.DirCacheEntry.checkPath(DirCacheEntry.java:835)
+	at org.eclipse.jgit.dircache.DirCacheEntry.<init>(DirCacheEntry.java:199)
+	... 23 more
+
+!ENTRY org.eclipse.egit.core 4 0 2020-03-09 10:35:41.039
+!MESSAGE Failed to load index for repository [RepositoryHandle:Repository[F:\ProductivityAPPtESTING gITHUB\ProductivityTesting\.git]]
+!STACK 0
+org.eclipse.jgit.errors.CorruptObjectException: Invalid path: .metadata/.plugins/org.eclipse.core.runtime/.settings/org.springframework.ide.eclipse.boot.dash:Cloud Foundry.prefs
+	at org.eclipse.jgit.dircache.DirCacheEntry.<init>(DirCacheEntry.java:202)
+	at org.eclipse.jgit.dircache.DirCache.readFrom(DirCache.java:503)
+	at org.eclipse.jgit.dircache.DirCache.read(DirCache.java:429)
+	at org.eclipse.jgit.dircache.DirCache.read(DirCache.java:221)
+	at org.eclipse.egit.core.internal.indexdiff.IndexDiffCacheEntry.<init>(IndexDiffCacheEntry.java:192)
+	at org.eclipse.egit.core.internal.indexdiff.IndexDiffCache.getIndexDiffCacheEntry(IndexDiffCache.java:240)
+	at org.eclipse.egit.ui.internal.resources.ResourceStateFactory.getIndexDiffDataOrNull(ResourceStateFactory.java:143)
+	at org.eclipse.egit.ui.internal.resources.ResourceStateFactory.getIndexDiffDataOrNull(ResourceStateFactory.java:104)
+	at org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator.decorateResource(GitLightweightDecorator.java:223)
+	at org.eclipse.egit.ui.internal.decorators.GitLightweightDecorator.decorate(GitLightweightDecorator.java:201)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorDefinition.decorate(LightweightDecoratorDefinition.java:247)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager$LightweightRunnable.run(LightweightDecoratorManager.java:105)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:45)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.decorate(LightweightDecoratorManager.java:360)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.getDecorations(LightweightDecoratorManager.java:346)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.ensureResultCached(DecorationScheduler.java:386)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.run(DecorationScheduler.java:362)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.eclipse.jgit.errors.CorruptObjectException: char ':' not allowed in Windows filename
+	at org.eclipse.jgit.lib.ObjectChecker.scanPathSegment(ObjectChecker.java:728)
+	at org.eclipse.jgit.lib.ObjectChecker.checkPathSegment(ObjectChecker.java:821)
+	at org.eclipse.jgit.lib.ObjectChecker.checkPath(ObjectChecker.java:803)
+	at org.eclipse.jgit.util.SystemReader.checkPath(SystemReader.java:586)
+	at org.eclipse.jgit.dircache.DirCacheEntry.checkPath(DirCacheEntry.java:835)
+	at org.eclipse.jgit.dircache.DirCacheEntry.<init>(DirCacheEntry.java:199)
+	... 17 more
+
+!ENTRY org.eclipse.ui 2 2 2020-03-09 11:21:27.784
 !MESSAGE Invalid property category path: org.springframework.ide.eclipse.beans.ui.properties.ProjectPropertyPage (bundle: org.springframework.ide.eclipse.xml.namespaces, propertyPage: org.springframework.ide.eclipse.beans.ui.namespaces.projectPropertyPage)
