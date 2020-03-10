@@ -100,7 +100,7 @@ public class FeedBackService {
                 queryObj.setResultStr(jsonObject.toString());
 
             } else {
-                JSONArray jsona = new JSONArray("[{NoData:No result to display}]");
+                JSONArray jsona = new JSONArray("[{Data:No result to display}]");
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("Data", jsona);
 
@@ -247,10 +247,7 @@ public class FeedBackService {
         feedback.setExceptionStr(query.getExceptionStr());
         feedback.setSqlStr(query.getSqlStr());
         feedback.setQuery_date(query.getCreatedAt().toString().replaceAll("T", " ").replaceAll("Z", " ").trim());
-
-        System.out.println("------------- Feedback status:-  " + feedback);
         Integer getNotify = mentorFeedbackRepo.getLastNotification(learnerId);
-        System.out.println("---------- GetNotify: " + getNotify);
         if (getNotify == null || getNotify == 0) {
             feedback.setNotification(count++);
         } else {

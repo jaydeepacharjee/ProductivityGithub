@@ -31,6 +31,8 @@ import com.aroha.pet.service.ScenarioService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import java.io.FileInputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -142,6 +144,8 @@ public class DomainController {
             if (file != null) {
                 String path = file.getOriginalFilename();
                 File csv1 = new File(path);
+                Path paths = Paths.get(csv1.getCanonicalPath());
+                System.out.println("Path is: " + paths);
                 String absolute = csv1.getPath();
                 System.out.println(absolute);
 
