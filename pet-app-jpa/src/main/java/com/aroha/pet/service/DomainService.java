@@ -20,6 +20,7 @@ import com.aroha.pet.repository.DomainTableRepository;
 import com.aroha.pet.repository.FunctionRepository;
 import com.aroha.pet.repository.QuestionRepository;
 import com.aroha.pet.repository.ScenarioRepository;
+import java.util.Base64;
 
 @Service
 public class DomainService {
@@ -38,6 +39,9 @@ public class DomainService {
 
     @Autowired
     QuestionRepository questionRepository;
+
+    @Autowired
+    ScenarioService scenarioService;
 
     private static final Logger logger = LoggerFactory.getLogger(DomainService.class);
 
@@ -69,15 +73,18 @@ public class DomainService {
 
     public List<DomainTable> getDomain() {
         List<Object[]> d = domainTableRepo.getDomainData();
-        List<DomainTable>list=new ArrayList<>();
-        for(Object[] object:d) {
-        	DomainTable domainTable=new DomainTable();
-        	domainTable.setQuestionId((int)object[0]);
-        	domainTable.setDomainName((String)object[1]);
-        	domainTable.setFunctionName((String)object[2]);
-        	domainTable.setScenarioTitle((String)object[3]);
-        	domainTable.setQuestionDesc((String)object[4]);
-        	list.add(domainTable);
+        List<DomainTable> list = new ArrayList<>();
+        for (Object[] object : d) {
+            DomainTable domainTable = new DomainTable();
+            domainTable.setQuestionId((int) object[0]);
+            domainTable.setDomainName((String) object[1]);
+            domainTable.setFunctionName((String) object[2]);
+            domainTable.setScenarioTitle((String) object[3]);
+            domainTable.setQuestionDesc((String) object[4]);
+            Scenario scenario = scenarioService.getFile((int) object[5]);
+            byte[] encoded = Base64.getEncoder().encode(scenario.getImage());
+            domainTable.setImage(new String(encoded));
+            list.add(domainTable);
         }
         return list;
     }
