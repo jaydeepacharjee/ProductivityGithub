@@ -185,10 +185,4 @@ public class UserController {
             return ResponseEntity.ok(ex.getMessage());
         }
     }
-
-    @GetMapping("/allUsers")
-    public ResponseEntity<?> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
-    }
-
 }

@@ -30,7 +30,10 @@ import com.aroha.pet.service.QuestionService;
 import com.aroha.pet.service.ScenarioService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -142,14 +145,7 @@ public class DomainController {
             int scenarioId = domainData.getScenarioId();
             question = domainData.getQuestion();
             if (file != null) {
-                String path = file.getOriginalFilename();
-                File csv1 = new File(path);
-                Path paths = Paths.get(csv1.getCanonicalPath());
-                System.out.println("Path is: " + paths);
-                String absolute = csv1.getPath();
-                System.out.println(absolute);
-
-                try (FileInputStream in = new FileInputStream(csv1)) {
+                try (Reader in = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
                     CSV csv = new CSV(true, ',', in);
                     List< String> fieldNames = null;
                     if (csv.hasNext()) {

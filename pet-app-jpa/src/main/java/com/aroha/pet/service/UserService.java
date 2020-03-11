@@ -99,10 +99,6 @@ public class UserService {
         return list;
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
     public Optional<User> findByLearnerId(long id) {
         return userRepository.findById(id);
     }
