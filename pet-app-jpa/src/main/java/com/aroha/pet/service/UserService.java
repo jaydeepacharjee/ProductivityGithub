@@ -138,17 +138,18 @@ public class UserService {
 
     public boolean forgetPassword(String userOrEmail) {
         long code = Code();
-        for (long i = code; i != 0; i /= 100)//a loop extracting 2 digits from the code  
-        {
-            long digit = i % 100;//extracting two digits 
-            if (digit <= 90) {
-                digit = digit + 32;
-            }
-            //converting those two digits(ascii value) to its character value 
-            char ch = (char) digit;
-            // adding 32 so that our least value be a valid character  
-            unique_password = ch + unique_password;//adding the character to the string 
-        }
+//        for (long i = code; i != 0; i /= 100)//a loop extracting 2 digits from the code  
+//        {
+//            long digit = i % 100;//extracting two digits 
+//            if (digit <= 90) {
+//                digit = digit + 32;
+//            }
+//            //converting those two digits(ascii value) to its character value 
+//            char ch = (char) digit;
+//            // adding 32 so that our least value be a valid character  
+//            unique_password = ch + unique_password;//adding the character to the string 
+//        }
+        System.out.println("Unique Code is: "+code);
         Optional<User> user = userRepository.findByEmail(userOrEmail);
         User getUser = user.get();
         logger.info("Forget Password OTP generated for the user : " + getUser.getName());
@@ -164,7 +165,7 @@ public class UserService {
         msg.setSubject("Forget Password");
         msg.setText("Dear User ,\n"
                 + "\n"
-                + "The OTP generated for your Account with ID " + userOrEmail + "  is : " + unique_password
+                + "The OTP generated for your Account with ID " + userOrEmail + "  is: " + unique_password
                 + "\n\n"
                 + "\nUse this OTP to change the password\n"
                 + "In case of any queries, kindly contact our customer service desk at the details below\n"
@@ -187,7 +188,7 @@ public class UserService {
 
     public static long Code() //this code returns the  unique 16 digit code  
     {  //creating a 16 digit code using Math.random function 
-        long code = (long) ((Math.random() * 9 * Math.pow(10, 15)) + Math.pow(10, 15));
+        long code = (long) ((Math.random() * Math.pow(9,5)));
         return code; //returning the code 
     }
 

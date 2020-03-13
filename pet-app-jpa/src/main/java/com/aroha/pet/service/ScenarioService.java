@@ -13,6 +13,8 @@ import com.aroha.pet.exception.FileNotFoundException;
 import com.aroha.pet.model.Domain;
 import com.aroha.pet.model.Function;
 import com.aroha.pet.model.Scenario;
+import com.aroha.pet.payload.ApiResponse;
+import com.aroha.pet.payload.DomainRequest;
 import com.aroha.pet.payload.ScenarioDataRequest;
 import com.aroha.pet.repository.DomainRepository;
 import com.aroha.pet.repository.FunctionRepository;
@@ -82,4 +84,10 @@ public class ScenarioService {
         return scenarioRepository.findById(fileId).orElseThrow(() -> new FileNotFoundException("Not found"));
     }
 
+    public Object checkDuplicate(DomainRequest domainData) {
+        if (scenarioRepository.checkDuplicate(domainData.getFunctionId(), domainData.getScenario().getScenarioTitle()) > 0) {
+            return new ApiResponse(Boolean.TRUE, "Scenario name already present for the function ");
+        }
+        return new ApiResponse(Boolean.FALSE, "Scenario Name not Present for the function");
+    }
 }

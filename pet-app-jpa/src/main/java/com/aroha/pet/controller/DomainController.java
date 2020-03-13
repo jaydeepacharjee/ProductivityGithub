@@ -63,6 +63,11 @@ public class DomainController {
         return ResponseEntity.ok(domainService.saveDomain(domain));
     }
 
+    @PostMapping("/checkDuplicateDomain")
+    public ResponseEntity<?> checkDuplicateDoain(@RequestBody Domain domain) {
+        return ResponseEntity.ok(domainService.checkDuplicate(domain));
+    }
+
     @GetMapping("/getDomains")
     public ResponseEntity<?> getDomainData() {
         if (domainService.getAllDomains().isEmpty()) {
@@ -78,6 +83,11 @@ public class DomainController {
         return ResponseEntity.ok(functionService.createFunction(domainId, function));
     }
 
+    @PostMapping("/checkDuplicateFunction")
+    public ResponseEntity<?> checkDuplicateFunction(@RequestBody DomainRequest domainData) {
+        return ResponseEntity.ok(functionService.checkDuplicateFunction(domainData));
+    }
+
     @PostMapping("/getFunctions")
     public ResponseEntity<?> getAllFunctions(@RequestBody DomainRequest domainData) {
         int domainId = domainData.getDomainId();
@@ -85,6 +95,11 @@ public class DomainController {
             return ResponseEntity.ok("No Function is found");
         }
         return ResponseEntity.ok(functionService.getAllFunctions(domainId));
+    }
+
+    @PostMapping("/cehckDuplicateScenario")
+    public ResponseEntity<?> checkDuplicateScenario(@RequestBody DomainRequest domainData) {
+        return ResponseEntity.ok(scenarioService.checkDuplicate(domainData));
     }
 
     @PostMapping("/saveScenario")
@@ -127,6 +142,11 @@ public class DomainController {
             return ResponseEntity.ok("No Scenario is Found");
         }
         return ResponseEntity.ok(scenarioService.getAllScenario(domainId, functionId));
+    }
+
+    @PostMapping("/checDuplicateQuestion")
+    public ResponseEntity<?> checkDuplicateQuestion(@RequestBody DomainRequest domainData) {
+        return ResponseEntity.ok(questionService.checkDuplicateQuestion(domainData));
     }
 
     @PostMapping("/saveQuestion")

@@ -10,104 +10,75 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import org.hibernate.annotations.NaturalId;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Domain implements Serializable{
+public class Domain implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int domainId;	
-	@NotBlank
-	@NotNull
-	private String domainName;
-	@NotBlank
-	@NotNull
-	private String domainCode;
-	@NotBlank
-	@NotNull
-	private String domainDesc;
-	@NotBlank
-	@NotNull
-	private String domainWebsite;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int domainId;
+    @NotBlank
+    @NotNull
+    private String domainName;
+    @NotBlank
+    @NotNull
+    private String domainCode;
+    @NotBlank
+    @NotNull
+    private String domainDesc;
+    @NotBlank
+    @NotNull
+    private String domainWebsite;
 
-	@OneToMany(mappedBy = "domain")
-	private Set<Function> functions=new HashSet<Function>();
+    @OneToMany(mappedBy = "domain")
+    private Set<Function> functions = new HashSet<Function>();
 
+    public int getDomainId() {
+        return domainId;
+    }
 
+    public void setDomainId(int domainId) {
+        this.domainId = domainId;
+    }
 
+    public String getDomainName() {
+        return domainName;
+    }
 
+    public void setDomainName(String domainName) {
+        this.domainName = domainName;
+    }
 
-	public int getDomainId() {
-		return domainId;
-	}
+    public String getDomainCode() {
+        return domainCode;
+    }
 
+    public void setDomainCode(String domainCode) {
+        this.domainCode = domainCode;
+    }
 
+    public String getDomainDesc() {
+        return domainDesc;
+    }
 
-	public void setDomainId(int domainId) {
-		this.domainId = domainId;
-	}
+    public void setDomainDesc(String domainDesc) {
+        this.domainDesc = domainDesc;
+    }
 
+    public String getDomainWebsite() {
+        return domainWebsite;
+    }
 
+    public void setDomainWebsite(String domainWebsite) {
+        this.domainWebsite = domainWebsite;
+    }
 
-	public String getDomainName() {
-		return domainName;
-	}
+    public Set<Function> getFunctions() {
+        return functions;
+    }
 
-
-
-	public void setDomainName(String domainName) {
-		this.domainName = domainName;
-	}
-
-
-
-	public String getDomainCode() {
-		return domainCode;
-	}
-
-
-
-	public void setDomainCode(String domainCode) {
-		this.domainCode = domainCode;
-	}
-
-
-
-	public String getDomainDesc() {
-		return domainDesc;
-	}
-
-
-
-	public void setDomainDesc(String domainDesc) {
-		this.domainDesc = domainDesc;
-	}
-
-
-
-	public String getDomainWebsite() {
-		return domainWebsite;
-	}
-
-
-
-	public void setDomainWebsite(String domainWebsite) {
-		this.domainWebsite = domainWebsite;
-	}
-
-
-
-	public Set<Function> getFunctions() {
-		return functions;
-	}
-
-
-
-	public void setFunctions(Set<Function> functions) {
-		this.functions = functions;
-	}
+    public void setFunctions(Set<Function> functions) {
+        this.functions = functions;
+    }
 
 }

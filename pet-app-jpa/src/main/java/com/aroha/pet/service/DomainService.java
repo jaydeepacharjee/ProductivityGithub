@@ -12,6 +12,7 @@ import com.aroha.pet.model.Domain;
 import com.aroha.pet.model.Function;
 import com.aroha.pet.model.Question;
 import com.aroha.pet.model.Scenario;
+import com.aroha.pet.payload.ApiResponse;
 import com.aroha.pet.payload.DomainDataRequest;
 import com.aroha.pet.payload.DomainRequest;
 import com.aroha.pet.payload.DomainTable;
@@ -144,5 +145,12 @@ public class DomainService {
             return "Domain Table Updated";
         }
         return "";
+    }
+
+    public Object checkDuplicate(Domain domain) {
+        if (domainRepository.existsBydomainName(domain.getDomainName())) {
+            return new ApiResponse(Boolean.TRUE, "Domain name already Exists");
+        }
+        return new ApiResponse(Boolean.FALSE, "Domain not exists");
     }
 }
