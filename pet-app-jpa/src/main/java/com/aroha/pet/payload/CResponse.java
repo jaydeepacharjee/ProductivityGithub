@@ -4,35 +4,36 @@ import java.util.List;
 
 public class CResponse {
 	
-	private String cScenario;
-	private List cResult;
-	private String cException;
-	private String cStatus;
-	public String getcScenario() {
-		return cScenario;
+	private String cprogram;
+	private List cresult;
+	private String cerror;
+	private String cstatus;
+	public String getCprogram() {
+		return cprogram;
 	}
-	public void setcScenario(String cScenario) {
-		this.cScenario = cScenario;
+	public void setCprogram(String cprogram) {
+		this.cprogram = cprogram;
 	}
-	public List getcResult() {
-		return cResult;
+	public List getCresult() {
+		return cresult;
 	}
-	public void setcResult(List cResult) {
-		this.cResult = cResult;
+	public void setCresult(List cresult) {
+		this.cresult = cresult;
 	}
-	public String getcException() {
-		return cException;
+	
+	public String getCerror() {
+		return cerror;
 	}
-	public void setcException(String cException) {
-		this.cException = cException;
+	public void setCerror(String cerror) {
+		this.cerror = cerror;
 	}
-	public String getcStatus() {
-		return cStatus;
+	public String getCstatus() {
+		return cstatus;
 	}
-	public void setcStatus(String cStatus) {
-		this.cStatus = cStatus;
+	public void setCstatus(String cstatus) {
+		this.cstatus = cstatus;
 	}
 	
 	
-	
+
 }

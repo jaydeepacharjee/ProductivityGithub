@@ -1,23 +1,25 @@
 package com.aroha.pet.payload;
 
-import com.aroha.pet.model.CProgram;
+import com.aroha.pet.model.CPojo;
+import com.aroha.pet.model.JavaPojo;
 
 public class CPayload {
-
+	
 	private int questionId;
-	private CProgram cProgram;
-
+	private CPojo cpojo;
 	public int getQuestionId() {
 		return questionId;
 	}
 	public void setQuestionId(int questionId) {
 		this.questionId = questionId;
 	}
-	public CProgram getcProgram() {
-		return cProgram;
+	public CPojo getCpojo() {
+		return cpojo;
 	}
-	public void setcProgram(CProgram cProgram) {
-		this.cProgram = cProgram;
+	public void setCpojo(CPojo cpojo) {
+		this.cpojo = cpojo;
 	}
-		
+	
+	
+
 }

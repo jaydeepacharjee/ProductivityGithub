@@ -5,4 +5,4 @@
 #include<stdlib.h>
 #include<string.h>
 #include<ctype.h>
-int main(){printf(1/0); return 0;}
+int main(){printf("hI wORLD"); return 0;}
