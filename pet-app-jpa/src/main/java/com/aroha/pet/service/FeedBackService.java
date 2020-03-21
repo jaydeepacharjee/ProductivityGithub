@@ -75,8 +75,8 @@ public class FeedBackService {
         return listObj;
     }
 
-    public Message showAnalysis(long created_by, String createdAt, int questionId) {
-        List<Object[]> list = quesRepo.getReport(created_by, createdAt, questionId);
+    public Message showAnalysis(long created_by, String createdAt, int domainId) {
+        List<Object[]> list = quesRepo.getReport(created_by, createdAt, domainId);
         Message message = new Message();
         List<QueryObject> queryList = new ArrayList<>();
         for (Object[] object : list) {

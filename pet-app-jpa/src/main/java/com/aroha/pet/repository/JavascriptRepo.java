@@ -1,20 +1,14 @@
 package com.aroha.pet.repository;
 
-public class JavascriptRepo {
-private Long id;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import com.aroha.pet.model.JavascriptPojo;
+
+@Repository
+public interface JavascriptRepo extends JpaRepository<JavascriptPojo, Long> {
 	
-
-	public JavascriptRepo(long id) {
-		super();
-		this.id = id;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
 }

@@ -3,6 +3,8 @@ package com.aroha.pet.model;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,7 +32,7 @@ public class Domain implements Serializable {
     @NotNull
     private String domainWebsite;
 
-    @OneToMany(mappedBy = "domain")
+    @OneToMany(mappedBy = "domain",cascade = {CascadeType.ALL,CascadeType.REMOVE})
     private Set<Function> functions = new HashSet<Function>();
 
     public int getDomainId() {

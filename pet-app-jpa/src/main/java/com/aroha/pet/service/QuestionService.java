@@ -4,16 +4,20 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
 import com.aroha.pet.model.Domain;
 import com.aroha.pet.model.Function;
 import com.aroha.pet.model.Question;
 import com.aroha.pet.model.Scenario;
 import com.aroha.pet.payload.ApiResponse;
+import com.aroha.pet.payload.DeleteDomainPayload;
 import com.aroha.pet.payload.DomainRequest;
 import com.aroha.pet.payload.QuestionDataRequest;
 import com.aroha.pet.repository.DomainRepository;
@@ -101,5 +105,20 @@ public class QuestionService {
             return new ApiResponse(Boolean.TRUE, "Same question already present for the scenario");
         }
         return new ApiResponse(Boolean.FALSE, "Question not present for the scenario");
+    }
+    
+    public DeleteDomainPayload deleteQuestionName(int qestionId) {
+    	Optional<Question> question=questionRepository.findById(qestionId);
+    	if(!question.isPresent()) {
+    		return new DeleteDomainPayload("Question not found", HttpStatus.NOT_FOUND.value());
+    	}
+    	Question quesObj=question.get();
+    	try {
+    		questionRepository.delete(quesObj);
+    		return new DeleteDomainPayload("Successfully deleted",HttpStatus.OK.value());
+    	}catch (Exception e) {
+			// TODO: handle exception
+    		return new DeleteDomainPayload(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+		}
     }
 }

@@ -60,9 +60,6 @@ public class UserService {
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
-    //	public Optional<User> findById(long id) {
-    //		return userRepository.findById(id);
-    //	}
 
     public List<UsersListPayload> findByRoles(String roleName) {
 //        return userRepository.findByRoles(roleName);
@@ -138,27 +135,15 @@ public class UserService {
 
     public boolean forgetPassword(String userOrEmail) {
         long code = Code();
-//        for (long i = code; i != 0; i /= 100)//a loop extracting 2 digits from the code  
-//        {
-//            long digit = i % 100;//extracting two digits 
-//            if (digit <= 90) {
-//                digit = digit + 32;
-//            }
-//            //converting those two digits(ascii value) to its character value 
-//            char ch = (char) digit;
-//            // adding 32 so that our least value be a valid character  
-//            unique_password = ch + unique_password;//adding the character to the string 
-//        }
-        System.out.println("Unique Code is: "+code);
         Optional<User> user = userRepository.findByEmail(userOrEmail);
         User getUser = user.get();
         logger.info("Forget Password OTP generated for the user : " + getUser.getName());
-        boolean istrue = sendEmail(unique_password, userOrEmail);
+        boolean istrue = sendEmail(code, userOrEmail);
         return istrue;
     }
 
     //	Send Email With unique OTP
-    public boolean sendEmail(String unique_password, String userOrEmail) {
+    public boolean sendEmail(Long unique_password, String userOrEmail) {
         //logger.info("OTP Password is "+unique_password);
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(userOrEmail);
@@ -188,7 +173,7 @@ public class UserService {
 
     public static long Code() //this code returns the  unique 16 digit code  
     {  //creating a 16 digit code using Math.random function 
-        long code = (long) ((Math.random() * Math.pow(9,5)));
+        long code = (long) ((Math.random() * Math.pow(9, 5)));
         return code; //returning the code 
     }
 

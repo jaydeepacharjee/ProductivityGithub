@@ -3,6 +3,8 @@ package com.aroha.pet.model;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -40,7 +42,7 @@ public class Function implements Serializable {
 	@JoinColumn(name="domainId")
 	private Domain domain;
 	
-	@OneToMany(mappedBy = "function")
+	@OneToMany(mappedBy = "function",cascade = {CascadeType.ALL,CascadeType.REMOVE})
 	private Set<Scenario> scenario=new HashSet<Scenario>();
 
    

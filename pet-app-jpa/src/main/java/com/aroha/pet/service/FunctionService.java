@@ -4,14 +4,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
 import com.aroha.pet.model.Domain;
 import com.aroha.pet.model.Function;
 import com.aroha.pet.payload.ApiResponse;
+import com.aroha.pet.payload.DeleteDomainPayload;
 import com.aroha.pet.payload.DomainRequest;
 import com.aroha.pet.payload.FunctionDataRequest;
 import com.aroha.pet.repository.DomainRepository;
@@ -72,6 +76,20 @@ public class FunctionService {
             return new ApiResponse(Boolean.TRUE, "Function name already present for the domain ");
         }
         return new ApiResponse(Boolean.FALSE, "Function not present for domain");
+    }
+    
+    public DeleteDomainPayload deleteFunction(int functionId) {
+    	Optional<Function> function=functionRepository.findById(functionId);
+    	if(!function.isPresent()) {
+    		return new DeleteDomainPayload("Function not present",HttpStatus.NOT_FOUND.value());
+    	}
+    	Function funObj=function.get();
+    	try {
+    		functionRepository.delete(funObj);
+    		return new DeleteDomainPayload("Successfully deleted ", HttpStatus.OK.value());
+    	}catch (Exception e) {
+    		return new DeleteDomainPayload(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+		}
     }
 
 }

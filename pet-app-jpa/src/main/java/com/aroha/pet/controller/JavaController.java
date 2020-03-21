@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aroha.pet.payload.JavaPayload;
-import com.aroha.pet.payload.JavaRequest;
+import com.aroha.pet.payload.JavaResponse;
 import com.aroha.pet.security.CurrentUser;
 import com.aroha.pet.security.UserPrincipal;
 import com.aroha.pet.service.JavaService;
+
 
 
 
@@ -29,8 +30,9 @@ public class JavaController {
 
 	@PostMapping("/executeJava") 
 	public ResponseEntity<?> executeJava(@CurrentUser UserPrincipal currentUser, @RequestBody JavaPayload payload)
-			throws IOException, SQLException {
-		return ResponseEntity.ok(javaservice.executeJava( currentUser, payload)); 
+			throws Exception {
+		JavaResponse javaResponse=javaservice.executeJava( currentUser, payload);
+		return ResponseEntity.ok(javaResponse); 
 		}
 
 }

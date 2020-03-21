@@ -2,10 +2,13 @@ package com.aroha.pet.service;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,138 +25,126 @@ import org.springframework.stereotype.Service;
 import com.aroha.pet.model.JavaPojo;
 import com.aroha.pet.payload.JavaPayload;
 import com.aroha.pet.payload.JavaResponse;
-import com.aroha.pet.repository.JavaDataRepo;
+import com.aroha.pet.repository.JavaRepo;
 import com.aroha.pet.security.UserPrincipal;
 
 @Service
 public class JavaService {
 
 	@Autowired
-	JavaDataRepo javadatarepo;
-    StringBuffer sb=null;
+	JavaRepo javaRepo;
+	StringBuffer sb=null;
 	StringBuffer sb1=null;
-	
+
 	@Autowired
 	ServletContext context;
-	
-	 private static final Logger logger = LoggerFactory.getLogger(JavaService.class);
-	
-	public JavaService() {
-		super();
-	}
 
-	public JavaResponse executeJava(final UserPrincipal currentUser,JavaPayload payload) throws IOException
+	private static final Logger logger = LoggerFactory.getLogger(JavaService.class);
+
+
+	public JavaResponse executeJava(final UserPrincipal currentUser,JavaPayload payload) throws Exception
 	{
+		Path currentPath=Paths.get("");
+		String projectPath=currentPath.toAbsolutePath().toString();
+
 		String absolutePathToIndexJSP=context.getRealPath("/");
 		DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
 		Date dateobj = new Date();
 		String currTimeAndDate=df.format(dateobj);
-        //String my_path= System.getenv("JAVA_PROGRAMS_PET");	
-        logger.info("JAVA_PROGRAMS_PET:  "+absolutePathToIndexJSP);
-		int n=20;
+		//String my_path= System.getenv("JAVA_PROGRAMS_PET");	
+		logger.info("JAVA_PROGRAMS_PET:  "+absolutePathToIndexJSP);
+		int n=10;
 		String random=getAlphaNumericString(n);
-		
+
 		int qId=payload.getQuestionId();
 		sb1=new StringBuffer();
 		String text=payload.getJavapojo().getJavastr();
-		
+
 		sb=new StringBuffer(text);
 		int endIdx=sb.indexOf("{");
 		int startIdx=sb.indexOf("public");
 		sb.replace(startIdx,endIdx, "class "+random);
-		
-		String name="/"+random+".java";
+
+		String name="/"+random+"_"+currentUser.getName()+".java";
 		String name1="/  "+random;
+
+		System.out.println("Name is: "+name);
+		System.out.println("Name1 is: "+name1);
 		//String dirName = "d:/Java";
 		//String dirName = my_path;
-		String dirName=absolutePathToIndexJSP;
-		
+		//String dirName=absolutePathToIndexJSP;
+		String dirName=projectPath+"\\"+"JavaPrograms";
+		File newFile=new File(projectPath+"\\"+"JavaPrograms");
+		newFile.mkdir();
+
 		BufferedWriter writer = new BufferedWriter(new FileWriter(dirName+name));
 		writer.write(sb.toString());
 		writer.close();
 		writer = null;
-		
-		String result="javac "+dirName+name;
-		String result1="java -cp "+dirName+name1;
-		
+
+		String compilationCommand="javac "+dirName+name;
+		String executableCommand="java -cp "+dirName+name1;
+
+		System.out.println("File name is: "+dirName+name1);
 		JavaResponse javaresponse=new JavaResponse();
 		JavaPojo javapojo=new JavaPojo();
-
-		try {
-			//sb=new StringBuffer();
-			runProcess(result);
-			if(!(sb1.toString().contains("error"))) {
-			runProcess(result1);}
-			//runProcess("notepad.exe");
-
+		runProcess(compilationCommand);
+		runProcess(executableCommand);
+		JSONArray jsona = null;
+		javapojo.setJavastr(text);
+		javaresponse.setJava(text);
+		jsona=getResultForJava(sb1);
+		//System.out.println("Jsona is: "+jsona);
+		if(jsona.toString().contains("Exception:")) {
+			//javaresponse.setJavaresult(getJsonArrayAsList(jsona));
+			String exception=sb1.toString().substring(sb1.toString().indexOf("Exception"));
+			System.out.println("Error is: "+exception);
+			int r=exception.toString().indexOf("\n");
+			int m=exception.toString().indexOf("Exception");
+			System.out.println("M is: "+m);
+			System.out.println("R is: "+r);
+			//cpojo.setResultstr(sb.toString().substring(sb.toString().indexOf("error")));
+			javapojo.setResultstr(exception);
+			//javaresponse.setJavaexception(exception);
 			
-			//int numMinutes =2;
-			//deleteFile(numMinutes);
-			JSONArray jsona = null;
-			if(!(sb1.toString().contains("error") || sb1.toString().contains("Exception"))){
-
-				javapojo.setJavastr(text);
-				javaresponse.setJava(text);
-				jsona=getResultForJava(sb1);
-				javaresponse.setJavaresult(getJsonArrayAsList(jsona));
-				javapojo.setResultstr(jsona.toString());
-				javaresponse.setJavastatus("SUCCESS");
-				javapojo.setQuestionId(qId);
-				javapojo.setScenario(payload.getJavapojo().getScenario());
-				javapojo.setCreatedAt(currTimeAndDate);
-				try {
-				javadatarepo.save(javapojo);
-				}catch(Exception ex) {
-					logger.error("Error saving java pojo "+ex.getMessage());
-				}
-			}
-			else if(sb1.toString().contains("error")) {
-				javapojo.setScenario(payload.getJavapojo().getScenario());
-				javapojo.setJavastr(text);
-				jsona=getResultForJava(sb1);
-				javaresponse.setJava(text);
-				javaresponse.setJavaresult(getJsonArrayAsList(jsona));
-				javapojo.setResultstr(jsona.toString());
-				javaresponse.setJavastatus("ERROR");
-				javapojo.setQuestionId(qId);
-				javapojo.setCreatedAt(currTimeAndDate);
-				try {
-					javadatarepo.save(javapojo);
-					}catch(Exception ex) {
-						logger.error("Error saving java pojo "+ex.getMessage());
-					}
-			}
-			else
-			{
-				javapojo.setScenario(payload.getJavapojo().getScenario());
-				javapojo.setJavastr(text);
-				jsona=getResultForJava(sb1);
-				javaresponse.setJava(text);
-				javaresponse.setJavaresult(getJsonArrayAsList(jsona));
-				javaresponse.setJavaexception(sb1.toString());
-				//javaresponse.setJavaexception("EXCEPTION");
-				javaresponse.setJavastatus("EXCEPTION");
-				javapojo.setExceptionstr(javaresponse.getJavaexception());
-				//javapojo.setResultstr(javaresponse.getJavaresult().toString());
-				javapojo.setResultstr(jsona.toString());
-				javapojo.setQuestionId(qId);
-				javapojo.setCreatedAt(currTimeAndDate);
-				try {
-					javadatarepo.save(javapojo);
-					}catch(Exception ex) {
-						logger.error("Error saving java pojo "+ex.getMessage());
-					}
-			}
+			javapojo.setResultstr(jsona.toString());
+			javaresponse.setJavaexception(exception.toString().substring(m, r));
+			javaresponse.setJavastatus("EXCEPTION");
+			javapojo.setQuestionId(qId);
+			javapojo.setScenario(payload.getJavapojo().getScenario());
+			javapojo.setCreatedAt(currTimeAndDate);
+			javapojo.setCreatedBy(currentUser.getId());
+			javaRepo.save(javapojo);
+			return javaresponse;
+		}else if(jsona.toString().contains("error:") || jsona.toString().contains("Error:")) {
+			javaresponse.setJavastatus("ERROR");		
+			String error=sb1.toString().substring(sb1.toString().indexOf("error"));
+			System.out.println("Error is: "+error);
+			int r=error.toString().indexOf("\n");
+			int m=error.toString().indexOf("error");
+			//cpojo.setResultstr(sb.toString().substring(sb.toString().indexOf("error")));
+			javapojo.setResultstr(error.toString().substring(m, r));
+			javaresponse.setJavaexception(error.toString().substring(m, r));
+			
+			javapojo.setQuestionId(qId);
+			javapojo.setScenario(payload.getJavapojo().getScenario());
+			javapojo.setCreatedAt(currTimeAndDate);
+			javapojo.setCreatedBy(currentUser.getId());
+			javaRepo.save(javapojo);
+			return javaresponse;
+		}else {
+			javaresponse.setJavaresult(getJsonArrayAsList(jsona));
+			javapojo.setResultstr(jsona.toString());
+			javaresponse.setJavastatus("SUCCESS");
+			javapojo.setQuestionId(qId);
+			javapojo.setScenario(payload.getJavapojo().getScenario());
+			javapojo.setCreatedAt(currTimeAndDate);
+			javapojo.setCreatedBy(currentUser.getId());
+			javaRepo.save(javapojo);
+			return javaresponse;
 		}
-		catch (Exception e) {
-			// TODO Auto-generated catch block
-			//javaresponse.setJavaexception(e.getMessage());
-			logger.error("Error in java "+e.getMessage());
-			javaresponse.setJavastatus("ERROR");
-		}
-		javapojo.setExceptionstr(javaresponse.getJavaexception());
-		return javaresponse;
 	}
+
 	private StringBuffer printLines(String cmd, InputStream ins) throws Exception {
 		int ctr=0;
 		String line = null;
@@ -170,17 +161,27 @@ public class JavaService {
 	}
 
 	private StringBuffer runProcess(String command) throws Exception {
-		Process pro = Runtime.getRuntime().exec(command);
-		InputStream temp = pro.getInputStream();
-		sb1=printLines(command + " stdout:", temp);
-		temp.close();
-		temp = pro.getErrorStream();
-		StringBuffer sb2=printLines(command + " stderr:", temp);
-		temp.close();
-		temp = null;
-		pro.waitFor();
-		pro.destroy();		
-		return sb1;
+		StringBuffer sb2=null;
+		StringBuffer sb3=null;
+		try {
+			Process pro = Runtime.getRuntime().exec(command);
+			InputStream temp=pro.getInputStream();
+			//sb=new StringBuffer();
+			sb2=printLines(command + " stdout:", temp);
+			temp.close();
+			temp=pro.getErrorStream();
+			//System.out.println("I am here: "+sb);
+			sb3=printLines(command + " stderr:",temp);
+			temp.close();
+			temp=null;
+			pro.waitFor();
+			//System.out.println(command + " exitValue() " + pro.exitValue());
+			pro.destroy();
+			return sb2;
+		}
+		catch(Exception ex) {
+			return sb3;
+		}
 	}
 
 	private JSONArray getResultForJava(StringBuffer sb1) throws Exception {
@@ -213,16 +214,6 @@ public class JavaService {
 		}    
 		return sb1.toString(); 
 	}
-
-	/*
-	 * public void deleteFile(int numMinutes) { String dir = "d:/Java"; File
-	 * directory = new File(dir); File[] fList = directory.listFiles();
-	 * 
-	 * if (fList != null){ for (File file : fList){ if (file.isFile()) { long diff =
-	 * new Date().getTime() - file.lastModified(); long cutoff = (numMinutes * (60 *
-	 * 1000));
-	 * 
-	 * if (diff > cutoff) { file.delete(); } } } } }
-	 */
 }
+
 

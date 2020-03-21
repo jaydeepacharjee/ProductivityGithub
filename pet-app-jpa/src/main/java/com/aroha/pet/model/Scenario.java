@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -46,7 +48,7 @@ public class Scenario implements Serializable {
 	@JoinColumn(name="functionId")
 	private Function function;
 	
-	@OneToMany(mappedBy = "scenario")
+	@OneToMany(mappedBy = "scenario",cascade = {CascadeType.ALL,CascadeType.REMOVE})
 	private Set<Question>ques=new HashSet<Question>();
 
 	

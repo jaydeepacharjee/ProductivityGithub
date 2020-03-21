@@ -23,6 +23,8 @@ public class JavaPojo {
 	@CreatedDate
 	@Column(insertable = true, updatable = false)
 	private String createdAt;
+	
+	private long createdBy;
 
 	@Lob
 	private String javastr;
@@ -81,6 +83,14 @@ public class JavaPojo {
 	}
 	public void setCreatedAt(String createdAt) {
 		this.createdAt = createdAt;
+	}
+	
+	
+	public long getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(long createdBy) {
+		this.createdBy = createdBy;
 	}
 	@Override
 	public String toString() {

@@ -6,6 +6,7 @@ public class JavascriptResponse {
 
 	private String javascript;
 	private List javascriptresult;
+	private String javascripterror;
 	private String javascriptstatus;
 	public String getJavascript() {
 		return javascript;
@@ -25,5 +26,12 @@ public class JavascriptResponse {
 	public void setJavascriptstatus(String javascriptstatus) {
 		this.javascriptstatus = javascriptstatus;
 	}
+	public String getJavascripterror() {
+		return javascripterror;
+	}
+	public void setJavascripterror(String javascripterror) {
+		this.javascripterror = javascripterror;
+	}
+	
 	
 }

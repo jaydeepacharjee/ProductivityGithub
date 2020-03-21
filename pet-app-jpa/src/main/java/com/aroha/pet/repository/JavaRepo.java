@@ -1,23 +1,17 @@
 package com.aroha.pet.repository;
 
-public class JavaRepo {
-	
-	private Long id;
-	
+import java.time.Instant;
+import java.util.List;
 
-	public JavaRepo(long id) {
-		super();
-		this.id = id;
-	}
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
-	public long getId() {
-		return id;
-	}
+import com.aroha.pet.model.DbInfo;
+import com.aroha.pet.model.JavaPojo;
+import com.aroha.pet.model.QueryInfo;
 
-	public void setId(long id) {
-		this.id = id;
-	}
-	
-	
+@Repository
+public interface JavaRepo extends JpaRepository<JavaPojo, Long>{
 
 }

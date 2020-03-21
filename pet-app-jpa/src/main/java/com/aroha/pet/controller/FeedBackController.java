@@ -31,17 +31,16 @@ public class FeedBackController {
     }
 
     @PostMapping("/analysis")
-    public ResponseEntity<?> showStudentAnalysis(@RequestParam String createdAt, @RequestParam long created_by, @RequestParam int questionId) {
-        if (feedService.showAnalysis(created_by, createdAt, questionId) == null) {
+    public ResponseEntity<?> showStudentAnalysis(@RequestParam String createdAt, @RequestParam long created_by, @RequestParam int domainId) {
+        if (feedService.showAnalysis(created_by, createdAt, domainId) == null) {
             return ResponseEntity.ok("No data");
         }
         //        return ResponseEntity.ok(feedService.showAnalysis(created_by, createdAt,questionId));
-        return new ResponseEntity<>((feedService.showAnalysis(created_by, createdAt, questionId)), HttpStatus.OK);
+        return new ResponseEntity<>((feedService.showAnalysis(created_by, createdAt, domainId)), HttpStatus.OK);
     }
 
     @PostMapping("/getDomainAnalysis")
     public ResponseEntity<?> getDomainAnalysis(@RequestParam String createdAt, @RequestParam long created_by) {
-
         return ResponseEntity.ok(feedService.getDomainResponse(created_by, createdAt));
     }
 
