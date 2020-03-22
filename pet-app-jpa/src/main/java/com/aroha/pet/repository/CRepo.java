@@ -36,5 +36,11 @@ public interface CRepo extends JpaRepository<CPojo, Long>{
 "        count(distinct q.scenario)>0;",nativeQuery = true)
     public List<Object[]>generateReport();
     
+    @Query(value="select d.domain_name,f.function_name,s.scenario_title,c.cstr,c.error,q.question_id,c.resultstr,c.scenario from cpojo c inner join question q \n" +
+"on c.question_id=q.question_id inner join scenario s on s.scenario_id=q.scenario_id inner join function_table f on f.function_id=s.function_id\n" +
+"inner join domain d on d.domain_id=f.domain_id where d.domain_id=?3\n" +
+"and DATE(created_at)=DATE(?1) and created_by=?2 order by scenario;",nativeQuery = true  )
+    public List<Object[]> generateReportAnalysis(String createdAt,Long createdBy,int domainId);
+    
 
 }

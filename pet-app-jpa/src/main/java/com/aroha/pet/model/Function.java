@@ -15,92 +15,92 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.NaturalId;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="FunctionTable")
 public class Function implements Serializable {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int functionId;
 
-	@NotNull
-	private double businessSize;
-	
-	@NotNull
-	private double businessValue;
-	@NotBlank
-	@NotNull
-	private String functionDesc;
-	@NotBlank
-	@NotNull
-	private String functionName;
-	
-	@ManyToOne
-	@JoinColumn(name="domainId")
-	private Domain domain;
-	
-	@OneToMany(mappedBy = "function",cascade = {CascadeType.ALL,CascadeType.REMOVE})
-	private Set<Scenario> scenario=new HashSet<Scenario>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int functionId;
 
-   
-	public int getFunctionId() {
-		return functionId;
-	}
+    @NotNull
+    private double businessSize;
 
-	public void setFunctionId(int functionId) {
-		this.functionId = functionId;
-	}
+    @NotNull
+    private double businessValue;
+    @NotBlank
+    @NotNull
+    private String functionDesc;
+    @NotBlank
+    @NotNull
+    private String functionName;
 
-	public double getBusinessSize() {
-		return businessSize;
-	}
+    @ManyToOne
+    @JoinColumn(name = "domainId")
+    private Domain domain;
 
-	public double getBusinessValue() {
-		return businessValue;
-	}
+    @OneToMany(mappedBy = "function", cascade = {CascadeType.ALL, CascadeType.REMOVE})
+    private Set<Scenario> scenario = new HashSet<Scenario>();
 
-	public String getFunctionDesc() {
-		return functionDesc;
-	}
+    public int getFunctionId() {
+        return functionId;
+    }
 
-	public String getFunctionName() {
-		return functionName;
-	}
-	@JsonIgnore
-	public Domain getDomain() {
-		return domain;
-	}
+    public void setFunctionId(int functionId) {
+        this.functionId = functionId;
+    }
 
-	public Set<Scenario> getScenario() {
-		return scenario;
-	}
+    public double getBusinessSize() {
+        return businessSize;
+    }
 
+    public double getBusinessValue() {
+        return businessValue;
+    }
 
-	public void setBusinessSize(double businessSize) {
-		this.businessSize = businessSize;
-	}
+    public String getFunctionDesc() {
+        return functionDesc;
+    }
 
-	public void setBusinessValue(double businessValue) {
-		this.businessValue = businessValue;
-	}
+    public String getFunctionName() {
+        return functionName;
+    }
 
-	public void setFunctionDesc(String functionDesc) {
-		this.functionDesc = functionDesc;
-	}
+    @JsonIgnore
+    public Domain getDomain() {
+        return domain;
+    }
 
-	public void setFunctionName(String functionName) {
-		this.functionName = functionName;
-	}
-	@JsonIgnore
-	public void setDomain(Domain domain) {
-		this.domain = domain;
-	}
-   
-	public void setScenario(Set<Scenario> scenario) {
-		this.scenario = scenario;
-	}
+    public Set<Scenario> getScenario() {
+        return scenario;
+    }
+
+    public void setBusinessSize(double businessSize) {
+        this.businessSize = businessSize;
+    }
+
+    public void setBusinessValue(double businessValue) {
+        this.businessValue = businessValue;
+    }
+
+    public void setFunctionDesc(String functionDesc) {
+        this.functionDesc = functionDesc;
+    }
+
+    public void setFunctionName(String functionName) {
+        this.functionName = functionName;
+    }
+
+    @JsonIgnore
+    public void setDomain(Domain domain) {
+        this.domain = domain;
+    }
+
+    public void setScenario(Set<Scenario> scenario) {
+        this.scenario = scenario;
+    }
 
 }

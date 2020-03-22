@@ -68,7 +68,9 @@ public class ScenarioService {
 			throw new ResourceNotFoundException("Function with a id " + functionId + " Not Exist");
 		}
 		Domain d = byIdDomain.get();
+		System.out.println("------------- Domain id: "+d.getDomainId());
 		Function f = byIdFunction.get();
+		System.out.println("------------- Function id is: "+f.getFunctionId());
 		f.setDomain(d);
 		scenario.setFunction(f);
 		try {

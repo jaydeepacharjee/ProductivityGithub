@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.aroha.pet.model.CPojo;
 import com.aroha.pet.payload.CPayload;
 import com.aroha.pet.payload.CReport;
+import com.aroha.pet.payload.CReportAnalysisPayload;
 import com.aroha.pet.payload.CResponse;
 import com.aroha.pet.repository.CRepo;
 import com.aroha.pet.security.UserPrincipal;
@@ -179,23 +180,43 @@ public class CService {
     private List getJsonArrayAsList(JSONArray jsona) {
         return jsona.toList();
     }
-    
-    public List<CReport> getReportCard(){
-        List<Object[]>listObj= cRepo.generateReport();
-        List<CReport> list=new ArrayList<>();
+
+    public List<CReport> getReportCard() {
+        List<Object[]> listObj = cRepo.generateReport();
+        List<CReport> list = new ArrayList<>();
         listObj.stream().map((obj) -> {
-            CReport report=new CReport();
-            report.setUserId((java.math.BigInteger)obj[0]);
-            report.setName((String)obj[1]);
-            java.sql.Timestamp i= (java.sql.Timestamp)obj[2];
+            CReport report = new CReport();
+            report.setUserId((java.math.BigInteger) obj[0]);
+            report.setName((String) obj[1]);
+            java.sql.Timestamp i = (java.sql.Timestamp) obj[2];
             report.setCreated_at(i.toString());
-            report.setNoOfError((java.math.BigInteger)obj[3]);
-            report.setNoOfQuestion((java.math.BigInteger)obj[4]);
-            report.setNoOfAttempt((java.math.BigInteger)obj[5]);
-            report.setProductivity((java.math.BigDecimal)obj[6]);
+            report.setNoOfError((java.math.BigInteger) obj[3]);
+            report.setNoOfQuestion((java.math.BigInteger) obj[4]);
+            report.setNoOfAttempt((java.math.BigInteger) obj[5]);
+            report.setProductivity((java.math.BigDecimal) obj[6]);
             return report;
         }).forEachOrdered((report) -> {
             list.add(report);
+        });
+        return list;
+    }
+
+    public List<CReportAnalysisPayload> generateReportAnalysis(String createdAt, Long createdBy, int domainId) {
+        List<Object[]> listObj = cRepo.generateReportAnalysis(createdAt, createdBy, domainId);
+        List<CReportAnalysisPayload> list = new ArrayList<>();
+        listObj.stream().map((object) -> {
+            CReportAnalysisPayload load = new CReportAnalysisPayload();
+            load.setDomainName((String) object[0]);
+            load.setFunctionName((String) object[1]);
+            load.setScenarioTitle((String) object[2]);
+            load.setcStr((String) object[3]);
+            load.setError((String) object[4]);
+            load.setQuestionId((int) object[5]);
+            load.setResultStr((String) object[6]);
+            load.setScenario((String) object[7]);
+            return load;
+        }).forEachOrdered((load) -> {
+            list.add(load);
         });
         return list;
     }

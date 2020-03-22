@@ -12,6 +12,7 @@ public class DomainRequest {
     private int scenarioId;
     private int questionId;
 
+
     private Domain domain;
     private Function function;
     private Scenario scenario;
