@@ -9,3 +9,9 @@ INSERT IGNORE INTO `users` (`id`, `created_at`, `updated_at`, `address`, `alt_ph
 
 INSERT IGNORE INTO `user_roles` (`user_id`, `role_id`) VALUES
 	(1, 3);
+
+INSERT IGNORE INTO `technology` (`tech_id`,`technology_name`) VALUES
+        (1,'SQL'),
+        (2,'C'),
+        (3,'JAVA'),
+        (4,'JAVASCRIPT');

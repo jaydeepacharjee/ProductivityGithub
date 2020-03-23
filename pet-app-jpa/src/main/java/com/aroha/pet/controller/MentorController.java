@@ -19,22 +19,22 @@ import com.aroha.pet.service.QueryInfoService;
 @RequestMapping("/api/mentor")
 public class MentorController {
 
-	@Autowired
-	QueryInfoService queryInfoService;
+    @Autowired
+    QueryInfoService queryInfoService;
 
-	@GetMapping("/queries")
-	public ResponseEntity<?> getQueryOf(
-			@Valid @RequestParam(value = "userId" ,required = true) Long userId,
-			@RequestParam(value = "fromDate", required = false) String fromDate,
-			@RequestParam(value = "toDate", required = false) String toDate) throws Exception {
+    @GetMapping("/queries")
+    public ResponseEntity<?> getQueryOf(
+            @Valid @RequestParam(value = "userId", required = true) Long userId,
+            @RequestParam(value = "fromDate", required = false) String fromDate,
+            @RequestParam(value = "toDate", required = false) String toDate) throws Exception {
 // date should be in "dd-MM-yyyy" format
-		if (fromDate != null && fromDate.isEmpty()) {
-			fromDate = null;
-		}
-		if (toDate != null && toDate.isEmpty()) {
-			toDate = null;
-		}
-		return ResponseEntity.ok(queryInfoService.getAllQueryInfoByParams(userId, fromDate, toDate));
-	}
+        if (fromDate != null && fromDate.isEmpty()) {
+            fromDate = null;
+        }
+        if (toDate != null && toDate.isEmpty()) {
+            toDate = null;
+        }
+        return ResponseEntity.ok(queryInfoService.getAllQueryInfoByParams(userId, fromDate, toDate));
+    }
 
 }

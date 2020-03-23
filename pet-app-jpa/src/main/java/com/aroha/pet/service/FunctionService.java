@@ -86,7 +86,8 @@ public class FunctionService {
     	Function funObj=function.get();
     	try {
     		functionRepository.delete(funObj);
-    		return new DeleteDomainPayload("Successfully deleted ", HttpStatus.OK.value());
+    		return new DeleteDomainPayload("Function deleted successfully along with its associated"
+                        + "scenarios and questions", HttpStatus.OK.value());
     	}catch (Exception e) {
     		return new DeleteDomainPayload(e.getMessage(), HttpStatus.BAD_REQUEST.value());
 		}

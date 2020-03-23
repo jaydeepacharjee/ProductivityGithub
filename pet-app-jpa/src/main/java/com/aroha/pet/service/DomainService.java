@@ -164,7 +164,8 @@ public class DomainService {
         Domain domain = getDomain.get();
         try {
             domainRepository.delete(domain);
-            return new DeleteDomainPayload("SuccessFully Deleted", HttpStatus.OK.value());
+            return new DeleteDomainPayload("Domain deleted successfully along with its associated"
+                    + "functions,scenarios and questions", HttpStatus.OK.value());
 
         } catch (Exception ex) {
             return new DeleteDomainPayload(ex.getMessage(), HttpStatus.BAD_REQUEST.value());

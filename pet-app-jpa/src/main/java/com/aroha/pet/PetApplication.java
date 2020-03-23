@@ -10,27 +10,27 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 @SpringBootApplication
 @EntityScan(basePackageClasses = {
-		PetApplication.class,
-		Jsr310JpaConverters.class
+    PetApplication.class,
+    Jsr310JpaConverters.class
 })
 public class PetApplication {
-    
-	@PostConstruct
-	void init() {
-		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-		try {
-			Class.forName("org.mariadb.jdbc.Driver");
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			Class.forName("org.postgresql.Driver");
-			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-		} catch (Exception ex) {			
-		}
-	}
 
-	public static void main(String[] args) {
+    @PostConstruct
+    void init() {
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            Class.forName("org.postgresql.Driver");
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        } catch (Exception ex) {
+        }
+    }
 
-		SpringApplication.run(PetApplication.class, args);
+    public static void main(String[] args) {
 
-	}
+        SpringApplication.run(PetApplication.class, args);
+
+    }
 }

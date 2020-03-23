@@ -9,6 +9,7 @@ public class MentorFeedback {
     private String createdAt;
     private int questionId;
     private String feedback;
+    private int technologyId;
 
     public String getCreatedAt() {
         return createdAt;
@@ -32,6 +33,14 @@ public class MentorFeedback {
 
     public void setFeedback(String feedback) {
         this.feedback = feedback;
+    }
+
+    public int getTechnologyId() {
+        return technologyId;
+    }
+
+    public void setTechnologyId(int technologyId) {
+        this.technologyId = technologyId;
     }
     
 }

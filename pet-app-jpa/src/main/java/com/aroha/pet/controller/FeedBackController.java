@@ -75,7 +75,17 @@ public class FeedBackController {
         if (user.isLearnerRole()) {
             return ResponseEntity.ok("Not elligible");
         }
-        return ResponseEntity.ok(feedService.saveFeedback(mentorFeedback, user));
+        int technologyId = mentorFeedback.getTechnologyId();
+        switch (technologyId) {
+            case 1:
+                return ResponseEntity.ok(feedService.saveFeedback(mentorFeedback, user));
+            case 2:
+                return ResponseEntity.ok("OK");
+                
+             default:
+                 return ResponseEntity.ok("Invalid Technology Id");
+        }
+
     }
 
     // Show Mentor FeedBack

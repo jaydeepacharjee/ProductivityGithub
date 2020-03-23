@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import com.aroha.pet.model.Domain; 
+import com.aroha.pet.model.Domain;
 import com.aroha.pet.model.Function;
 import com.aroha.pet.model.Question;
 import com.aroha.pet.model.Scenario;
@@ -159,7 +159,9 @@ public class DomainController {
             int domainId = domainData.getDomainId();
             int functionId = domainData.getFunctionId();
             int scenarioId = domainData.getScenarioId();
+            int technologyId = domainData.getTechnologyId();
             question = domainData.getQuestion();
+
             if (file != null) {
                 try (Reader in = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
                     CSV csv = new CSV(true, ',', in);
@@ -181,21 +183,21 @@ public class DomainController {
 
                 }
             }
-            return ResponseEntity.ok(questionService.createQuestion(domainId, functionId, scenarioId, question));
+            return ResponseEntity.ok(questionService.createQuestion(domainId, functionId, scenarioId, technologyId, question));
         } catch (Exception ex) {
             logger.error("question not saved" + ex.getMessage());
             return ResponseEntity.ok(ex.getMessage());
         }
-
     }
 
     @PostMapping("/getQuestions")
-    public ResponseEntity<?> getAllQuestion(@RequestBody DomainRequest domainData) {
+    public ResponseEntity<?> getSQLQuestion(@RequestBody DomainRequest domainData) {
         int scenarioId = domainData.getScenarioId();
-        if (questionService.getQuestionData(scenarioId).isEmpty()) {
+        int technologyId = domainData.getTechnologyId();
+        if (questionService.getSqlQuestionData(scenarioId, technologyId).isEmpty()) {
             return ResponseEntity.ok("No Question is Found");
         }
-        return ResponseEntity.ok(questionService.getQuestionData(scenarioId));
+        return ResponseEntity.ok(questionService.getSqlQuestionData(scenarioId, technologyId));
     }
 
     @GetMapping("/getDomain")
@@ -220,26 +222,26 @@ public class DomainController {
 
         return ResponseEntity.ok(domainService.updateData(questionId, domainObj, funObj, scenaObj, questObj));
     }
-    
+
     @PostMapping("/deleteDomainName")
-    public ResponseEntity<?> deleteDomain(@RequestBody DomainRequest domainRequest){
-    	int domainId=domainRequest.getDomainId();
-    	return ResponseEntity.ok(domainService.deleteDomain(domainId));
+    public ResponseEntity<?> deleteDomain(@RequestBody DomainRequest domainRequest) {
+        int domainId = domainRequest.getDomainId();
+        return ResponseEntity.ok(domainService.deleteDomain(domainId));
     }
-    
+
     @PostMapping("/deleteFunctionName")
-    public ResponseEntity<?> deleteFunction(@RequestBody DomainRequest domainRequest){
-    	return ResponseEntity.ok(functionService.deleteFunction(domainRequest.getFunctionId()));
+    public ResponseEntity<?> deleteFunction(@RequestBody DomainRequest domainRequest) {
+        return ResponseEntity.ok(functionService.deleteFunction(domainRequest.getFunctionId()));
     }
-    
+
     @PostMapping("/deleteScenarioName")
-    public ResponseEntity<?> deleteScenarioName(@RequestBody DomainRequest domainRequest){
-    	return ResponseEntity.ok(scenarioService.deleteScenarioName(domainRequest.getScenarioId()));
+    public ResponseEntity<?> deleteScenarioName(@RequestBody DomainRequest domainRequest) {
+        return ResponseEntity.ok(scenarioService.deleteScenarioName(domainRequest.getScenarioId()));
     }
-    
+
     @PostMapping("/deleteQuestionName")
-    public ResponseEntity<?> deleteQuestionName(@RequestBody DomainRequest domainRequest){
-    	return ResponseEntity.ok(questionService.deleteQuestionName(domainRequest.getQuestionId()));
+    public ResponseEntity<?> deleteQuestionName(@RequestBody DomainRequest domainRequest) {
+        return ResponseEntity.ok(questionService.deleteQuestionName(domainRequest.getQuestionId()));
     }
-    
+
 }

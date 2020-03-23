@@ -102,7 +102,6 @@ public class DataBaseInfoController {
 
    @GetMapping("/quetionId")     
     public ResponseEntity<?> checkQuestionForId() {
-        System.out.println("---- Just Inside----");
         quesrService.getAllQuestions();
         return ResponseEntity.ok("Question Id Updated");
     }

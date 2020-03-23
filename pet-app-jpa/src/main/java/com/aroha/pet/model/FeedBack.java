@@ -27,6 +27,7 @@ public class FeedBack extends DateAuditnew {
     private String question;
     private String resulstr;
     private String exceptionStr;
+    private String error;
     private String sqlStr;
     private int notification;
     private String query_date;
@@ -135,10 +136,12 @@ public class FeedBack extends DateAuditnew {
         this.query_date = query_date;
     }
 
-    @Override
-    public String toString() {
-        return "FeedBack{" + "feedbackId=" + feedbackId + ", questionId=" + questionId + ", mentorName=" + mentorName + ", mentorId=" + mentorId + ", learnerId=" + learnerId + ", learnerName=" + learnerName + ", feedback=" + feedback + ", question=" + question + ", resulstr=" + resulstr + ", exceptionStr=" + exceptionStr + ", sqlStr=" + sqlStr + ", notification=" + notification + ", query_date=" + query_date + '}';
+    public String getError() {
+        return error;
     }
-    
+
+    public void setError(String error) {
+        this.error = error;
+    }
 
 }

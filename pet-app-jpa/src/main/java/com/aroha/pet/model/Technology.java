@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+
 /**
  *
  * @author Jaydeep
@@ -39,7 +40,7 @@ public class Technology {
     public void setTechnologyName(String technologyName) {
         this.technologyName = technologyName;
     }
-
+    
     public Set<Question> getQuestion() {
         return question;
     }

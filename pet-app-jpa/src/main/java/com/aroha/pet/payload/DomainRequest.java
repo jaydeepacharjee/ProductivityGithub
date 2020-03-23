@@ -11,7 +11,7 @@ public class DomainRequest {
     private int functionId;
     private int scenarioId;
     private int questionId;
-
+    private int technologyId;
 
     private Domain domain;
     private Function function;
@@ -92,6 +92,14 @@ public class DomainRequest {
 
     public void setDomain(Domain domain) {
         this.domain = domain;
+    }
+
+    public int getTechnologyId() {
+        return technologyId;
+    }
+
+    public void setTechnologyId(int technologyId) {
+        this.technologyId = technologyId;
     }
 
 }
