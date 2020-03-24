@@ -59,8 +59,10 @@ public class DomainController {
     private static final Logger logger = LoggerFactory.getLogger(DomainController.class);
 
     @PostMapping("/savedomain")
-    public ResponseEntity<?> saveDomainData(@RequestBody Domain domain) {
-        return ResponseEntity.ok(domainService.saveDomain(domain));
+    public ResponseEntity<?> saveDomainData(@RequestBody DomainRequest domainRequest) {
+        int technologyId=domainRequest.getTechnologyId();
+        Domain domain=domainRequest.getDomain();
+        return ResponseEntity.ok(domainService.saveDomain(technologyId,domain));
     }
 
     @PostMapping("/checkDuplicateDomain")
@@ -159,7 +161,7 @@ public class DomainController {
             int domainId = domainData.getDomainId();
             int functionId = domainData.getFunctionId();
             int scenarioId = domainData.getScenarioId();
-            int technologyId = domainData.getTechnologyId();
+
             question = domainData.getQuestion();
 
             if (file != null) {
@@ -183,7 +185,7 @@ public class DomainController {
 
                 }
             }
-            return ResponseEntity.ok(questionService.createQuestion(domainId, functionId, scenarioId, technologyId, question));
+            return ResponseEntity.ok(questionService.createQuestion(domainId, functionId, scenarioId, question));
         } catch (Exception ex) {
             logger.error("question not saved" + ex.getMessage());
             return ResponseEntity.ok(ex.getMessage());
@@ -193,11 +195,10 @@ public class DomainController {
     @PostMapping("/getQuestions")
     public ResponseEntity<?> getSQLQuestion(@RequestBody DomainRequest domainData) {
         int scenarioId = domainData.getScenarioId();
-        int technologyId = domainData.getTechnologyId();
-        if (questionService.getSqlQuestionData(scenarioId, technologyId).isEmpty()) {
+        if (questionService.getQuestionData(scenarioId).isEmpty()) {
             return ResponseEntity.ok("No Question is Found");
         }
-        return ResponseEntity.ok(questionService.getSqlQuestionData(scenarioId, technologyId));
+        return ResponseEntity.ok(questionService.getQuestionData(scenarioId));
     }
 
     @GetMapping("/getDomain")

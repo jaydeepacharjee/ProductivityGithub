@@ -36,11 +36,43 @@ public interface CRepo extends JpaRepository<CPojo, Long>{
 "        count(distinct q.scenario)>0;",nativeQuery = true)
     public List<Object[]>generateReport();
     
-    @Query(value="select d.domain_name,f.function_name,s.scenario_title,c.cstr,c.error,q.question_id,c.resultstr,c.scenario from cpojo c inner join question q \n" +
-"on c.question_id=q.question_id inner join scenario s on s.scenario_id=q.scenario_id inner join function_table f on f.function_id=s.function_id\n" +
-"inner join domain d on d.domain_id=f.domain_id where d.domain_id=?3\n" +
-"and DATE(created_at)=DATE(?1) and created_by=?2 order by scenario;",nativeQuery = true  )
+    @Query(value="select\n" +
+"        d.domain_name,\n" +
+"        f.function_name,\n" +
+"        s.scenario_title,\n" +
+"        c.cstr,\n" +
+"        c.error,\n" +
+"        q.question_id,\n" +
+"        c.resultstr,\n" +
+"        c.scenario,\n" +
+"		  m.feedback,\n" +
+"		  m.mentor_name,\n" +
+"		  m.created_at \n" +
+"    from\n" +
+"        cpojo c \n" +
+"        left join mentor_feedback m\n" +
+"        on c.created_at=m.query_date\n" +
+"    inner join\n" +
+"        question q  \n" +
+"            on c.question_id=q.question_id \n" +
+"    inner join\n" +
+"        scenario s \n" +
+"            on s.scenario_id=q.scenario_id \n" +
+"    inner join\n" +
+"        function_table f \n" +
+"            on f.function_id=s.function_id \n" +
+"    inner join\n" +
+"        domain d \n" +
+"            on d.domain_id=f.domain_id \n" +
+"    where\n" +
+"        d.domain_id=?3 \n" +
+"        and DATE(c.created_at)=DATE(?1) \n" +
+"        and c.created_by=?2 \n" +
+"    order by\n" +
+"        scenario;",nativeQuery = true  )
     public List<Object[]> generateReportAnalysis(String createdAt,Long createdBy,int domainId);
     
 
+    @Query(value="select * from cpojo where created_at=?1 and question_id=?2",nativeQuery = true)
+    public CPojo searchCRepo(String createdAt,int questionId);
 }

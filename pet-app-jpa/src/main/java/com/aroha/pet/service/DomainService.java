@@ -13,6 +13,7 @@ import com.aroha.pet.model.Domain;
 import com.aroha.pet.model.Function;
 import com.aroha.pet.model.Question;
 import com.aroha.pet.model.Scenario;
+import com.aroha.pet.model.Technology;
 import com.aroha.pet.payload.ApiResponse;
 import com.aroha.pet.payload.DeleteDomainPayload;
 import com.aroha.pet.payload.DomainDataRequest;
@@ -24,27 +25,31 @@ import com.aroha.pet.repository.FunctionRepository;
 import com.aroha.pet.repository.QuestionRepository;
 import com.aroha.pet.repository.ScenarioRepository;
 import java.util.Base64;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
 @Service
 public class DomainService {
 
     @Autowired
-    DomainRepository domainRepository;
+    private DomainRepository domainRepository;
 
     @Autowired
-    DomainTableRepository domainTableRepo;
+    private DomainTableRepository domainTableRepo;
 
     @Autowired
-    FunctionRepository functionRepository;
+    private FunctionRepository functionRepository;
 
     @Autowired
-    ScenarioRepository scenarioRepository;
+    private ScenarioRepository scenarioRepository;
 
     @Autowired
-    QuestionRepository questionRepository;
+    private QuestionRepository questionRepository;
 
     @Autowired
-    ScenarioService scenarioService;
+    private ScenarioService scenarioService;
+
+    @Autowired
+    private TechnologyService techService;
 
     private static final Logger logger = LoggerFactory.getLogger(DomainService.class);
 
@@ -63,6 +68,7 @@ public class DomainService {
 
     }
 
+    /*
     public String saveDomain(Domain domain) {
         try {
             domainRepository.save(domain);
@@ -72,6 +78,24 @@ public class DomainService {
             return ex.getMessage();
         }
         return "Domain Saved Successfully";
+    }
+     */
+
+    public String saveDomain(int technologyId, Domain domain) {
+
+        Optional<Technology> tech = techService.findById(technologyId);
+        Technology technology = tech.get();
+        if (!tech.isPresent()) {
+            throw new ResourceNotFoundException("Technology " + technology.getTechnologyName() + " not found");
+        }
+        domain.setTechnology(technology);
+        technology.getDomain().add(domain);
+        try {
+            domainRepository.save(domain);
+        } catch (Exception ex) {
+            return ex.getMessage();
+        }
+        return "Domain saved Successfully";
     }
 
     public List<DomainTable> getDomain() {

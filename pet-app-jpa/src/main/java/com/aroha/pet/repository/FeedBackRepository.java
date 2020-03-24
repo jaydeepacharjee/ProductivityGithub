@@ -1,5 +1,6 @@
 package com.aroha.pet.repository;
 
+import com.aroha.pet.model.CPojo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -59,4 +60,4 @@ public interface FeedBackRepository extends JpaRepository<QueryInfo, Long> {
     		+ "f.function_id =?4 and s.scenario_id =?5 order by scenario;",nativeQuery = true)
     public List<Object[]> getQuestionRepo(long created_by, String createdAt,int domainId,int functionId,int scenarioId);
 
-}
+ }

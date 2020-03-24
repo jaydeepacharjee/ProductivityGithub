@@ -25,10 +25,6 @@ public class Question implements Serializable {
     @JoinColumn(name = "scenarioId")
     private Scenario scenario;
 
-    @ManyToOne
-    @JoinColumn(name = "technologyId")
-    private Technology technology;
-
     @Lob
     private String answer;
 
@@ -64,14 +60,6 @@ public class Question implements Serializable {
 
     public void setAnswer(String answer) {
         this.answer = answer;
-    }
-
-    public Technology getTechnology() {
-        return technology;
-    }
-
-    public void setTechnology(Technology technology) {
-        this.technology = technology;
     }
 
 }

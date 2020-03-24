@@ -45,12 +45,12 @@ public class QuestionService {
 
     private static final Logger logger = LoggerFactory.getLogger(QuestionService.class);
 
-    public String createQuestion(int domainId, int functionId, int scenarioId, int technologyId, Question question) {
+    public String createQuestion(int domainId, int functionId, int scenarioId,  Question question) {
 
         Optional<Domain> byDomainId = domainRepository.findById(domainId);
         Optional<Function> byFunctionId = functionRepository.findById(functionId);
         Optional<Scenario> byScenarioId = scenarioRepository.findById(scenarioId);
-        Optional<Technology> byTechnologyId = techRepo.findById(technologyId);
+
 
         if (!byDomainId.isPresent()) {
             throw new ResourceNotFoundException("Domain with  id " + domainId + " not Exist");
@@ -61,14 +61,9 @@ public class QuestionService {
         if (!byScenarioId.isPresent()) {
             throw new ResourceNotFoundException("Scenario with id " + scenarioId + " not Exist");
         }
-        if (!byTechnologyId.isPresent()) {
-            throw new ResourceNotFoundException("Technology with id " + technologyId + " not Exist");
-        }
-
         Domain d = byDomainId.get();
         Function f = byFunctionId.get();
         Scenario s = byScenarioId.get();
-        Technology t = byTechnologyId.get();
 
         f.setDomain(d);
         d.getFunctions().add(f);
@@ -76,8 +71,7 @@ public class QuestionService {
         f.getScenario().add(s);
         question.setScenario(s);
         s.getQues().add(question);
-        question.setTechnology(t);
-        t.getQuestion().add(question);
+
         try {
             questionRepository.save(question);
             logger.info("Question saved successfully");
@@ -88,9 +82,9 @@ public class QuestionService {
         return "Question Saved Successfully";
     }
 
-    public List<QuestionDataRequest> getSqlQuestionData(int scenarioId, int technologyId) {
+    public List<QuestionDataRequest> getQuestionData(int scenarioId) {
 
-        List<Question> listQuestion = questionRepository.getAllQuestion(technologyId);
+        List<Question> listQuestion = questionRepository.findAll();
         List<QuestionDataRequest> listQuestionDataRequest = new ArrayList<>();
 
         Iterator<Question> itr = listQuestion.iterator();

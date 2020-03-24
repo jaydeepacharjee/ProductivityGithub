@@ -65,7 +65,6 @@ public class FeedBackController {
         if (feedService.checkException(created_by, createdAt).isEmpty()) {
             return ResponseEntity.ok("No Data");
         }
-
         return ResponseEntity.ok(feedService.checkException(created_by, createdAt));
     }
 
@@ -80,12 +79,10 @@ public class FeedBackController {
             case 1:
                 return ResponseEntity.ok(feedService.saveFeedback(mentorFeedback, user));
             case 2:
-                return ResponseEntity.ok("OK");
-                
-             default:
-                 return ResponseEntity.ok("Invalid Technology Id");
+                return ResponseEntity.ok(feedService.saveCPoramFeedback(mentorFeedback, user));
+            default:
+                return ResponseEntity.ok("Invalid Technology Id");
         }
-
     }
 
     // Show Mentor FeedBack

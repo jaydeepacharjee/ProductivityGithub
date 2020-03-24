@@ -23,7 +23,7 @@ public class Technology {
     private String technologyName;
     
     @OneToMany(mappedBy = "technology",cascade = {CascadeType.ALL, CascadeType.REMOVE})
-    private Set<Question> question = new HashSet<>();
+    private Set<Domain> domain = new HashSet<>();
 
     public int getTechId() {
         return techId;
@@ -40,13 +40,13 @@ public class Technology {
     public void setTechnologyName(String technologyName) {
         this.technologyName = technologyName;
     }
-    
-    public Set<Question> getQuestion() {
-        return question;
+
+    public Set<Domain> getDomain() {
+        return domain;
     }
 
-    public void setQuestion(Set<Question> question) {
-        this.question = question;
+    public void setDomain(Set<Domain> domain) {
+        this.domain = domain;
     }
-    
+
 }

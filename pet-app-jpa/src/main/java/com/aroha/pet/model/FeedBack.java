@@ -19,6 +19,7 @@ public class FeedBack extends DateAuditnew {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int feedbackId;
     private int questionId;
+    private String technologyName;
     private String mentorName;
     private long mentorId;
     private long learnerId;
@@ -29,6 +30,7 @@ public class FeedBack extends DateAuditnew {
     private String exceptionStr;
     private String error;
     private String sqlStr;
+    private String cStr;
     private int notification;
     private String query_date;
 
@@ -142,6 +144,22 @@ public class FeedBack extends DateAuditnew {
 
     public void setError(String error) {
         this.error = error;
+    }
+
+    public String getTechnologyName() {
+        return technologyName;
+    }
+
+    public void setTechnologyName(String technologyName) {
+        this.technologyName = technologyName;
+    }
+
+    public String getcStr() {
+        return cStr;
+    }
+
+    public void setcStr(String cStr) {
+        this.cStr = cStr;
     }
 
 }

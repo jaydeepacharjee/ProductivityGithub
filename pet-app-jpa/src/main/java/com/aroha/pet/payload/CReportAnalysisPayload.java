@@ -14,6 +14,9 @@ public class CReportAnalysisPayload {
     private int questionId;
     private String resultStr;
     private String scenario;
+    private String feedbackDate;
+    private String feedback;
+    private String mentorName;
 
     public String getDomainName() {
         return domainName;
@@ -77,6 +80,30 @@ public class CReportAnalysisPayload {
 
     public void setScenario(String scenario) {
         this.scenario = scenario;
+    }
+
+    public String getFeedbackDate() {
+        return feedbackDate;
+    }
+
+    public void setFeedbackDate(String feedbackDate) {
+        this.feedbackDate = feedbackDate;
+    }
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
+    }
+
+    public String getMentorName() {
+        return mentorName;
+    }
+
+    public void setMentorName(String mentorName) {
+        this.mentorName = mentorName;
     }
 
 }
