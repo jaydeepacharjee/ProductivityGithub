@@ -17,9 +17,9 @@ import com.aroha.pet.payload.DeleteDomainPayload;
 import com.aroha.pet.payload.DomainResponsePayload;
 import com.aroha.pet.payload.FeedBackStatusPayload;
 import com.aroha.pet.payload.FunctionResponsePayload;
+import com.aroha.pet.payload.GetDomainDataPayload;
 import com.aroha.pet.payload.MentorFeedback;
 import com.aroha.pet.payload.MentorFeedbackResponse;
-import com.aroha.pet.payload.Message;
 import com.aroha.pet.payload.QueryObject;
 import com.aroha.pet.payload.QuestionResponsePayload;
 import com.aroha.pet.payload.Result;
@@ -33,34 +33,36 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Service
 public class FeedBackService {
-
+    
     @Autowired
     private FeedBackRepository fedRepo;
-
+    
     @Autowired
     private QuestionQueryInfoRepository quesRepo;
-
+    
     @Autowired
     private UserService userService;
-
+    
     @Autowired
     private MentorFeedbackRepository mentorFeedbackRepo;
-
+    
     @Autowired
     private TechnologyService techService;
-
+    
     @Autowired
     private CService cService;
-
+    
+    @Autowired
+    private DBService dbservice;
+    
     private final Logger logger = LoggerFactory.getLogger(FeedBackService.class);
-
-    public List<FeedBackStatusPayload> getData() {
+    
+    public GetDomainDataPayload getData() {
         List<Object[]> list = fedRepo.getFeedBackStatus();
         ArrayList<FeedBackStatusPayload> listObj = new ArrayList<>();
         list.stream().map((obj) -> {
@@ -83,60 +85,53 @@ public class FeedBackService {
         }).forEachOrdered((load) -> {
             listObj.add(load);
         });
-        return listObj;
+        if (listObj.isEmpty()) {
+            return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "No data found");
+        }
+        return new GetDomainDataPayload(HttpStatus.OK.value(), listObj, "SUCCESS");
     }
-
-    public Message showAnalysis(long created_by, String createdAt, int domainId) {
+    
+    public GetDomainDataPayload showAnalysis(long created_by, String createdAt, int domainId) {
         List<Object[]> list = quesRepo.getReport(created_by, createdAt, domainId);
-        Message message = new Message();
         List<QueryObject> queryList = new ArrayList<>();
         for (Object[] object : list) {
-            QueryObject queryObj = new QueryObject();
-            queryObj.setScenario((String) object[0]);
-            queryObj.setSqlStr((String) object[1]);
-
-            if ((String) object[2] == null) {
-
-                queryObj.setExceptionStr("No results to display");
-
+            QueryObject query = new QueryObject();
+            query.setDoaminName((String) object[0]);
+            query.setFunctionName((String) object[1]);
+            query.setScenario((String) object[2]);
+            query.setSqlStr((String) object[3]);
+            if ((String) object[4] == null) {
+                query.setExceptionStr("No results to display");
             } else {
-
-                queryObj.setExceptionStr((String) object[2]);
+                query.setExceptionStr((String) object[4]);
             }
-            if ((String) object[9] != null) {
-                JSONArray jsona = new JSONArray((String) object[9]);
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("Data", jsona);
-
-                queryObj.setResultStr(jsonObject.toString());
-
-            } else {
-                JSONArray jsona = new JSONArray("[{Data:No result to display}]");
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("Data", jsona);
-
-                queryObj.setResultStr(jsonObject.toString());
+            Date date = null;
+            try {
+                java.sql.Timestamp j = (java.sql.Timestamp) object[5];
+                date = new SimpleDateFormat("yyyy-MM-dd").parse(j.toString());
+            } catch (Exception ex) {
             }
+            SimpleDateFormat formatter2 = new SimpleDateFormat("dd MMMM yyyy");
+            query.setCreatedAt(formatter2.format(date));
+            query.setQuestionId((int) object[6]);
+            query.setFeedback((String) object[7]);
+            query.setFeedback((String) object[8]);
+            query.setFeedback((String) object[9]);
+            query.setAnswer((String) object[10]);
 
-            queryObj.setQuestionId((int) object[4]);
-            java.sql.Timestamp j = (java.sql.Timestamp) object[3];
-            String created = j.toString().replaceAll("T", " ").replaceAll("Z", " ").trim();
-            queryObj.setCreatedAt(created);
-            queryObj.setMentorName((String) object[6]);
-            queryObj.setFeedback((String) object[5]);
-            java.sql.Timestamp k = (java.sql.Timestamp) object[7];
-            if (k == null) {
-                queryObj.setFeedBackDate(null);
-            } else {
-                queryObj.setFeedBackDate(k.toString());
+            if ((String) object[11] != null) {
+                String data = ((String) object[11]);
+                JSONArray jsona=new JSONArray(data);
+                query.setResultStr(dbservice.getJsonArrayAsList(jsona));
             }
-            queryList.add(queryObj);
-            message.setQueryResponse(queryList);
-            message.setStatus(HttpStatus.OK.value());
+            queryList.add(query);
         }
-        return message;
+        if (queryList.isEmpty()) {
+            return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "No Data found");
+        }
+        return new GetDomainDataPayload(HttpStatus.OK.value(), queryList, "SUCCESS");
     }
-
+    
     public Set<DomainResponsePayload> getDomainResponse(long created_by, String createdAt) {
         Set<DomainResponsePayload> domainName = new HashSet<>();
         List<Object[]> getDomain = fedRepo.getDomainRepo(created_by, createdAt);
@@ -150,7 +145,7 @@ public class FeedBackService {
         });
         return domainName;
     }
-
+    
     public Set<FunctionResponsePayload> getFunctionResponse(long created_by, String createdAt, int domainId) {
         Set<FunctionResponsePayload> functionName = new HashSet<>();
         List<Object[]> getFunction = fedRepo.getFunctionRepo(created_by, createdAt, domainId);
@@ -164,7 +159,7 @@ public class FeedBackService {
         });
         return functionName;
     }
-
+    
     public Set<ScenarioResponsePayload> getScenarioResponse(long created_by, String createdAt, int domainId, int functionId) {
         Set<ScenarioResponsePayload> secenarioName = new HashSet<>();
         List<Object[]> getScenario = fedRepo.getScenarioRepo(created_by, createdAt, domainId, functionId);
@@ -178,7 +173,7 @@ public class FeedBackService {
         });
         return secenarioName;
     }
-
+    
     public Set<QuestionResponsePayload> getQuestionResponse(long created_by, String createdAt, int domainId, int functionId, int scenarioId) {
         Set<QuestionResponsePayload> questionName = new HashSet<>();
         List<Object[]> getQuestion = fedRepo.getQuestionRepo(created_by, createdAt, domainId, functionId, scenarioId);
@@ -192,7 +187,7 @@ public class FeedBackService {
         });
         return questionName;
     }
-
+    
     public HashMap<String, Result> checkException(long created_by, String createdAt) {
         HashMap<String, Result> map = new HashMap<>();
         List<QueryObject> list = quesRepo.getException(created_by, createdAt);
@@ -229,7 +224,7 @@ public class FeedBackService {
                         map.put(temp4, res);
                     }
                 }
-
+                
             }
         }
         return map;
@@ -269,14 +264,14 @@ public class FeedBackService {
         } else {
             feedback.setNotification(++getNotify);
         }
-
+        
         try {
             mentorFeedbackRepo.save(feedback);
         } catch (Exception ex) {
             return new DeleteDomainPayload(ex.getMessage(), HttpStatus.BAD_REQUEST.value());
         }
         return new DeleteDomainPayload("FeedBack Saved successfully", HttpStatus.OK.value());
-
+        
     }
 
     // Save C Prgram Feedback
@@ -375,8 +370,7 @@ public class FeedBackService {
             Date date2 = null;
             try {
                 date2 = new SimpleDateFormat("yyyy-MM-dd").parse(fobj.getQuery_date().toString());
-            } catch (Exception ex) {
-            }
+            } catch (Exception ex) {}
             SimpleDateFormat formatter2 = new SimpleDateFormat("dd MMMM yyyy");
             mentorFeedback.setQuery_date(formatter2.format(date2));
             listObj.add(mentorFeedback);

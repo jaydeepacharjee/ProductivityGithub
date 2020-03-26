@@ -516,7 +516,7 @@ public class DBService {
         return dBRepository.findById(1L);
     }
 
-    private List getJsonArrayAsList(JSONArray jsona) {
+    public List getJsonArrayAsList(JSONArray jsona) {
         return jsona.toList();
     }
 }

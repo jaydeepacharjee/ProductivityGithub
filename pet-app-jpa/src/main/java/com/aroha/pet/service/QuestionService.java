@@ -7,17 +7,16 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.aroha.pet.model.Domain;
 import com.aroha.pet.model.Function;
 import com.aroha.pet.model.Question;
 import com.aroha.pet.model.Scenario;
-import com.aroha.pet.model.Technology;
 import com.aroha.pet.payload.ApiResponse;
 import com.aroha.pet.payload.DeleteDomainPayload;
 import com.aroha.pet.payload.DomainRequest;
+import com.aroha.pet.payload.GetDomainDataPayload;
 import com.aroha.pet.payload.QuestionDataRequest;
 import com.aroha.pet.repository.DomainRepository;
 import com.aroha.pet.repository.FunctionRepository;
@@ -45,21 +44,23 @@ public class QuestionService {
 
     private static final Logger logger = LoggerFactory.getLogger(QuestionService.class);
 
-    public String createQuestion(int domainId, int functionId, int scenarioId,  Question question) {
+    public GetDomainDataPayload createQuestion(int domainId, int functionId, int scenarioId, Question question) {
 
         Optional<Domain> byDomainId = domainRepository.findById(domainId);
         Optional<Function> byFunctionId = functionRepository.findById(functionId);
         Optional<Scenario> byScenarioId = scenarioRepository.findById(scenarioId);
 
-
         if (!byDomainId.isPresent()) {
-            throw new ResourceNotFoundException("Domain with  id " + domainId + " not Exist");
+//            throw new ResourceNotFoundException("Domain with  id " + domainId + " not Exist");
+            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), "Selected Domain is missing from the database");
         }
         if (!byFunctionId.isPresent()) {
-            throw new ResourceNotFoundException("Function with  id " + functionId + " not Exist");
+//            throw new ResourceNotFoundException("Function with  id " + functionId + " not Exist");
+            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), "Selected Function is missing from the database");
         }
         if (!byScenarioId.isPresent()) {
-            throw new ResourceNotFoundException("Scenario with id " + scenarioId + " not Exist");
+//            throw new ResourceNotFoundException("Scenario with id " + scenarioId + " not Exist");
+            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(),"Selected Scenario is missing from the database");
         }
         Domain d = byDomainId.get();
         Function f = byFunctionId.get();
@@ -77,12 +78,12 @@ public class QuestionService {
             logger.info("Question saved successfully");
         } catch (Exception ex) {
             logger.error("Question not saved " + ex.getMessage());
-            return ex.getMessage();
+            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
         }
-        return "Question Saved Successfully";
+        return new GetDomainDataPayload(HttpStatus.OK.value(),"Question Saved Successfully");
     }
 
-    public List<QuestionDataRequest> getQuestionData(int scenarioId) {
+    public GetDomainDataPayload getQuestionData(int scenarioId) {
 
         List<Question> listQuestion = questionRepository.findAll();
         List<QuestionDataRequest> listQuestionDataRequest = new ArrayList<>();
@@ -100,7 +101,10 @@ public class QuestionService {
             questionData.setAnswer(question.getAnswer());
             listQuestionDataRequest.add(questionData);
         }
-        return listQuestionDataRequest;
+        if(listQuestionDataRequest.isEmpty()){
+            return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(),"No data is found");
+        }
+        return new GetDomainDataPayload(HttpStatus.OK.value(), listQuestionDataRequest, "SUCCESS");
     }
 
     public Object checkDuplicateQuestion(DomainRequest domainData) {

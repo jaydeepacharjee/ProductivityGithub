@@ -151,14 +151,17 @@ public class AuthController {
 
         boolean mailExist = userService.existsByEmail(login.getUsernameOrEmail());
         if (!mailExist) {
-            return ResponseEntity.ok(login.getUsernameOrEmail() + " does not exist");
+//            return ResponseEntity.ok(login.getUsernameOrEmail() + " does not exist");
+              return ResponseEntity.ok(new ApiResponse(Boolean.FALSE,login.getUsernameOrEmail() + " does not exist" ));
         } else {
             boolean istrue = userService.forgetPassword(login.getUsernameOrEmail());
             if (istrue) {
-                return ResponseEntity.ok("OTP sent to registered emailId");
+//                return ResponseEntity.ok("OTP sent to registered emailId");
+                  return ResponseEntity.ok(new ApiResponse(Boolean.TRUE, "OTP sent to registered emailId"));
             }
         }
-        return ResponseEntity.ok("Failed to send mail");
+//        return ResponseEntity.ok("Failed to send mail");
+          return ResponseEntity.ok(new ApiResponse(Boolean.FALSE,"Failed to send mail" ));
     }
 
     @PostMapping("/UpdatePassword")

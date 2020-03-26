@@ -1,15 +1,22 @@
 package com.aroha.pet.payload;
 
+import com.google.gson.JsonArray;
+import java.util.List;
+
 /**
  *
  * @author Jaydeep
  */
 public class QueryObject {
-
+    
+   
+    private String doaminName;
+    private String functionName;
     private String scenario;
     private String sqlStr;
+    private String answer;
     private String exceptionStr;
-    private String resultStr;
+    private List resultStr;
     private String createdAt;
     private int questionId;
     private String feedBackDate;
@@ -42,11 +49,11 @@ public class QueryObject {
         this.exceptionStr = exceptionStr;
     }
 
-    public String getResultStr() {
+    public List getResultStr() {
         return resultStr;
     }
 
-    public void setResultStr(String resultStr) {
+    public void setResultStr(List resultStr) {
         this.resultStr = resultStr;
     }
 
@@ -95,6 +102,30 @@ public class QueryObject {
 
     public void setScenario(String scenario) {
         this.scenario = scenario;
+    }
+
+    public String getDoaminName() {
+        return doaminName;
+    }
+
+    public void setDoaminName(String doaminName) {
+        this.doaminName = doaminName;
+    }
+
+    public String getFunctionName() {
+        return functionName;
+    }
+
+    public void setFunctionName(String functionName) {
+        this.functionName = functionName;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
 }

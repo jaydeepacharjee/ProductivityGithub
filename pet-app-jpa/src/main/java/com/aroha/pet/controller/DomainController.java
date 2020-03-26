@@ -20,6 +20,7 @@ import com.aroha.pet.model.Question;
 import com.aroha.pet.model.Scenario;
 import com.aroha.pet.payload.CSV;
 import com.aroha.pet.payload.DomainRequest;
+import com.aroha.pet.payload.GetDomainDataPayload;
 import com.aroha.pet.security.CurrentUser;
 import com.aroha.pet.security.UserPrincipal;
 import com.aroha.pet.service.DBService;
@@ -36,6 +37,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/api/domain")
@@ -72,9 +74,6 @@ public class DomainController {
 
     @GetMapping("/getDomains")
     public ResponseEntity<?> getDomainData() {
-        if (domainService.getAllDomains().isEmpty()) {
-            return ResponseEntity.ok("No domain found");
-        }
         return ResponseEntity.ok(domainService.getAllDomains());
     }
 
@@ -93,9 +92,6 @@ public class DomainController {
     @PostMapping("/getFunctions")
     public ResponseEntity<?> getAllFunctions(@RequestBody DomainRequest domainData) {
         int domainId = domainData.getDomainId();
-        if (functionService.getAllFunctions(domainId).isEmpty()) {
-            return ResponseEntity.ok("No Function is found");
-        }
         return ResponseEntity.ok(functionService.getAllFunctions(domainId));
     }
 
@@ -121,7 +117,7 @@ public class DomainController {
             return ResponseEntity.ok(scenarioService.createScenario(domainId, functionId, scenario));
         } catch (Exception ex) {
             logger.error("Failed saving scenario" + ex.getMessage());
-            return ResponseEntity.ok(ex.getMessage());
+            return ResponseEntity.ok(new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), ex.getMessage()));
         }
 
     }
@@ -140,9 +136,6 @@ public class DomainController {
     public ResponseEntity<?> getAllScenarios(@RequestBody DomainRequest domainData) {
         int domainId = domainData.getDomainId();
         int functionId = domainData.getFunctionId();
-        if (scenarioService.getAllScenario(domainId, functionId).isEmpty()) {
-            return ResponseEntity.ok("No Scenario is Found");
-        }
         return ResponseEntity.ok(scenarioService.getAllScenario(domainId, functionId));
     }
 
@@ -195,18 +188,16 @@ public class DomainController {
     @PostMapping("/getQuestions")
     public ResponseEntity<?> getSQLQuestion(@RequestBody DomainRequest domainData) {
         int scenarioId = domainData.getScenarioId();
-        if (questionService.getQuestionData(scenarioId).isEmpty()) {
-            return ResponseEntity.ok("No Question is Found");
-        }
         return ResponseEntity.ok(questionService.getQuestionData(scenarioId));
     }
+    
 
     @GetMapping("/getDomain")
     public ResponseEntity<?> getDomain() {
-        if (domainService.getDomain().isEmpty()) {
-            return ResponseEntity.ok("No Data Found");
+        if(domainService.getDomain().isEmpty()){
+            return ResponseEntity.ok(new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(),"No data is found"));
         }
-        return ResponseEntity.ok(domainService.getDomain());
+        return ResponseEntity.ok(new GetDomainDataPayload(HttpStatus.OK.value(),domainService.getDomain(),"SUCCESS"));
     }
 
     @RequestMapping(value = "/updateDomain", method = RequestMethod.POST)

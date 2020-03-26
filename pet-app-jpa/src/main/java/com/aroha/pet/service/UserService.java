@@ -13,6 +13,7 @@ import com.aroha.pet.exception.ResourceNotFoundException;
 import com.aroha.pet.model.Role;
 import com.aroha.pet.model.RoleName;
 import com.aroha.pet.model.User;
+import com.aroha.pet.payload.ApiResponse;
 import com.aroha.pet.payload.ForgetPassword;
 import com.aroha.pet.payload.UsersListPayload;
 import com.aroha.pet.repository.RoleRepository;
@@ -185,16 +186,18 @@ public class UserService {
             User user = obj.get();
             if (passwordEncoder.matches(object.getPassword(), user.getPassword())) {
                 logger.info("Error You can not give previous password, please enter a new password");
-                return "You can not give previous password, please enter a new password";
+//                return "You can not give previous password, please enter a new password";
+                return new ApiResponse(Boolean.FALSE, "You can not give previous password, please enter a new password");
             } else {
                 user.setPassword(passwordEncoder.encode(object.getPassword()));
                 userRepository.save(user);
                 logger.info("password changed for :" + user.getName());
-                return "Password updated successfully, please login with your new password";
+//                return "Password updated successfully, please login with your new password";
+                return new ApiResponse(Boolean.TRUE, "Password updated successfully, please login with your new password");
             }
         } else {
             logger.error("OTP didn't matched");
-            return "OTP did not matched";
+            return new ApiResponse(Boolean.FALSE, "OTP didn't matched");
         }
     }
 }

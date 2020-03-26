@@ -24,18 +24,11 @@ public class FeedBackController {
 
     @RequestMapping("/status")
     public ResponseEntity<?> getfeedback() {
-        if (feedService.getData().isEmpty()) {
-            return ResponseEntity.ok("No Data");
-        }
         return ResponseEntity.ok(feedService.getData());
     }
 
     @PostMapping("/analysis")
     public ResponseEntity<?> showStudentAnalysis(@RequestParam String createdAt, @RequestParam long created_by, @RequestParam int domainId) {
-        if (feedService.showAnalysis(created_by, createdAt, domainId) == null) {
-            return ResponseEntity.ok("No data");
-        }
-        //        return ResponseEntity.ok(feedService.showAnalysis(created_by, createdAt,questionId));
         return new ResponseEntity<>((feedService.showAnalysis(created_by, createdAt, domainId)), HttpStatus.OK);
     }
 

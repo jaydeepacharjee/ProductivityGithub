@@ -17,6 +17,7 @@ import com.aroha.pet.model.Scenario;
 import com.aroha.pet.payload.ApiResponse;
 import com.aroha.pet.payload.DeleteDomainPayload;
 import com.aroha.pet.payload.DomainRequest;
+import com.aroha.pet.payload.GetDomainDataPayload;
 import com.aroha.pet.payload.ScenarioDataRequest;
 import com.aroha.pet.repository.DomainRepository;
 import com.aroha.pet.repository.FunctionRepository;
@@ -36,7 +37,7 @@ public class ScenarioService {
 
     private static final Logger logger = LoggerFactory.getLogger(ScenarioService.class);
 
-    public List<ScenarioDataRequest> getAllScenario(int domainId, int functionId) {
+    public GetDomainDataPayload getAllScenario(int domainId, int functionId) {
         List<Scenario> scenarioList = scenarioRepository.findAll();
         List<ScenarioDataRequest> listScenarioData = new ArrayList<>();
 
@@ -51,19 +52,21 @@ public class ScenarioService {
             scData.setScenarioTitle(sc.getScenarioTitle());
             listScenarioData.add(scData);
         }
-
-        return listScenarioData;
+        if(listScenarioData.isEmpty()){
+            return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(),"No Data is found");
+        }
+        return new GetDomainDataPayload(HttpStatus.OK.value(),listScenarioData,"SUCCESS");
     }
 
-    public String createScenario(int domainId, int functionId, Scenario scenario) {
+    public GetDomainDataPayload createScenario(int domainId, int functionId, Scenario scenario) {
 
         Optional<Domain> byIdDomain = domainRepository.findById(domainId);
         Optional<Function> byIdFunction = functionRepository.findById(functionId);
         if (!byIdDomain.isPresent()) {
-            throw new ResourceNotFoundException("Domain with a id " + domainId + " Not Exist");
+            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), "Selected Domain is missing from the database");
         }
         if (!byIdFunction.isPresent()) {
-            throw new ResourceNotFoundException("Function with a id " + functionId + " Not Exist");
+            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), "Selected Function is missing from the database");
         }
         Domain d = byIdDomain.get();
         Function f = byIdFunction.get();
@@ -74,9 +77,9 @@ public class ScenarioService {
             logger.info("Scenario saved successfully");
         } catch (Exception ex) {
             logger.error("Scenario failed saved " + ex.getMessage());
-            return ex.getMessage();
+            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
         }
-        return "Scenario Saved Successfully";
+        return new GetDomainDataPayload(HttpStatus.OK.value(), "Scenario Saved Successfully");
 
     }
 
