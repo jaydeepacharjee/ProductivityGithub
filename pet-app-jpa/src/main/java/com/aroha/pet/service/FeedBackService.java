@@ -39,27 +39,27 @@ import org.slf4j.LoggerFactory;
 
 @Service
 public class FeedBackService {
-    
+
     @Autowired
     private FeedBackRepository fedRepo;
-    
+
     @Autowired
     private QuestionQueryInfoRepository quesRepo;
-    
+
     @Autowired
     private UserService userService;
-    
+
     @Autowired
     private MentorFeedbackRepository mentorFeedbackRepo;
-    
+
     @Autowired
     private TechnologyService techService;
-    
+
     @Autowired
     private CService cService;
-    
+
     private final Logger logger = LoggerFactory.getLogger(FeedBackService.class);
-    
+
     public List<FeedBackStatusPayload> getData() {
         List<Object[]> list = fedRepo.getFeedBackStatus();
         ArrayList<FeedBackStatusPayload> listObj = new ArrayList<>();
@@ -85,7 +85,7 @@ public class FeedBackService {
         });
         return listObj;
     }
-    
+
     public Message showAnalysis(long created_by, String createdAt, int domainId) {
         List<Object[]> list = quesRepo.getReport(created_by, createdAt, domainId);
         Message message = new Message();
@@ -94,30 +94,30 @@ public class FeedBackService {
             QueryObject queryObj = new QueryObject();
             queryObj.setScenario((String) object[0]);
             queryObj.setSqlStr((String) object[1]);
-            
+
             if ((String) object[2] == null) {
-                
+
                 queryObj.setExceptionStr("No results to display");
-                
+
             } else {
-                
+
                 queryObj.setExceptionStr((String) object[2]);
             }
             if ((String) object[9] != null) {
                 JSONArray jsona = new JSONArray((String) object[9]);
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("Data", jsona);
-                
+
                 queryObj.setResultStr(jsonObject.toString());
-                
+
             } else {
                 JSONArray jsona = new JSONArray("[{Data:No result to display}]");
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("Data", jsona);
-                
+
                 queryObj.setResultStr(jsonObject.toString());
             }
-            
+
             queryObj.setQuestionId((int) object[4]);
             java.sql.Timestamp j = (java.sql.Timestamp) object[3];
             String created = j.toString().replaceAll("T", " ").replaceAll("Z", " ").trim();
@@ -136,7 +136,7 @@ public class FeedBackService {
         }
         return message;
     }
-    
+
     public Set<DomainResponsePayload> getDomainResponse(long created_by, String createdAt) {
         Set<DomainResponsePayload> domainName = new HashSet<>();
         List<Object[]> getDomain = fedRepo.getDomainRepo(created_by, createdAt);
@@ -150,7 +150,7 @@ public class FeedBackService {
         });
         return domainName;
     }
-    
+
     public Set<FunctionResponsePayload> getFunctionResponse(long created_by, String createdAt, int domainId) {
         Set<FunctionResponsePayload> functionName = new HashSet<>();
         List<Object[]> getFunction = fedRepo.getFunctionRepo(created_by, createdAt, domainId);
@@ -164,7 +164,7 @@ public class FeedBackService {
         });
         return functionName;
     }
-    
+
     public Set<ScenarioResponsePayload> getScenarioResponse(long created_by, String createdAt, int domainId, int functionId) {
         Set<ScenarioResponsePayload> secenarioName = new HashSet<>();
         List<Object[]> getScenario = fedRepo.getScenarioRepo(created_by, createdAt, domainId, functionId);
@@ -178,7 +178,7 @@ public class FeedBackService {
         });
         return secenarioName;
     }
-    
+
     public Set<QuestionResponsePayload> getQuestionResponse(long created_by, String createdAt, int domainId, int functionId, int scenarioId) {
         Set<QuestionResponsePayload> questionName = new HashSet<>();
         List<Object[]> getQuestion = fedRepo.getQuestionRepo(created_by, createdAt, domainId, functionId, scenarioId);
@@ -192,7 +192,7 @@ public class FeedBackService {
         });
         return questionName;
     }
-    
+
     public HashMap<String, Result> checkException(long created_by, String createdAt) {
         HashMap<String, Result> map = new HashMap<>();
         List<QueryObject> list = quesRepo.getException(created_by, createdAt);
@@ -229,7 +229,7 @@ public class FeedBackService {
                         map.put(temp4, res);
                     }
                 }
-                
+
             }
         }
         return map;
@@ -269,14 +269,14 @@ public class FeedBackService {
         } else {
             feedback.setNotification(++getNotify);
         }
-        
+
         try {
             mentorFeedbackRepo.save(feedback);
         } catch (Exception ex) {
             return new DeleteDomainPayload(ex.getMessage(), HttpStatus.BAD_REQUEST.value());
         }
         return new DeleteDomainPayload("FeedBack Saved successfully", HttpStatus.OK.value());
-        
+
     }
 
     // Save C Prgram Feedback
@@ -330,7 +330,7 @@ public class FeedBackService {
             FeedBack fobj = itr.next();
             MentorFeedbackResponse mentorFeedback = new MentorFeedbackResponse();
             // mentorFeedback.setFeedbackDate(fobj.getCreatedAt().toString().replaceAll("T", " ").replaceAll("Z", " ").trim());
-            Date date = null;            
+            Date date = null;
             try {
                 date = new SimpleDateFormat("yyyy-MM-dd").parse(fobj.getCreatedAt().toString());
             } catch (Exception ex) {
@@ -372,7 +372,7 @@ public class FeedBackService {
             }
             mentorFeedback.setNotification(fobj.getNotification());
 //            mentorFeedback.setQuery_date(fobj.getQuery_date());
-            Date date2 = null;            
+            Date date2 = null;
             try {
                 date2 = new SimpleDateFormat("yyyy-MM-dd").parse(fobj.getQuery_date().toString());
             } catch (Exception ex) {

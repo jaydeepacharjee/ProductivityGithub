@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-
 /**
  *
  * @author Jaydeep
@@ -21,8 +20,8 @@ public class Technology {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int techId;
     private String technologyName;
-    
-    @OneToMany(mappedBy = "technology",cascade = {CascadeType.ALL, CascadeType.REMOVE})
+
+    @OneToMany(mappedBy = "technology", cascade = {CascadeType.ALL, CascadeType.REMOVE})
     private Set<Domain> domain = new HashSet<>();
 
     public int getTechId() {

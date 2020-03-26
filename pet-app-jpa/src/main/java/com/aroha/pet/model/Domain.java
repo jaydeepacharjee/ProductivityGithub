@@ -36,8 +36,8 @@ public class Domain implements Serializable {
     @ManyToOne
     @JoinColumn(name = "technologyId")
     private Technology technology;
-    
-    @OneToMany(mappedBy = "domain",cascade = {CascadeType.ALL,CascadeType.REMOVE})
+
+    @OneToMany(mappedBy = "domain", cascade = {CascadeType.ALL, CascadeType.REMOVE})
     private Set<Function> functions = new HashSet<Function>();
 
     public int getDomainId() {

@@ -11,7 +11,6 @@ public class CData {
 
     private int statusCode;
     private String message;
-
     private List<CReportAnalysisPayload> data = new ArrayList<>();
 
     public String getMessage() {

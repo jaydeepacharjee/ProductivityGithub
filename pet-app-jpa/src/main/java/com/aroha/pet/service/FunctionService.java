@@ -72,25 +72,25 @@ public class FunctionService {
     }
 
     public Object checkDuplicateFunction(DomainRequest domainData) {
-        if (functionRepository.checkDuplicate(domainData.getDomainId(), domainData.getFunction().getFunctionName()) > 0) {
+        if (functionRepository.checkDuplicate(domainData.getDomainId(), domainData.getFunction().getFunctionName().trim()) > 0) {
             return new ApiResponse(Boolean.TRUE, "Function name already present for the domain ");
         }
         return new ApiResponse(Boolean.FALSE, "Function not present for domain");
     }
-    
+
     public DeleteDomainPayload deleteFunction(int functionId) {
-    	Optional<Function> function=functionRepository.findById(functionId);
-    	if(!function.isPresent()) {
-    		return new DeleteDomainPayload("Function not present",HttpStatus.NOT_FOUND.value());
-    	}
-    	Function funObj=function.get();
-    	try {
-    		functionRepository.delete(funObj);
-    		return new DeleteDomainPayload("Function deleted successfully along with its associated"
-                        + "scenarios and questions", HttpStatus.OK.value());
-    	}catch (Exception e) {
-    		return new DeleteDomainPayload(e.getMessage(), HttpStatus.BAD_REQUEST.value());
-		}
+        Optional<Function> function = functionRepository.findById(functionId);
+        if (!function.isPresent()) {
+            return new DeleteDomainPayload("Function not present", HttpStatus.NOT_FOUND.value());
+        }
+        Function funObj = function.get();
+        try {
+            functionRepository.delete(funObj);
+            return new DeleteDomainPayload("Function deleted successfully along with its associated"
+                    + "scenarios and questions", HttpStatus.OK.value());
+        } catch (Exception e) {
+            return new DeleteDomainPayload(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+        }
     }
 
 }

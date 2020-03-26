@@ -46,10 +46,11 @@ public class CService {
         newFile.mkdir();
 
         FileWriter writer = new FileWriter(dirName + "\\" + compileFileName);
-        String cCode = "#include<stdio.h>" + "\n" + "#include<conio.h>" + "\n"
-                + "#include<assert.h>" + "\n" + "#include<math.h>" + "\n"
-                + "#include<stdlib.h>" + "\n" + "#include<string.h>" + "\n" + "#include<ctype.h>"
-                + "\n" + cpayload.getCpojo().getCstr();
+//        String cCode = "#include<stdio.h>" + "\n" + "#include<conio.h>" + "\n"
+//                + "#include<assert.h>" + "\n" + "#include<math.h>" + "\n"
+//                + "#include<stdlib.h>" + "\n" + "#include<string.h>" + "\n" + "#include<ctype.h>"
+//                + "\n" + cpayload.getCpojo().getCstr();
+        String cCode=cpayload.getCpojo().getCstr();
         sbuffer = new StringBuffer(cCode);
         sb = new StringBuffer();
         writer.write(cCode);
@@ -58,7 +59,7 @@ public class CService {
         writer = null;
 
         String compilationCommand = "gcc " + dirName + "\\" + compileFileName + " -o " + " " + dirName + "\\" + executableFileName;
-
+        
         CPojo cpojo = new CPojo();
         CResponse cResponse = new CResponse();
         JSONArray jsona = null;

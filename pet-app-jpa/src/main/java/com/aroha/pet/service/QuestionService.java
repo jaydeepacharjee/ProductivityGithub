@@ -104,7 +104,7 @@ public class QuestionService {
     }
 
     public Object checkDuplicateQuestion(DomainRequest domainData) {
-        if (questionRepository.checkDuplicate(domainData.getScenarioId(), domainData.getQuestion().getQuestionDesc()) > 0) {
+        if (questionRepository.checkDuplicate(domainData.getScenarioId(), domainData.getQuestion().getQuestionDesc().trim()) > 0) {
             return new ApiResponse(Boolean.TRUE, "Same question already present for the scenario");
         }
         return new ApiResponse(Boolean.FALSE, "Question not present for the scenario");

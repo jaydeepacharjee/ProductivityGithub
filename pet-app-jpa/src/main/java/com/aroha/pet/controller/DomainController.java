@@ -60,9 +60,9 @@ public class DomainController {
 
     @PostMapping("/savedomain")
     public ResponseEntity<?> saveDomainData(@RequestBody DomainRequest domainRequest) {
-        int technologyId=domainRequest.getTechnologyId();
-        Domain domain=domainRequest.getDomain();
-        return ResponseEntity.ok(domainService.saveDomain(technologyId,domain));
+        int technologyId = domainRequest.getTechnologyId();
+        Domain domain = domainRequest.getDomain();
+        return ResponseEntity.ok(domainService.saveDomain(technologyId, domain));
     }
 
     @PostMapping("/checkDuplicateDomain")

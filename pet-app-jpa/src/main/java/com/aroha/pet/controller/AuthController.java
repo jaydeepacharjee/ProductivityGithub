@@ -159,7 +159,6 @@ public class AuthController {
             }
         }
         return ResponseEntity.ok("Failed to send mail");
-
     }
 
     @PostMapping("/UpdatePassword")

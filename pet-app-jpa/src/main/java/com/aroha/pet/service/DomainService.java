@@ -56,7 +56,7 @@ public class DomainService {
     public List<DomainDataRequest> getAllDomains() {
         List<Domain> list = domainRepository.findAll();
         Iterator<Domain> itr = list.iterator();
-        List<DomainDataRequest> DomainList = new ArrayList<DomainDataRequest>();
+        List<DomainDataRequest> DomainList = new ArrayList<>();
         while (itr.hasNext()) {
             Domain d = itr.next();
             DomainDataRequest domainData = new DomainDataRequest();
@@ -80,7 +80,6 @@ public class DomainService {
         return "Domain Saved Successfully";
     }
      */
-
     public String saveDomain(int technologyId, Domain domain) {
 
         Optional<Technology> tech = techService.findById(technologyId);
@@ -174,10 +173,10 @@ public class DomainService {
     }
 
     public Object checkDuplicate(Domain domain) {
-        if (domainRepository.existsBydomainName(domain.getDomainName())) {
+        if (domainRepository.existsBydomainName(domain.getDomainName().trim())) {
             return new ApiResponse(Boolean.TRUE, "Domain name already Exists");
         }
-        return new ApiResponse(Boolean.FALSE, "Domain not exists");
+        return new ApiResponse(Boolean.FALSE, "Domain doesn't exists");
     }
 
     public DeleteDomainPayload deleteDomain(int domainId) {

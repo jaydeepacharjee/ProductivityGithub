@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import com.aroha.pet.exception.FileNotFoundException;
 import com.aroha.pet.model.Domain;
 import com.aroha.pet.model.Function;
@@ -68,9 +66,7 @@ public class ScenarioService {
             throw new ResourceNotFoundException("Function with a id " + functionId + " Not Exist");
         }
         Domain d = byIdDomain.get();
-        System.out.println("------------- Domain id: " + d.getDomainId());
         Function f = byIdFunction.get();
-        System.out.println("------------- Function id is: " + f.getFunctionId());
         f.setDomain(d);
         scenario.setFunction(f);
         try {
@@ -85,13 +81,11 @@ public class ScenarioService {
     }
 
     public Scenario getFile(int fileId) {
-
-        //System.out.println("FieldId: "+fileId);
         return scenarioRepository.findById(fileId).orElseThrow(() -> new FileNotFoundException("Not found"));
     }
 
     public Object checkDuplicate(DomainRequest domainData) {
-        if (scenarioRepository.checkDuplicate(domainData.getFunctionId(), domainData.getScenario().getScenarioTitle()) > 0) {
+        if (scenarioRepository.checkDuplicate(domainData.getFunctionId(), domainData.getScenario().getScenarioTitle().trim()) > 0) {
             return new ApiResponse(Boolean.TRUE, "Scenario name already present for the function ");
         }
         return new ApiResponse(Boolean.FALSE, "Scenario Name not Present for the function");
