@@ -92,7 +92,7 @@ public class JavaService {
 		runProcess(executableCommand);
 		JSONArray jsona = null;
 		javapojo.setJavastr(text);
-		javaresponse.setJava(text);
+		//javaresponse.setJava(text);
 		jsona=getResultForJava(sb1);
 		//System.out.println("Jsona is: "+jsona);
 		if(jsona.toString().contains("Exception:")) {
@@ -104,10 +104,10 @@ public class JavaService {
 			System.out.println("M is: "+m);
 			System.out.println("R is: "+r);
 			//cpojo.setResultstr(sb.toString().substring(sb.toString().indexOf("error")));
-			javapojo.setResultstr(exception);
+			//javapojo.setResultstr(exception);
 			//javaresponse.setJavaexception(exception);
 			
-			javapojo.setResultstr(jsona.toString());
+			javapojo.setResultstr(exception.toString().substring(m, r));
 			javaresponse.setJavaexception(exception.toString().substring(m, r));
 			javaresponse.setJavastatus("EXCEPTION");
 			javapojo.setQuestionId(qId);
@@ -133,8 +133,9 @@ public class JavaService {
 			javaRepo.save(javapojo);
 			return javaresponse;
 		}else {
-			javaresponse.setJavaresult(getJsonArrayAsList(jsona));
-			javapojo.setResultstr(jsona.toString());
+			//javaresponse.setJavaresult(getJsonArrayAsList(jsona));
+			javaresponse.setJavaresult(sb1.toString());
+			javapojo.setResultstr(sb1.toString());
 			javaresponse.setJavastatus("SUCCESS");
 			javapojo.setQuestionId(qId);
 			javapojo.setScenario(payload.getJavapojo().getScenario());

@@ -26,7 +26,7 @@ import com.aroha.pet.repository.FunctionRepository;
 import com.aroha.pet.repository.QuestionRepository;
 import com.aroha.pet.repository.ScenarioRepository;
 import java.util.Base64;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+
 
 @Service
 public class DomainService {

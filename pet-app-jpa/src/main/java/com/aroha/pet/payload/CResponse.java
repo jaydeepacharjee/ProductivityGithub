@@ -2,25 +2,21 @@ package com.aroha.pet.payload;
 
 import java.util.List;
 
+import javax.persistence.Lob;
+
 public class CResponse {
-	
-	private String cprogram;
-	private List cresult;
+
+	@Lob
+	private String cresult;
 	private String cerror;
 	private String cstatus;
-	public String getCprogram() {
-		return cprogram;
-	}
-	public void setCprogram(String cprogram) {
-		this.cprogram = cprogram;
-	}
-	public List getCresult() {
+
+	public String getCresult() {
 		return cresult;
 	}
-	public void setCresult(List cresult) {
+	public void setCresult(String cresult) {
 		this.cresult = cresult;
 	}
-	
 	public String getCerror() {
 		return cerror;
 	}

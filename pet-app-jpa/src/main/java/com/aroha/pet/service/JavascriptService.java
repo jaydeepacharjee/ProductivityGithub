@@ -113,7 +113,7 @@ public class JavascriptService {
 			//javascriptpojo.setResultstr(sb2.toString());
 			javascriptpojo.setCreatedAt(currTimeAndDate);
 			javascriptpojo.setCreatedBy(currentUser.getId());
-			javascriptresponse.setJavascript(text);
+			//javascriptresponse.setJavascript(text);
 			//javascriptresponse.setJavascriptresult(getJsonArrayAsList(jsona));
 			javascriptresponse.setJavascripterror(error.toString().substring(m+1, r));
 			javascriptresponse.setJavascriptstatus("ERROR");
@@ -121,15 +121,15 @@ public class JavascriptService {
 			return javascriptresponse;
 		}
 		else {
-			jsona=getResultForJava(sb2);
+			//jsona=getResultForJava(sb2);
 			javascriptpojo.setJavascriptstr(text);		
-			javascriptpojo.setResultstr(jsona.toString());
+			javascriptpojo.setResultstr(sb2.toString());
 			javascriptpojo.setQuestionId(qId);
 			javascriptpojo.setScenario(payload.getJavascriptpojo().getScenario());
 			javascriptpojo.setCreatedAt(currTimeAndDate);
 			javascriptpojo.setCreatedBy(currentUser.getId());
-			javascriptresponse.setJavascript(text);
-			javascriptresponse.setJavascriptresult(getJsonArrayAsList(jsona));
+			//javascriptresponse.setJavascript(text);
+			javascriptresponse.setJavascriptresult(sb2.toString());
 			javascriptresponse.setJavascriptstatus("SUCCESS");
 			javascriptRepo.save(javascriptpojo);
 			return javascriptresponse;

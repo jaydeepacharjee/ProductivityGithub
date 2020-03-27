@@ -2,22 +2,20 @@ package com.aroha.pet.payload;
 
 import java.util.List;
 
+import javax.persistence.Lob;
+
 public class JavascriptResponse {
 
-	private String javascript;
-	private List javascriptresult;
+	@Lob
+	private String javascriptresult;
 	private String javascripterror;
 	private String javascriptstatus;
-	public String getJavascript() {
-		return javascript;
-	}
-	public void setJavascript(String javascript) {
-		this.javascript = javascript;
-	}
-	public List getJavascriptresult() {
+
+    
+	public String getJavascriptresult() {
 		return javascriptresult;
 	}
-	public void setJavascriptresult(List javascriptresult) {
+	public void setJavascriptresult(String javascriptresult) {
 		this.javascriptresult = javascriptresult;
 	}
 	public String getJavascriptstatus() {
