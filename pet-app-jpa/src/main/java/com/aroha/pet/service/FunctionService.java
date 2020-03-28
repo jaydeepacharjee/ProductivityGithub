@@ -4,14 +4,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import com.aroha.pet.model.Domain;
 import com.aroha.pet.model.Function;
 import com.aroha.pet.payload.ApiResponse;
@@ -77,10 +74,22 @@ public class FunctionService {
     }
 
     public Object checkDuplicateFunction(DomainRequest domainData) {
-        if (functionRepository.checkDuplicate(domainData.getDomainId(), domainData.getFunction().getFunctionName().trim()) > 0) {
-            return new ApiResponse(Boolean.TRUE, "Function name already present for the domain ");
-        }
-        return new ApiResponse(Boolean.FALSE, "Function not present for domain");
+       int domainId=domainData.getDomainId();
+       String functionName=domainData.getFunction().getFunctionName().toLowerCase().trim().replaceAll("\\s+","");
+       boolean flag=false;
+       List<Function>function=functionRepository.checkDuplicate(domainId);
+       Iterator<Function>itr=function.iterator();
+       while(itr.hasNext()) {
+    	   Function funObject=itr.next();
+    	   if(functionName.equals(funObject.getFunctionName().toLowerCase().trim().replaceAll("\\s+",""))) {
+    		   flag=true;
+    	   }
+       }
+       if(flag) {
+			return new ApiResponse(Boolean.TRUE, "Function already exists");
+		}else {
+			return new ApiResponse(Boolean.FALSE,"Function doesn't exists");
+		}
     }
 
     public DeleteDomainPayload deleteFunction(int functionId) {

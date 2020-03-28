@@ -22,7 +22,7 @@ import com.aroha.pet.repository.DomainRepository;
 import com.aroha.pet.repository.FunctionRepository;
 import com.aroha.pet.repository.QuestionRepository;
 import com.aroha.pet.repository.ScenarioRepository;
-import com.aroha.pet.repository.TechnologyRepository;
+
 
 @Service
 public class QuestionService {
@@ -39,8 +39,6 @@ public class QuestionService {
     @Autowired
     private FunctionRepository functionRepository;
 
-    @Autowired
-    private TechnologyRepository techRepo;
 
     private static final Logger logger = LoggerFactory.getLogger(QuestionService.class);
 
@@ -108,10 +106,22 @@ public class QuestionService {
     }
 
     public Object checkDuplicateQuestion(DomainRequest domainData) {
-        if (questionRepository.checkDuplicate(domainData.getScenarioId(), domainData.getQuestion().getQuestionDesc().trim()) > 0) {
-            return new ApiResponse(Boolean.TRUE, "Same question already present for the scenario");
+        int scenarioId=domainData.getScenarioId();
+        String question=domainData.getQuestion().getQuestionDesc().toLowerCase().trim().replaceAll("\\s+","");
+        boolean flag=false;
+        List<Question>ques=questionRepository.checkDuplicate(scenarioId);
+        Iterator<Question>itr=ques.iterator();
+        while(itr.hasNext()) {
+        	Question obj=itr.next();
+        	if(question.equals(obj.getQuestionDesc().toLowerCase().trim().replaceAll("\\s+",""))) {
+        		flag=true;
+        	}
         }
-        return new ApiResponse(Boolean.FALSE, "Question not present for the scenario");
+        if(flag) {
+        	return new ApiResponse(Boolean.TRUE,"Question already exists");
+        }else {
+        	return new ApiResponse(Boolean.FALSE,"Question doesn't exists");
+        }
     }
 
     public DeleteDomainPayload deleteQuestionName(int qestionId) {

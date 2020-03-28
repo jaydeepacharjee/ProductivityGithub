@@ -19,7 +19,11 @@ public interface MentorFeedbackRepository extends JpaRepository<FeedBack, Intege
     Integer getLastNotification(Long learnerId, String techName);
 
     //List<FeedBack> findBylearnerId(Long id);
-    @Query(value = "select * from mentor_feedback where learner_id=?1 order by created_at desc", nativeQuery = true)
+    @Query(value = "select * from mentor_feedback where learner_id=?1 and technology_id=?2 order by created_at desc", nativeQuery = true)
+    List<FeedBack> getMentorFeedback(Long Id,int techId);
+    
+
+    @Query(value = "select * from mentor_feedback where learner_id=?1  order by created_at desc", nativeQuery = true)
     List<FeedBack> getMentorFeedback(Long Id);
 
 }

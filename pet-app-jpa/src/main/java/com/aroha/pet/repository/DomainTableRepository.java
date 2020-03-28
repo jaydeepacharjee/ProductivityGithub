@@ -1,9 +1,12 @@
 package com.aroha.pet.repository;
 
 import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import com.aroha.pet.model.Domain;
 import com.aroha.pet.model.QueryInfo;
 
 @Repository
@@ -41,5 +44,7 @@ public interface DomainTableRepository extends JpaRepository<QueryInfo, Long> {
             + "    WHERE\n"
             + "        a.sid=b.sid;", nativeQuery = true)
     public List<Object[]> getDomainData();
+    
+
 
 }

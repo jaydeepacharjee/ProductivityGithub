@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
@@ -15,21 +14,22 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
 import com.aroha.pet.model.CPojo;
 import com.aroha.pet.payload.CPayload;
 import com.aroha.pet.payload.CReport;
 import com.aroha.pet.payload.CReportAnalysisPayload;
 import com.aroha.pet.payload.CResponse;
+import com.aroha.pet.payload.DomainResponsePayload;
+import com.aroha.pet.payload.GetDomainDataPayload;
 import com.aroha.pet.repository.CRepo;
 import com.aroha.pet.security.UserPrincipal;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class CService {
@@ -207,7 +207,7 @@ public class CService {
 		return jsona.toList();
 	}
 	
-	public List<CReport> getReportCard() {
+	public GetDomainDataPayload getReportCard() {
         List<Object[]> listObj = cRepo.generateReport();
         List<CReport> list = new ArrayList<>();
         listObj.stream().map((obj) -> {
@@ -224,7 +224,10 @@ public class CService {
         }).forEachOrdered((report) -> {
             list.add(report);
         });
-        return list;
+        if(list.isEmpty()) {
+        	return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(),"No Data Found");
+        }
+        return new GetDomainDataPayload(HttpStatus.OK.value(), list,"SUCCESS");
     }
 
     public List<CReportAnalysisPayload> generateReportAnalysis(String createdAt, Long createdBy, int domainId) {
@@ -252,6 +255,8 @@ public class CService {
                 SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");
                 load.setFeedbackDate(formatter.format(date));
             }
+             java.sql.Timestamp j = (java.sql.Timestamp) object[11];
+             load.setCreatedAt(j.toString());
             return load;
         }).forEachOrdered((load) -> {
             list.add(load);
@@ -261,6 +266,20 @@ public class CService {
 
     public CPojo findByTechnologyRepo(String createdAt, int questionId) {
         return cRepo.searchCRepo(createdAt, questionId);
+    }
+    
+     public Set<DomainResponsePayload> getDomainResponse(long created_by, String createdAt) {
+        Set<DomainResponsePayload> domainName = new HashSet<>();
+        List<Object[]> getDomain = cRepo.getDomainAnalsisRepo(created_by, createdAt);
+        getDomain.stream().map((object) -> {
+            DomainResponsePayload dLoad = new DomainResponsePayload();
+            dLoad.setDomain_id((int) object[0]);
+            dLoad.setDomainName((String) object[1]);
+            return dLoad;
+        }).forEachOrdered((dLoad) -> {
+            domainName.add(dLoad);
+        });
+        return domainName;
     }
 
 }

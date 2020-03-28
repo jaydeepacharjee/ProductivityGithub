@@ -4,6 +4,8 @@ import com.aroha.pet.payload.MentorFeedback;
 import com.aroha.pet.security.CurrentUser;
 import com.aroha.pet.security.UserPrincipal;
 import com.aroha.pet.service.FeedBackService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,8 @@ public class FeedBackController {
 
     @Autowired
     private FeedBackService feedService;
+
+    private final Logger logger = LoggerFactory.getLogger(FeedBackController.class);
 
     @RequestMapping("/status")
     public ResponseEntity<?> getfeedback() {
@@ -79,12 +83,9 @@ public class FeedBackController {
     }
 
     // Show Mentor FeedBack
-    @GetMapping("/showMentorFeedback")
-    public ResponseEntity<?> showMentorFeedback(@CurrentUser UserPrincipal user) {
-        if (feedService.showFeedback(user).isEmpty()) {
-            return ResponseEntity.ok("No Feedback given by mentor");
-        }
-        return ResponseEntity.ok(feedService.showFeedback(user));
+    @PostMapping("/showMentorFeedback")
+    public ResponseEntity<?> showMentorFeedback(@CurrentUser UserPrincipal user, @RequestParam("techId") int techId) {
+        return ResponseEntity.ok(feedService.showFeedback(user, techId));
     }
 
     //Clear notification
@@ -94,4 +95,9 @@ public class FeedBackController {
         return ResponseEntity.ok("cleared notification");
     }
 
+    @GetMapping("/findTechnology")
+    public ResponseEntity<?> getTechnology(@CurrentUser UserPrincipal user) {
+        Long userId = user.getId();
+        return ResponseEntity.ok(feedService.findTechnology(userId));
+    }
 }

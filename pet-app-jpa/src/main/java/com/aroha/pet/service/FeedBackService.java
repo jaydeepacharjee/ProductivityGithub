@@ -1,14 +1,21 @@
 package com.aroha.pet.service;
 
-import com.aroha.pet.model.CPojo;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import org.json.JSONArray;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import com.aroha.pet.model.CPojo;
 import com.aroha.pet.model.FeedBack;
 import com.aroha.pet.model.QueryInfo;
 import com.aroha.pet.model.Technology;
@@ -28,40 +35,34 @@ import com.aroha.pet.repository.FeedBackRepository;
 import com.aroha.pet.repository.MentorFeedbackRepository;
 import com.aroha.pet.repository.QuestionQueryInfoRepository;
 import com.aroha.pet.security.UserPrincipal;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.Set;
-import org.json.JSONArray;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.text.ParseException;
 
 @Service
 public class FeedBackService {
-    
+
     @Autowired
     private FeedBackRepository fedRepo;
-    
+
     @Autowired
     private QuestionQueryInfoRepository quesRepo;
-    
+
     @Autowired
     private UserService userService;
-    
+
     @Autowired
     private MentorFeedbackRepository mentorFeedbackRepo;
-    
+
     @Autowired
     private TechnologyService techService;
-    
+
     @Autowired
     private CService cService;
-    
+
     @Autowired
     private DBService dbservice;
-    
+
     private final Logger logger = LoggerFactory.getLogger(FeedBackService.class);
-    
+
     public GetDomainDataPayload getData() {
         List<Object[]> list = fedRepo.getFeedBackStatus();
         ArrayList<FeedBackStatusPayload> listObj = new ArrayList<>();
@@ -90,11 +91,11 @@ public class FeedBackService {
         }
         return new GetDomainDataPayload(HttpStatus.OK.value(), listObj, "SUCCESS");
     }
-    
+
     public GetDomainDataPayload showAnalysis(long created_by, String createdAt, int domainId) {
         List<Object[]> list = quesRepo.getReport(created_by, createdAt, domainId);
         List<QueryObject> queryList = new ArrayList<>();
-        for (Object[] object : list) {
+        list.stream().map((object) -> {
             QueryObject query = new QueryObject();
             query.setDoaminName((String) object[0]);
             query.setFunctionName((String) object[1]);
@@ -105,33 +106,37 @@ public class FeedBackService {
             } else {
                 query.setExceptionStr((String) object[4]);
             }
-            Date date = null;
-            try {
-                java.sql.Timestamp j = (java.sql.Timestamp) object[5];
-                date = new SimpleDateFormat("yyyy-MM-dd").parse(j.toString());
-            } catch (Exception ex) {
-            }
-            SimpleDateFormat formatter2 = new SimpleDateFormat("dd MMMM yyyy");
-            query.setCreatedAt(formatter2.format(date));
+            java.sql.Timestamp j = (java.sql.Timestamp) object[5];
+            query.setCreatedAt(j.toString());
             query.setQuestionId((int) object[6]);
             query.setFeedback((String) object[7]);
-            query.setFeedback((String) object[8]);
-            query.setFeedback((String) object[9]);
+            query.setMentorName((String) object[8]);
+            if (object[9] != null) {
+                Date date = null;
+                try {
+                    java.sql.Timestamp obj = (java.sql.Timestamp) object[9];
+                    date = new SimpleDateFormat("yyyy-MM-dd").parse(obj.toString());
+                } catch (ParseException ex) {
+                }
+                SimpleDateFormat formatter2 = new SimpleDateFormat("dd MMMM yyyy");
+                query.setFeedBackDate(formatter2.format(date));
+            }
             query.setAnswer((String) object[10]);
-
             if ((String) object[11] != null) {
                 String data = ((String) object[11]);
-                JSONArray jsona=new JSONArray(data);
+                JSONArray jsona = new JSONArray(data);
                 query.setResultStr(dbservice.getJsonArrayAsList(jsona));
             }
+            return query;
+        }).forEachOrdered((query) -> {
             queryList.add(query);
-        }
+        });
         if (queryList.isEmpty()) {
             return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "No Data found");
         }
         return new GetDomainDataPayload(HttpStatus.OK.value(), queryList, "SUCCESS");
     }
-    
+
     public Set<DomainResponsePayload> getDomainResponse(long created_by, String createdAt) {
         Set<DomainResponsePayload> domainName = new HashSet<>();
         List<Object[]> getDomain = fedRepo.getDomainRepo(created_by, createdAt);
@@ -145,7 +150,7 @@ public class FeedBackService {
         });
         return domainName;
     }
-    
+
     public Set<FunctionResponsePayload> getFunctionResponse(long created_by, String createdAt, int domainId) {
         Set<FunctionResponsePayload> functionName = new HashSet<>();
         List<Object[]> getFunction = fedRepo.getFunctionRepo(created_by, createdAt, domainId);
@@ -159,7 +164,7 @@ public class FeedBackService {
         });
         return functionName;
     }
-    
+
     public Set<ScenarioResponsePayload> getScenarioResponse(long created_by, String createdAt, int domainId, int functionId) {
         Set<ScenarioResponsePayload> secenarioName = new HashSet<>();
         List<Object[]> getScenario = fedRepo.getScenarioRepo(created_by, createdAt, domainId, functionId);
@@ -173,7 +178,7 @@ public class FeedBackService {
         });
         return secenarioName;
     }
-    
+
     public Set<QuestionResponsePayload> getQuestionResponse(long created_by, String createdAt, int domainId, int functionId, int scenarioId) {
         Set<QuestionResponsePayload> questionName = new HashSet<>();
         List<Object[]> getQuestion = fedRepo.getQuestionRepo(created_by, createdAt, domainId, functionId, scenarioId);
@@ -187,7 +192,7 @@ public class FeedBackService {
         });
         return questionName;
     }
-    
+
     public HashMap<String, Result> checkException(long created_by, String createdAt) {
         HashMap<String, Result> map = new HashMap<>();
         List<QueryObject> list = quesRepo.getException(created_by, createdAt);
@@ -224,7 +229,7 @@ public class FeedBackService {
                         map.put(temp4, res);
                     }
                 }
-                
+
             }
         }
         return map;
@@ -246,6 +251,7 @@ public class FeedBackService {
         User userObj = userData.get();
         Technology technology = tech.get();
         FeedBack feedback = new FeedBack();
+        feedback.setTechnologyId(technology.getTechId());
         feedback.setTechnologyName(technology.getTechnologyName());
         feedback.setFeedback(feed.getFeedback());
         feedback.setLearnerId(userObj.getId());
@@ -264,14 +270,14 @@ public class FeedBackService {
         } else {
             feedback.setNotification(++getNotify);
         }
-        
+
         try {
             mentorFeedbackRepo.save(feedback);
         } catch (Exception ex) {
             return new DeleteDomainPayload(ex.getMessage(), HttpStatus.BAD_REQUEST.value());
         }
         return new DeleteDomainPayload("FeedBack Saved successfully", HttpStatus.OK.value());
-        
+
     }
 
     // Save C Prgram Feedback
@@ -291,6 +297,8 @@ public class FeedBackService {
         Technology technology = tech.get();
         FeedBack feedback = new FeedBack();
         feedback.setTechnologyName(technology.getTechnologyName());
+        logger.info("-----------------------technology id is--------\n" + technology.getTechId());
+        feedback.setTechnologyId(technology.getTechId());
         feedback.setFeedback(feed.getFeedback());
         feedback.setLearnerId(userObj.getId());
         feedback.setLearnerName(userObj.getName());
@@ -317,65 +325,75 @@ public class FeedBackService {
     }
 
     // Show mentor feedback
-    public List<MentorFeedbackResponse> showFeedback(UserPrincipal user) {
-        List<FeedBack> list = mentorFeedbackRepo.getMentorFeedback(user.getId());
-        ArrayList<MentorFeedbackResponse> listObj = new ArrayList<>();
-        Iterator<FeedBack> itr = list.iterator();
-        while (itr.hasNext()) {
-            FeedBack fobj = itr.next();
-            MentorFeedbackResponse mentorFeedback = new MentorFeedbackResponse();
-            // mentorFeedback.setFeedbackDate(fobj.getCreatedAt().toString().replaceAll("T", " ").replaceAll("Z", " ").trim());
-            Date date = null;
-            try {
-                date = new SimpleDateFormat("yyyy-MM-dd").parse(fobj.getCreatedAt().toString());
-            } catch (Exception ex) {
+    public GetDomainDataPayload showFeedback(UserPrincipal user, int techId) {
+        if (techId == 0) {
+            return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "Sorry!! No TEST Is Found");
+        } else {
+            List<FeedBack> list = mentorFeedbackRepo.getMentorFeedback(user.getId(), techId);
+            ArrayList<MentorFeedbackResponse> listObj = new ArrayList<>();
+            Iterator<FeedBack> itr = list.iterator();
+            while (itr.hasNext()) {
+                FeedBack fobj = itr.next();
+                MentorFeedbackResponse mentorFeedback = new MentorFeedbackResponse();
+                // mentorFeedback.setFeedbackDate(fobj.getCreatedAt().toString().replaceAll("T", " ").replaceAll("Z", " ").trim());
+                Date date = null;
+                try {
+                    date = new SimpleDateFormat("yyyy-MM-dd").parse(fobj.getCreatedAt().toString());
+                } catch (ParseException ex) {
+                }
+                SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");
+                mentorFeedback.setFeedbackDate(formatter.format(date));
+                mentorFeedback.setQuestionId(fobj.getQuestionId());
+                mentorFeedback.setMentorName(fobj.getMentorName());
+                mentorFeedback.setMentorId(fobj.getMentorId());
+                mentorFeedback.setLearnerName(fobj.getLearnerName());
+                mentorFeedback.setLearnerId(fobj.getLearnerId());
+                mentorFeedback.setFeedback(fobj.getFeedback());
+                mentorFeedback.setQuestion(fobj.getQuestion());
+                if (fobj.getResulstr() == null) {
+                    mentorFeedback.setResulstr("No results to display");
+                } else {
+                    mentorFeedback.setResulstr(fobj.getResulstr());
+                }
+                if (fobj.getExceptionStr() == null) {
+                    mentorFeedback.setExceptionStr("No results to display");
+                } else {
+                    mentorFeedback.setExceptionStr(fobj.getExceptionStr());
+                }
+                if (fobj.getSqlStr() == null) {
+                    mentorFeedback.setSqlStr("No results to display");
+                } else {
+                    mentorFeedback.setSqlStr(fobj.getSqlStr());
+                }
+                if (fobj.getcStr() == null) {
+                    mentorFeedback.setcStr("No results to display");
+                } else {
+                    mentorFeedback.setcStr(fobj.getcStr());
+                }
+                mentorFeedback.setTechnologyName(fobj.getTechnologyName());
+                if (fobj.getError() == null) {
+                    mentorFeedback.setError("No results to display");
+                } else {
+                    mentorFeedback.setError(fobj.getError());
+                }
+                mentorFeedback.setNotification(fobj.getNotification());
+                //            mentorFeedback.setQuery_date(fobj.getQuery_date());
+                Date date2 = null;
+                try {
+                    date2 = new SimpleDateFormat("yyyy-MM-dd").parse(fobj.getQuery_date().toString());
+                } catch (ParseException ex) {
+                }
+                SimpleDateFormat formatter2 = new SimpleDateFormat("dd MMMM yyyy");
+                mentorFeedback.setQuery_date(formatter2.format(date2));
+                listObj.add(mentorFeedback);
+
             }
-            SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");
-            mentorFeedback.setFeedbackDate(formatter.format(date));
-            mentorFeedback.setQuestionId(fobj.getQuestionId());
-            mentorFeedback.setMentorName(fobj.getMentorName());
-            mentorFeedback.setMentorId(fobj.getMentorId());
-            mentorFeedback.setLearnerName(fobj.getLearnerName());
-            mentorFeedback.setLearnerId(fobj.getLearnerId());
-            mentorFeedback.setFeedback(fobj.getFeedback());
-            mentorFeedback.setQuestion(fobj.getQuestion());
-            if (fobj.getResulstr() == null) {
-                mentorFeedback.setResulstr("No results to display");
+            if (listObj.isEmpty()) {
+                return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "No Mentor Feedback Found");
             } else {
-                mentorFeedback.setResulstr(fobj.getResulstr());
+                return new GetDomainDataPayload(HttpStatus.OK.value(), listObj, "SUCCESS");
             }
-            if (fobj.getExceptionStr() == null) {
-                mentorFeedback.setExceptionStr("No results to display");
-            } else {
-                mentorFeedback.setExceptionStr(fobj.getExceptionStr());
-            }
-            if (fobj.getSqlStr() == null) {
-                mentorFeedback.setSqlStr("No results to display");
-            } else {
-                mentorFeedback.setSqlStr(fobj.getSqlStr());
-            }
-            if (fobj.getcStr() == null) {
-                mentorFeedback.setcStr("No results to display");
-            } else {
-                mentorFeedback.setcStr(fobj.getcStr());
-            }
-            mentorFeedback.setTechnologyName(fobj.getTechnologyName());
-            if (fobj.getError() == null) {
-                mentorFeedback.setError("No results to display");
-            } else {
-                mentorFeedback.setError(fobj.getError());
-            }
-            mentorFeedback.setNotification(fobj.getNotification());
-//            mentorFeedback.setQuery_date(fobj.getQuery_date());
-            Date date2 = null;
-            try {
-                date2 = new SimpleDateFormat("yyyy-MM-dd").parse(fobj.getQuery_date().toString());
-            } catch (Exception ex) {}
-            SimpleDateFormat formatter2 = new SimpleDateFormat("dd MMMM yyyy");
-            mentorFeedback.setQuery_date(formatter2.format(date2));
-            listObj.add(mentorFeedback);
         }
-        return listObj;
     }
 
     // Clear notification
@@ -387,5 +405,22 @@ public class FeedBackService {
         }).forEachOrdered((f) -> {
             mentorFeedbackRepo.save(f);
         });
+    }
+
+    public GetDomainDataPayload findTechnology(Long userId) {
+        List<Technology> listObj = techService.findTechnology(userId);
+        Set<Technology> set = new HashSet<>();
+        Iterator<Technology> itr = listObj.iterator();
+        while (itr.hasNext()) {
+            Technology tech = itr.next();
+            tech.setTechId(tech.getTechId());
+            tech.setTechnologyName(tech.getTechnologyName());
+            set.add(tech);
+        }
+        if (set.isEmpty()) {
+            return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "Sorry!! No TEST Is Found");
+        } else {
+            return new GetDomainDataPayload(HttpStatus.OK.value(), new ArrayList<>(set), "SUCCESS");
+        }
     }
 }

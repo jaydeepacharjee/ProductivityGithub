@@ -33,4 +33,8 @@ public class TechnologyService {
     public Optional<Technology> findById(int technologyId){
         return techRepo.findById(technologyId);
     }
+    
+    public List<Technology>findTechnology(Long userId){
+    	return techRepo.getTech(userId);
+    }
 }

@@ -68,13 +68,14 @@ public class DomainController {
     }
 
     @PostMapping("/checkDuplicateDomain")
-    public ResponseEntity<?> checkDuplicateDoain(@RequestBody Domain domain) {
+    public ResponseEntity<?> checkDuplicateDoain(@RequestBody DomainRequest domain) {
         return ResponseEntity.ok(domainService.checkDuplicate(domain));
     }
 
-    @GetMapping("/getDomains")
-    public ResponseEntity<?> getDomainData() {
-        return ResponseEntity.ok(domainService.getAllDomains());
+    @PostMapping("/getDomains")
+    public ResponseEntity<?> getDomainData(@RequestParam("technologyId")int technologyId) {
+    	logger.info("------------------"+technologyId);
+        return ResponseEntity.ok(domainService.getAllDomains(technologyId));
     }
 
     @PostMapping("/saveFunction")
@@ -119,7 +120,6 @@ public class DomainController {
             logger.error("Failed saving scenario" + ex.getMessage());
             return ResponseEntity.ok(new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), ex.getMessage()));
         }
-
     }
 
     @PostMapping(value = "/getScenarioImage")

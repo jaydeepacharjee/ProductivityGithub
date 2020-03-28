@@ -9,6 +9,7 @@ public class CReportAnalysisPayload {
     private String domainName;
     private String functionName;
     private String scenarioTitle;
+    private String createdAt;
     private String cStr;
     private String error;
     private int questionId;
@@ -105,5 +106,15 @@ public class CReportAnalysisPayload {
     public void setMentorName(String mentorName) {
         this.mentorName = mentorName;
     }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+  
 
 }

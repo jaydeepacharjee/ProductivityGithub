@@ -3,6 +3,7 @@ package com.aroha.pet.controller;
 import com.aroha.pet.payload.CData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,25 +30,28 @@ public class CController {
         return ResponseEntity.ok(cResponse);
     }
 
-    @PostMapping("/getReport")
+    @GetMapping("/getReport")
     public ResponseEntity<?> generateReportCard() {
-        if (cService.getReportCard().isEmpty()) {
-            return ResponseEntity.ok("No Record");
-        }
         return ResponseEntity.ok(cService.getReportCard());
+    }
+
+    @PostMapping("/getDomainAnalysisForCProgramming")
+    public ResponseEntity<?> getDomainAnalysisForCPrograming(@RequestParam String createdAt, @RequestParam long created_by) {
+        return ResponseEntity.ok(cService.getDomainResponse(created_by, createdAt));
     }
 
     @PostMapping("/showAnalysis")
     public ResponseEntity<?> showAnalysis(@RequestParam String createdAt, @RequestParam long created_by, @RequestParam int domainId) {
         if (cService.generateReportAnalysis(createdAt, created_by, domainId).isEmpty()) {
             CData data = new CData();
-            data.setMessage("No Resule Found");
+            data.setMessage("No Result Found");
             data.setStatusCode(HttpStatus.NOT_FOUND.value());
             return ResponseEntity.ok(data);
         }
         CData data = new CData();
         data.setData(cService.generateReportAnalysis(createdAt, created_by, domainId));
         data.setStatusCode(HttpStatus.OK.value());
+        data.setMessage("SUCCESS");
         return ResponseEntity.ok(data);
     }
 }

@@ -19,6 +19,7 @@ public class FeedBack extends DateAuditnew {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int feedbackId;
     private int questionId;
+    private int technologyId;
     private String technologyName;
     private String mentorName;
     private long mentorId;
@@ -160,6 +161,14 @@ public class FeedBack extends DateAuditnew {
 
     public void setcStr(String cStr) {
         this.cStr = cStr;
+    }
+
+    public int getTechnologyId() {
+        return technologyId;
+    }
+
+    public void setTechnologyId(int technologyId) {
+        this.technologyId = technologyId;
     }
 
 }

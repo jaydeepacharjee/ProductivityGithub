@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  *
  * @author Jaydeep
@@ -39,7 +41,8 @@ public class Technology {
     public void setTechnologyName(String technologyName) {
         this.technologyName = technologyName;
     }
-
+    
+    @JsonIgnore
     public Set<Domain> getDomain() {
         return domain;
     }

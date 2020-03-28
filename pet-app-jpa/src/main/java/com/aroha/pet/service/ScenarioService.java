@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.aroha.pet.exception.FileNotFoundException;
@@ -88,10 +87,22 @@ public class ScenarioService {
     }
 
     public Object checkDuplicate(DomainRequest domainData) {
-        if (scenarioRepository.checkDuplicate(domainData.getFunctionId(), domainData.getScenario().getScenarioTitle().trim()) > 0) {
-            return new ApiResponse(Boolean.TRUE, "Scenario name already present for the function ");
-        }
-        return new ApiResponse(Boolean.FALSE, "Scenario Name not Present for the function");
+    	int functionId=domainData.getFunctionId();
+    	String scenarioTitle=domainData.getScenario().getScenarioTitle().toLowerCase().trim().replaceAll("\\s+","");
+    	boolean flag=false;
+    	List<Scenario>scenario=scenarioRepository.checkDuplicate(functionId);
+    	Iterator<Scenario>itr=scenario.iterator();
+    	while(itr.hasNext()) {
+    		Scenario obj=itr.next();
+    		if(scenarioTitle.equals(obj.getScenarioTitle().toLowerCase().trim().replaceAll("\\s+",""))) {
+    			flag=true;
+    		}
+    	}
+    	if(flag) {
+    		return new ApiResponse(Boolean.TRUE,"Scenario already exists");
+    	}else {
+    		return new ApiResponse(Boolean.FALSE,"Scenario doesn't exists");
+    	}
     }
 
     public DeleteDomainPayload deleteScenarioName(int scenarioId) {

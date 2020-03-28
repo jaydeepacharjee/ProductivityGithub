@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import com.aroha.pet.model.QueryInfo;
+import com.aroha.pet.model.Technology;
 import java.util.List;
 
 @Repository
@@ -59,5 +60,6 @@ public interface FeedBackRepository extends JpaRepository<QueryInfo, Long> {
     		"DATE(q.created_at)=DATE(?2) and q.created_by=?1 and d.domain_id =?3 and "
     		+ "f.function_id =?4 and s.scenario_id =?5 order by scenario;",nativeQuery = true)
     public List<Object[]> getQuestionRepo(long created_by, String createdAt,int domainId,int functionId,int scenarioId);
+
 
  }
