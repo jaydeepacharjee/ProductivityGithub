@@ -13,6 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TechnologyRepository extends JpaRepository<Technology, Integer>{
 	
-    @Query(value="select technology_id as tech_id,technology_name from mentor_feedback where learner_id=?1",nativeQuery = true)
-    public List<Technology> getTech(Long userId);
+//    @Query(value="select technology_id as tech_id,technology_name from mentor_feedback where learner_id=?1",nativeQuery = true)
+//    public List<Technology> getTech(Long userId);
 }

@@ -34,7 +34,7 @@ public class TechnologyService {
         return techRepo.findById(technologyId);
     }
     
-    public List<Technology>findTechnology(Long userId){
-    	return techRepo.getTech(userId);
-    }
+//    public List<Technology>findTechnology(Long userId){
+//    	return techRepo.getTech(userId);
+//    }
 }

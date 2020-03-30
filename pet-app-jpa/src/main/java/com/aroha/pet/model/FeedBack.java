@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import com.aroha.pet.model.audit.DateAuditnew;
 
@@ -27,6 +28,7 @@ public class FeedBack extends DateAuditnew {
     private String learnerName;
     private String feedback;
     private String question;
+    @Lob
     private String resulstr;
     private String exceptionStr;
     private String error;

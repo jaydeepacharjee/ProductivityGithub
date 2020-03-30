@@ -138,4 +138,11 @@ public class QueryInfo extends UserDateAudit {
 		this.questionId = questionId;
 	}
 
+	@Override
+	public String toString() {
+		return "QueryInfo [id=" + id + ", sqlStr=" + sqlStr + ", resultStr=" + resultStr + ", exceptionStr="
+				+ exceptionStr + ", dbType=" + dbType + ", jdbcUrl=" + jdbcUrl + ", userName=" + userName
+				+ ", password=" + password + ", scenario=" + scenario + ", questionId=" + questionId + "]";
+	}
+
 }

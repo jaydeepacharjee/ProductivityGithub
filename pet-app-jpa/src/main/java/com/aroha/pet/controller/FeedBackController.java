@@ -95,9 +95,9 @@ public class FeedBackController {
         return ResponseEntity.ok("cleared notification");
     }
 
-    @GetMapping("/findTechnology")
-    public ResponseEntity<?> getTechnology(@CurrentUser UserPrincipal user) {
-        Long userId = user.getId();
-        return ResponseEntity.ok(feedService.findTechnology(userId));
-    }
+//    @GetMapping("/findTechnology")
+//    public ResponseEntity<?> getTechnology(@CurrentUser UserPrincipal user) {
+//        Long userId = user.getId();
+//        return ResponseEntity.ok(feedService.findTechnology(userId));
+//    }
 }

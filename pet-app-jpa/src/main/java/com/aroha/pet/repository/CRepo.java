@@ -28,7 +28,7 @@ public interface CRepo extends JpaRepository<CPojo, Long>{
     		"        user_roles r              \r\n" + 
     		"            on u.id=r.user_id      \r\n" + 
     		"    WHERE\r\n" + 
-    		"        r.role_id=1       \r\n" + 
+    		"        r.role_id =1       \r\n" + 
     		"    GROUP BY\r\n" + 
     		"        u.id,\r\n" + 
     		"        DAY(q.created_at)       \r\n" + 
@@ -36,75 +36,77 @@ public interface CRepo extends JpaRepository<CPojo, Long>{
     		"        count(distinct q.scenario)>0;",nativeQuery = true)
     public List<Object[]>generateReport();
     
-    @Query(value="select\n" +
-"        d.domain_name,\n" +
-"        f.function_name,\n" +
-"        s.scenario_title,\n" +
-"        c.cstr,\n" +
-"        c.error,\n" +
-"        q.question_id,\n" +
-"        c.resultstr,\n" +
-"        c.scenario,\n" +
-"        m.feedback,\n" +
-"        m.mentor_name,\n" +
-"        m.created_at,\n" +
-"		c.created_at as answerDate\n" +
-"    from\n" +
-"        cpojo c          \n" +
-"    left join\n" +
-"        mentor_feedback m         \n" +
-"            on c.created_at=m.query_date     \n" +
-"    inner join\n" +
-"        question q               \n" +
-"            on c.question_id=q.question_id      \n" +
-"    inner join\n" +
-"        scenario s              \n" +
-"            on s.scenario_id=q.scenario_id      \n" +
-"    inner join\n" +
-"        function_table f              \n" +
-"            on f.function_id=s.function_id      \n" +
-"    inner join\n" +
-"        domain d              \n" +
-"            on d.domain_id=f.domain_id      \n" +
-"    where\n" +
-"        d.domain_id=?3          \n" +
-"        and DATE(c.created_at)=DATE(?1)          \n" +
-"        and c.created_by=?2     \n" +
-"    order by\n" +
-"        scenario;",nativeQuery = true  )
+    @Query(value="select\r\n" + 
+    		"        d.domain_name,\r\n" + 
+    		"        f.function_name,\r\n" + 
+    		"        s.scenario_title,\r\n" + 
+    		"        c.cstr,\r\n" + 
+    		"        c.error,\r\n" + 
+    		"        q.question_id,\r\n" + 
+    		"        c.resultstr,\r\n" + 
+    		"        c.scenario,\r\n" + 
+    		"        m.feedback,\r\n" + 
+    		"        m.mentor_name,\r\n" + 
+    		"        m.created_at,\r\n" + 
+    		"        c.created_at as answerDate     \r\n" + 
+    		"    from\r\n" + 
+    		"        cpojo c                      \r\n" + 
+    		"    inner join\r\n" + 
+    		"        question q                            \r\n" + 
+    		"            on c.question_id=q.question_id           \r\n" + 
+    		"    inner join\r\n" + 
+    		"        scenario s                           \r\n" + 
+    		"            on s.scenario_id=q.scenario_id           \r\n" + 
+    		"    inner join\r\n" + 
+    		"        function_table f                           \r\n" + 
+    		"            on f.function_id=s.function_id           \r\n" + 
+    		"    inner join\r\n" + 
+    		"        domain d                           \r\n" + 
+    		"            on d.domain_id=f.domain_id\r\n" + 
+    		"	 left join\r\n" + 
+    		"        mentor_feedback m                      \r\n" + 
+    		"            on c.created_at=m.query_date              \r\n" + 
+    		"    where\r\n" + 
+    		"        d.domain_id=?3                   \r\n" + 
+    		"        and DATE(c.created_at)=DATE(?1)                   \r\n" + 
+    		"        and c.created_by=?2          \r\n" + 
+    		"    order by\r\n" + 
+    		"        scenario;",nativeQuery = true  )
     public List<Object[]> generateReportAnalysis(String createdAt,Long createdBy,int domainId);
     
 
     @Query(value="select * from cpojo where created_at=?1 and question_id=?2",nativeQuery = true)
     public CPojo searchCRepo(String createdAt,int questionId);
     
-    @Query(value="select\n" +
-"        d.domain_id,\n" +
-"        d.domain_name \n" +
-"    from\n" +
-"        cpojo q   \n" +
-"    left join\n" +
-"        mentor_feedback m \n" +
-"            on q.created_at=m.query_date \n" +
-"    inner join\n" +
-"        question ques \n" +
-"            on  q.question_id=ques.question_id \n" +
-"    inner join\n" +
-"        scenario s \n" +
-"            on s.scenario_id=ques.scenario_id  \n" +
-"    inner join\n" +
-"        function_table f \n" +
-"            on f.function_id=s.function_id \n" +
-"    inner join\n" +
-"        domain d \n" +
-"            on d.domain_id=f.domain_id  \n" +
-"    left join\n" +
-"        question qus \n" +
-"            on q.question_id=qus.question_id \n" +
-"    where\n" +
-"        DATE(q.created_at)=DATE(?2) \n" +
-"        and q.created_by=?1 \n" +
-"    order by\n" +
-"        scenario;",nativeQuery = true)
+    @Query(value=" select\r\n" + 
+    		"        d.domain_id,\r\n" + 
+    		"        d.domain_name      \r\n" + 
+    		"    from\r\n" + 
+    		"        cpojo q                    \r\n" + 
+    		"                \r\n" + 
+    		"    inner join\r\n" + 
+    		"        question ques              \r\n" + 
+    		"            on  q.question_id=ques.question_id      \r\n" + 
+    		"    inner join\r\n" + 
+    		"        scenario s              \r\n" + 
+    		"            on s.scenario_id=ques.scenario_id       \r\n" + 
+    		"    inner join\r\n" + 
+    		"        function_table f              \r\n" + 
+    		"            on f.function_id=s.function_id      \r\n" + 
+    		"    inner join\r\n" + 
+    		"        domain d              \r\n" + 
+    		"            on d.domain_id=f.domain_id       \r\n" + 
+    		"    left join\r\n" + 
+    		"        question qus              \r\n" + 
+    		"            on q.question_id=qus.question_id \r\n" + 
+    		"	 left join\r\n" + 
+    		"        mentor_feedback m \r\n" + 
+    		"		    on q.created_at=m.query_date      \r\n" + 
+    		"    where\r\n" + 
+    		"        DATE(q.created_at)=DATE(?2)          \r\n" + 
+    		"        and q.created_by=?1      \r\n" + 
+    		"    order by\r\n" + 
+    		"        scenario;\r\n" + 
+    		"",nativeQuery = true)
     public List<Object[]> getDomainAnalsisRepo(long created_by, String createdAt);
 }

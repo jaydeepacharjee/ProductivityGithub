@@ -1,7 +1,8 @@
 package com.aroha.pet.payload;
 
-import com.google.gson.JsonArray;
 import java.util.List;
+
+import javax.persistence.Lob;
 
 /**
  *

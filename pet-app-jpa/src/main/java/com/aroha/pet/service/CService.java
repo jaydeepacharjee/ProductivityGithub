@@ -16,9 +16,13 @@ import java.util.List;
 import java.util.Random;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import com.aroha.pet.controller.FeedBackController;
 import com.aroha.pet.model.CPojo;
 import com.aroha.pet.payload.CPayload;
 import com.aroha.pet.payload.CReport;
@@ -40,6 +44,8 @@ public class CService {
 	StringBuffer sbuffer=null;
 	StringBuffer sb=null;
 	int ctr=0;
+	
+	 private final Logger logger = LoggerFactory.getLogger(CService.class);
 
 	public CResponse executeC(CPayload cpayload, UserPrincipal currentUser) throws Exception {
 		// TODO Auto-generated method stub
@@ -232,6 +238,7 @@ public class CService {
 
     public List<CReportAnalysisPayload> generateReportAnalysis(String createdAt, Long createdBy, int domainId) {
         List<Object[]> listObj = cRepo.generateReportAnalysis(createdAt, createdBy, domainId);
+        logger.info("------------- I am here----------------"+listObj.size());
         List<CReportAnalysisPayload> list = new ArrayList<>();
         listObj.stream().map((object) -> {
             CReportAnalysisPayload load = new CReportAnalysisPayload();

@@ -21,45 +21,46 @@ public interface QuestionQueryInfoRepository extends JpaRepository<QueryInfo, In
             + "DATE(q.created_at)=DATE(?2)and q.created_by=?1 order by scenario", nativeQuery = true)
     public List<QuestionQueryInfo> getReport(long created_by, String createdAt,int questionId);
      */
-    @Query(value = " select"
-          +" d.domain_name,\n" +
-"        f.function_name,\n" +
-"        q.scenario,\n" +
-"        q.sql_str,\n" +
-"        q.exception_str,\n" +
-"        q.created_at,\n" +
-"        q.question_id,\n" +
-"        m.feedback,\n" +
-"        m.mentor_name,\n" +
-"        m.created_at as feedbackDate,\n" +
-"        qus.answer,\n" +
-"        q.result_str as resultStr   \n" +
-"    from\n" +
-"        query_info q   \n" +
-"    left join\n" +
-"        mentor_feedback m \n" +
-"            on q.created_at=m.query_date \n" +
-"    inner join\n" +
-"        question ques \n" +
-"            on  q.question_id=ques.question_id \n" +
-"    inner join\n" +
-"        scenario s \n" +
-"            on s.scenario_id=ques.scenario_id  \n" +
-"    inner join\n" +
-"        function_table f \n" +
-"            on f.function_id=s.function_id \n" +
-"    inner join\n" +
-"        domain d \n" +
-"            on d.domain_id=f.domain_id  \n" +
-"    left join\n" +
-"        question qus \n" +
-"            on q.question_id=qus.question_id \n" +
-"    where\n" +
-"        d.domain_id=?3 \n" +
-"        and  DATE(q.created_at)=DATE(?2) \n" +
-"        and q.created_by=?1 \n" +
-"    order by\n" +
-"        scenario;", nativeQuery = true)
+    @Query(value = " select\r\n" + 
+    		"        d.domain_name,\r\n" + 
+    		"        f.function_name,\r\n" + 
+    		"        q.scenario,\r\n" + 
+    		"        q.sql_str,\r\n" + 
+    		"        q.exception_str,\r\n" + 
+    		"        q.created_at,\r\n" + 
+    		"        q.question_id,\r\n" + 
+    		"        m.feedback,\r\n" + 
+    		"        m.mentor_name,\r\n" + 
+    		"        m.created_at as feedbackDate,\r\n" + 
+    		"        qus.answer,\r\n" + 
+    		"        q.result_str as resultStr        \r\n" + 
+    		"    from\r\n" + 
+    		"        query_info q        \r\n" + 
+    		"\r\n" + 
+    		"    inner join\r\n" + 
+    		"        question ques              \r\n" + 
+    		"            on  q.question_id=ques.question_id      \r\n" + 
+    		"    inner join\r\n" + 
+    		"        scenario s              \r\n" + 
+    		"            on s.scenario_id=ques.scenario_id       \r\n" + 
+    		"    inner join\r\n" + 
+    		"        function_table f              \r\n" + 
+    		"            on f.function_id=s.function_id      \r\n" + 
+    		"    inner join\r\n" + 
+    		"        domain d              \r\n" + 
+    		"            on d.domain_id=f.domain_id       \r\n" + 
+    		"    left join\r\n" + 
+    		"        question qus              \r\n" + 
+    		"            on q.question_id=qus.question_id\r\n" + 
+    		"	  left join\r\n" + 
+    		"        mentor_feedback m              \r\n" + 
+    		"            on q.created_at=m.query_date            \r\n" + 
+    		"    where\r\n" + 
+    		"        d.domain_id=?3          \r\n" + 
+    		"        and  DATE(q.created_at)=DATE(?2)          \r\n" + 
+    		"        and q.created_by=?1      \r\n" + 
+    		"    order by\r\n" + 
+    		"        scenario;", nativeQuery = true)
     public List<Object[]> getReport(long created_by, String createdAt,int domainId);
 //    public List<QuestionQueryInfo> getReport(long created_by, String createdAt, int questionId);
 
