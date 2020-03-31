@@ -4,30 +4,30 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-
+import java.util.Set;
 import javax.servlet.ServletContext;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.aroha.pet.model.JavaPojo;
 import com.aroha.pet.model.JavascriptPojo;
-import com.aroha.pet.payload.JavaResponse;
+import com.aroha.pet.payload.DomainResponsePayload;
 import com.aroha.pet.payload.JavascriptPayload;
+import com.aroha.pet.payload.JavascriptReport;
+import com.aroha.pet.payload.JavascriptReportAnalysisPayload;
 import com.aroha.pet.payload.JavascriptResponse;
 import com.aroha.pet.repository.JavascriptRepo;
 import com.aroha.pet.security.UserPrincipal;
@@ -58,6 +58,7 @@ public class JavascriptService {
         String fileString = generateRandomWord(8);
         File newFile = new File(dirName);
         newFile.mkdir();
+        logger.info("--------------file is:------"+newFile.getAbsolutePath());
 
         DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
         Date dateobj = new Date();
@@ -65,6 +66,7 @@ public class JavascriptService {
         //logger.info("JAVA_PROGRAMS_PET:  "+absolutePath);
 
         String uName = currentUser.getName();
+        logger.info("---------------------current user-------"+uName);
         sb2 = new StringBuffer();
 
         //Generate Random Name for each Javascript Program
@@ -74,6 +76,7 @@ public class JavascriptService {
         int qId = payload.getQuestionId();
         String text = payload.getJavascriptpojo().getJavascriptstr();
         sb = new StringBuffer(text);
+        logger.info("-------------------javascriptstr-------"+sb.toString());
 
         String filename = "/" + random + ".js";
         //System.out.println("Name is : "+filename);
@@ -105,14 +108,9 @@ public class JavascriptService {
             System.out.println("Error is: " + error);
             int r = error.toString().indexOf("at");
             int m = error.toString().indexOf("\n");
-            //cpojo.setResultstr(sb.toString().substring(sb.toString().indexOf("error")));
             javascriptpojo.setResultstr(error.toString().substring(m + 1, r));
-
-            //javascriptpojo.setResultstr(sb2.toString());
-            javascriptpojo.setCreatedAt(currTimeAndDate);
             javascriptpojo.setCreatedBy(currentUser.getId());
-            //javascriptresponse.setJavascript(text);
-            //javascriptresponse.setJavascriptresult(getJsonArrayAsList(jsona));
+            javascriptpojo.setError(error.toString().substring(m + 1, r));
             javascriptresponse.setJavascripterror(error.toString().substring(m + 1, r));
             javascriptresponse.setJavascriptstatus("ERROR");
             javascriptRepo.save(javascriptpojo);
@@ -123,9 +121,7 @@ public class JavascriptService {
             javascriptpojo.setResultstr(sb2.toString());
             javascriptpojo.setQuestionId(qId);
             javascriptpojo.setScenario(payload.getJavascriptpojo().getScenario());
-            javascriptpojo.setCreatedAt(currTimeAndDate);
             javascriptpojo.setCreatedBy(currentUser.getId());
-            //javascriptresponse.setJavascript(text);
             javascriptresponse.setJavascriptresult(sb2.toString());
             javascriptresponse.setJavascriptstatus("SUCCESS");
             javascriptRepo.save(javascriptpojo);
@@ -183,5 +179,77 @@ public class JavascriptService {
             sb.append(tmp); // Add it to the String
         }
         return sb.toString();
+    }
+
+    public List<JavascriptReport> getReportCard() {
+        // TODO Auto-generated method stub
+        List<Object[]> listObj = javascriptRepo.generateReport();
+        List<JavascriptReport> list = new ArrayList<>();
+        listObj.stream().map((obj) -> {
+            JavascriptReport report = new JavascriptReport();
+            report.setUserId((java.math.BigInteger) obj[0]);
+            report.setName((String) obj[1]);
+            java.sql.Timestamp i = (java.sql.Timestamp) obj[2];
+            report.setCreated_at(i.toString());
+            report.setNoOfError((java.math.BigInteger) obj[3]);
+            report.setNoOfQuestion((java.math.BigInteger) obj[4]);
+            report.setNoOfAttempt((java.math.BigInteger) obj[5]);
+            report.setProductivity((java.math.BigDecimal) obj[6]);
+            return report;
+        }).forEachOrdered((report) -> {
+            list.add(report);
+        });
+        return list;
+    }
+
+    public List<JavascriptReportAnalysisPayload> generateReportAnalysis(String createdAt, long createdBy, int domainId) {
+        // TODO Auto-generated method stub
+        List<Object[]> listObj = javascriptRepo.generateReportAnalysis(createdAt, createdBy, domainId);
+        List<JavascriptReportAnalysisPayload> list = new ArrayList<>();
+        listObj.stream().map((object) -> {
+            JavascriptReportAnalysisPayload load = new JavascriptReportAnalysisPayload();
+            load.setDomainName((String) object[0]);
+            load.setFunctionName((String) object[1]);
+            load.setScenarioTitle((String) object[2]);
+            load.setJavascriptStr((String) object[3]);
+            load.setError((String) object[4]);
+            load.setQuestionId((int) object[5]);
+            load.setResultStr((String) object[6]);
+            load.setScenario((String) object[7]);
+            load.setFeedback((String) object[8]);
+            load.setMentorName((String) object[9]);
+            java.sql.Timestamp i = (java.sql.Timestamp) object[10];
+            Date date = null;
+            if (i != null) {
+                try {
+                    date = new SimpleDateFormat("yyyy-MM-dd").parse(i.toString());
+                } catch (Exception ex) {
+                }
+                SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");
+                load.setFeedbackDate(formatter.format(date));
+            }
+            return load;
+        }).forEachOrdered((load) -> {
+            list.add(load);
+        });
+        return list;
+    }
+
+    public JavascriptPojo findByTechnologyRepo(String createdAt, int questionId) {
+        return javascriptRepo.searchJavascriptRepo(createdAt, questionId);
+    }
+
+    public Set<DomainResponsePayload> getDomainResponse(long created_by, String createdAt) {
+        Set<DomainResponsePayload> domainName = new HashSet<>();
+        List<Object[]> getDomain = javascriptRepo.getDomainAnalsisRepo(created_by, createdAt);
+        getDomain.stream().map((object) -> {
+            DomainResponsePayload dLoad = new DomainResponsePayload();
+            dLoad.setDomain_id((int) object[0]);
+            dLoad.setDomainName((String) object[1]);
+            return dLoad;
+        }).forEachOrdered((dLoad) -> {
+            domainName.add(dLoad);
+        });
+        return domainName;
     }
 }
