@@ -124,5 +124,10 @@ public class Scenario implements Serializable {
 		this.fileName = fileName;
 	}
 
+    @Override
+    public String toString() {
+        return "Scenario{" + "scenarioId=" + scenarioId + ", scenarioTitle=" + scenarioTitle + ", scenarioType=" + scenarioType + ", scenarioCode=" + scenarioCode + ", scenarioDesc=" + scenarioDesc + ", image=" + image + ", fileName=" + fileName + ", function=" + function + ", ques=" + ques + '}';
+    }
+
 
 }

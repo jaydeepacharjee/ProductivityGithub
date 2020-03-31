@@ -18,15 +18,14 @@ import com.aroha.pet.service.JavascriptService;
 @RestController
 @RequestMapping("api/javascript")
 public class JavascriptController {
-	
-	@Autowired
-	private JavascriptService javascriptservice;
-	
-	
-	@PostMapping("/executeJavascript")
-	public ResponseEntity<?> executeJavascript(@CurrentUser UserPrincipal currentUser, @RequestBody JavascriptPayload payload) throws Exception{
-		JavascriptResponse javascriptResponse=javascriptservice.executeJavascript(currentUser, payload);
-		return ResponseEntity.ok(javascriptResponse);		
-	}
+
+    @Autowired
+    private JavascriptService javascriptservice;
+
+    @PostMapping("/executeJavascript")
+    public ResponseEntity<?> executeJavascript(@CurrentUser UserPrincipal currentUser, @RequestBody JavascriptPayload payload) throws Exception {
+        JavascriptResponse javascriptResponse = javascriptservice.executeJavascript(currentUser, payload);
+        return ResponseEntity.ok(javascriptResponse);
+    }
 
 }

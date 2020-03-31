@@ -72,7 +72,7 @@ public class DomainService {
             DomainList.add(domainData);
         }
         if (DomainList.isEmpty()) {
-            data.setMessage("Sorry!! No Data found");
+            data.setMessage("No Domain is added for the technology, please add one");
             data.setStatusCode(HttpStatus.NO_CONTENT.value());
         } else {
             data.setStatusCode(HttpStatus.OK.value());
@@ -113,8 +113,10 @@ public class DomainService {
             domainTable.setScenarioTitle((String) object[3]);
             domainTable.setQuestionDesc((String) object[4]);
             Scenario scenario = scenarioService.getFile((int) object[5]);
-            byte[] encoded = Base64.getEncoder().encode(scenario.getImage());
-            domainTable.setImage(new String(encoded));
+            if (scenario.getImage() != null) {
+                byte[] encoded = Base64.getEncoder().encode(scenario.getImage());
+                domainTable.setImage(new String(encoded));
+            }
             list.add(domainTable);
         }
         return list;

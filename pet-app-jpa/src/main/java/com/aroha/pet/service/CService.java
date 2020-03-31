@@ -32,188 +32,181 @@ import com.aroha.pet.payload.DomainResponsePayload;
 import com.aroha.pet.payload.GetDomainDataPayload;
 import com.aroha.pet.repository.CRepo;
 import com.aroha.pet.security.UserPrincipal;
+import java.text.ParseException;
 import java.util.HashSet;
 import java.util.Set;
 
 @Service
 public class CService {
 
-	@Autowired
-	CRepo cRepo;
+    @Autowired
+    CRepo cRepo;
 
-	StringBuffer sbuffer=null;
-	StringBuffer sb=null;
-	int ctr=0;
-	
-	 private final Logger logger = LoggerFactory.getLogger(CService.class);
+    StringBuffer sbuffer = null;
+    StringBuffer sb = null;
+    int ctr = 0;
 
-	public CResponse executeC(CPayload cpayload, UserPrincipal currentUser) throws Exception {
-		// TODO Auto-generated method stub
-		Path currentPath=Paths.get("");
-		String projectPath=currentPath.toAbsolutePath().toString();
-		String dirName=projectPath+"\\"+"CPrograms";
-		String fileString=generateRandomWord(8);
-		String compileFileName=fileString+"_"+currentUser.getName()+".c";
-		String executableFileName=fileString+"_"+currentUser.getName();
-		File newFile=new File(projectPath+"\\"+"CPrograms");
-		newFile.mkdir();
+    private final Logger logger = LoggerFactory.getLogger(CService.class);
 
-		BufferedWriter writer = new BufferedWriter(new FileWriter(dirName+"\\"+compileFileName));
+    public CResponse executeC(CPayload cpayload, UserPrincipal currentUser) throws Exception {
+        // TODO Auto-generated method stub
+        Path currentPath = Paths.get("");
+        String projectPath = currentPath.toAbsolutePath().toString();
+        String dirName = projectPath + "\\" + "CPrograms";
+        String fileString = generateRandomWord(8);
+        String compileFileName = fileString + "_" + currentUser.getName() + ".c";
+        String executableFileName = fileString + "_" + currentUser.getName();
+        File newFile = new File(projectPath + "\\" + "CPrograms");
+        newFile.mkdir();
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter(dirName + "\\" + compileFileName));
 //		String cCode="#include<stdio.h>"+"\n"+"#include<conio.h>"+"\n"
 //				+"#include<assert.h>"+"\n"+"#include<math.h>"+"\n"+
 //				"#include<stdlib.h>"+"\n"+"#include<string.h>"+"\n"+"#include<ctype.h>"+                                           
 //				"\n"+cpayload.getCpojo().getCstr();
-		String cCode=cpayload.getCpojo().getCstr();
-		//System.out.println("C Code is: "+cCode);
-		sbuffer=new StringBuffer(cCode);
-		sb=new StringBuffer();
-		writer.write(sbuffer.toString());
-		writer.close();
-		writer = null;
+        String cCode = cpayload.getCpojo().getCstr();
+        //System.out.println("C Code is: "+cCode);
+        sbuffer = new StringBuffer(cCode);
+        sb = new StringBuffer();
+        writer.write(sbuffer.toString());
+        writer.close();
+        writer = null;
 
-         //String compilationCommand="C:\\TDM-GCC-64\\bin\\gcc.exe "+dirName+"\\"+compileFileName +" -o "+ " "+dirName+"\\"+executableFileName;
-		String compilationCommand="gcc "+dirName+"\\"+compileFileName +" -o "+ " "+dirName+"\\"+executableFileName;
-		DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
-		Date dateobj = new Date();
-		String currTimeAndDate=df.format(dateobj);
+        //String compilationCommand="C:\\TDM-GCC-64\\bin\\gcc.exe "+dirName+"\\"+compileFileName +" -o "+ " "+dirName+"\\"+executableFileName;
+        String compilationCommand = "gcc " + dirName + "\\" + compileFileName + " -o " + " " + dirName + "\\" + executableFileName;
+        DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+        Date dateobj = new Date();
+        String currTimeAndDate = df.format(dateobj);
 
-		CPojo cpojo=new CPojo();
-		CResponse cResponse = new CResponse();
-		JSONArray jsona = null;
+        CPojo cpojo = new CPojo();
+        CResponse cResponse = new CResponse();
+        JSONArray jsona = null;
 
-		sb=runProcess(compilationCommand);		
-		System.out.println("Sb is: "+sb);
-		String executableCommand=dirName+"\\"+executableFileName;
-		if (runProcess(executableCommand)!=null){
-			//sb=runProcess(executableCommand);
-			cpojo.setScenario(cpayload.getCpojo().getScenario());
-			cpojo.setCstr(cCode);
-			System.out.println("=========================================================================");
-			System.out.println("My sb is: "+sb);
-			if(sb.toString().contains("warning:")) {
-				cpojo.setQuestionId(cpayload.getQuestionId());
-				cpojo.setScenario(cpayload.getCpojo().getScenario());
-				//cpojo.setCreatedAt(currTimeAndDate);
-				cpojo.setCreatedBy(currentUser.getId());
-				String error=sb.toString().substring(sb.toString().indexOf("warning:"));
-				System.out.println("Error is: "+error);
-				int r=error.toString().indexOf("]");
-				int m=error.toString().indexOf("warning:");
-				cpojo.setResultstr(error.toString().substring(m, r+1));
-				//cResponse.setCprogram(cCode);
-				cResponse.setCerror(error.toString().substring(m, r+1));
-				//cResponse.setCprogram(cCode);
-				cResponse.setCstatus("ERROR");
-				
-				cRepo.save(cpojo);
-				return cResponse;
-			}
-			else {
-				//jsona=getResultForJava(sb);
-				cpojo.setQuestionId(cpayload.getQuestionId());
-				cpojo.setScenario(cpayload.getCpojo().getScenario());
-				//cpojo.setCreatedAt(currTimeAndDate);
-				cpojo.setCreatedBy(currentUser.getId());
-				cpojo.setResultstr(sb.toString());
-				//cResponse.setCprogram(cCode);
-				cResponse.setCresult(sb.toString());
-				cResponse.setCstatus("SUCCESS");
-				cRepo.save(cpojo);
-				return cResponse;
-			}
-		}
-		else{
-			runProcess(executableCommand);
-			cpojo.setScenario(cpayload.getCpojo().getScenario());
-			cpojo.setCstr(cCode);
-			System.out.println("=========================================================================");
-			//int idx=sb.indexOf("error");
-			jsona=getResultForJava(sb);
-			cpojo.setQuestionId(cpayload.getQuestionId());
-			cpojo.setScenario(cpayload.getCpojo().getScenario());
-			//cpojo.setCreatedAt(currTimeAndDate);
-			cpojo.setCreatedBy(currentUser.getId());
-			String error=sb.toString().substring(sb.toString().indexOf("error"));
-			System.out.println("Error is: "+error);
-			int r=error.toString().indexOf("\n");
-			int m=error.toString().indexOf("error");
-			//cpojo.setResultstr(sb.toString().substring(sb.toString().indexOf("error")));
-			cpojo.setResultstr(error.toString().substring(m, r));
-			//cResponse.setCprogram(cCode);
-			//cResponse.setCexception(sb.toString().substring(sb.toString().indexOf("error")));
-			cResponse.setCerror(error.toString().substring(m, r));
-			cResponse.setCstatus("ERROR");
-			cRepo.save(cpojo);
-			return cResponse;	
-		}
+        sb = runProcess(compilationCommand);
+        String executableCommand = dirName + "\\" + executableFileName;
+        if (runProcess(executableCommand) != null) {
+            //sb=runProcess(executableCommand);
+            cpojo.setScenario(cpayload.getCpojo().getScenario());
+            cpojo.setCstr(cCode);
+            logger.info("My sb is: " + sb);
+            if (sb.toString().contains("warning:")) {
+                cpojo.setQuestionId(cpayload.getQuestionId());
+                cpojo.setScenario(cpayload.getCpojo().getScenario());
+                //cpojo.setCreatedAt(currTimeAndDate);
+                cpojo.setCreatedBy(currentUser.getId());
+                String error = sb.toString().substring(sb.toString().indexOf("warning:"));
+                logger.error("Error is: " + error);
+                int r = error.toString().indexOf("]");
+                int m = error.toString().indexOf("warning:");
+                cpojo.setResultstr(error.toString().substring(m, r + 1));
+                //cResponse.setCprogram(cCode);
+                cResponse.setCerror(error.toString().substring(m, r + 1));
+                //cResponse.setCprogram(cCode);
+                cResponse.setCstatus("ERROR");
 
-	}
+                cRepo.save(cpojo);
+                return cResponse;
+            } else {
+                //jsona=getResultForJava(sb);
+                cpojo.setQuestionId(cpayload.getQuestionId());
+                cpojo.setScenario(cpayload.getCpojo().getScenario());
+                //cpojo.setCreatedAt(currTimeAndDate);
+                cpojo.setCreatedBy(currentUser.getId());
+                cpojo.setResultstr(sb.toString());
+                //cResponse.setCprogram(cCode);
+                cResponse.setCresult(sb.toString());
+                cResponse.setCstatus("SUCCESS");
+                cRepo.save(cpojo);
+                return cResponse;
+            }
+        } else {
+            runProcess(executableCommand);
+            cpojo.setScenario(cpayload.getCpojo().getScenario());
+            cpojo.setCstr(cCode);
+            //int idx=sb.indexOf("error");
+            jsona = getResultForJava(sb);
+            cpojo.setQuestionId(cpayload.getQuestionId());
+            cpojo.setScenario(cpayload.getCpojo().getScenario());
+            //cpojo.setCreatedAt(currTimeAndDate);
+            cpojo.setCreatedBy(currentUser.getId());
+            String error = sb.toString().substring(sb.toString().indexOf("error"));
+            int r = error.toString().indexOf("\n");
+            int m = error.toString().indexOf("error");
+            //cpojo.setResultstr(sb.toString().substring(sb.toString().indexOf("error")));
+            cpojo.setResultstr(error.toString().substring(m, r));
+            //cResponse.setCprogram(cCode);
+            //cResponse.setCexception(sb.toString().substring(sb.toString().indexOf("error")));
+            cResponse.setCerror(error.toString().substring(m, r));
+            cResponse.setCstatus("ERROR");
+            cRepo.save(cpojo);
+            return cResponse;
+        }
 
-	private StringBuffer printLines(String cmd, InputStream ins) throws Exception {
-		String line = null;
+    }
 
-		BufferedReader in = new BufferedReader(
-				new InputStreamReader(ins));
-		while ((line = in.readLine()) != null) {
-			sb.append(line);
-			sb.append("\n");
-			ctr++;
+    private StringBuffer printLines(String cmd, InputStream ins) throws Exception {
+        String line = null;
 
-		}
-		in.close();
-		in=null;
-		//System.out.println("Output is: "+sb);
-		return sb;
-	}
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(ins));
+        while ((line = in.readLine()) != null) {
+            sb.append(line);
+            sb.append("\n");
+            ctr++;
 
-	private StringBuffer runProcess(String command) throws Exception {
-		StringBuffer sb2=null;
-		StringBuffer sb3=null;
-		try {
-			Process pro = Runtime.getRuntime().exec(command);
-			InputStream temp=pro.getInputStream();
-			//sb=new StringBuffer();
-			sb2=printLines(command + " stdout:", temp);
-			temp.close();
-			temp=pro.getErrorStream();
-			//System.out.println("I am here: "+sb);
-			sb3=printLines(command + " stderr:",temp);
-			temp.close();
-			temp=null;
-			pro.waitFor();
-			System.out.println(command + " exitValue() " + pro.exitValue());
-			pro.destroy();
-			return sb2;
-		}
-		catch(Exception ex) {
-			return sb3;
-		}
-	}
+        }
+        in.close();
+        in = null;
+        //System.out.println("Output is: "+sb);
+        return sb;
+    }
 
+    private StringBuffer runProcess(String command) throws Exception {
+        StringBuffer sb2 = null;
+        StringBuffer sb3 = null;
+        try {
+            Process pro = Runtime.getRuntime().exec(command);
+            InputStream temp = pro.getInputStream();
+            //sb=new StringBuffer();
+            sb2 = printLines(command + " stdout:", temp);
+            temp.close();
+            temp = pro.getErrorStream();
+            //System.out.println("I am here: "+sb);
+            sb3 = printLines(command + " stderr:", temp);
+            temp.close();
+            temp = null;
+            pro.waitFor();
+            logger.info(command + " exitValue() " + pro.exitValue());
+            pro.destroy();
+            return sb2;
+        } catch (Exception ex) {
+            return sb3;
+        }
+    }
 
-	private String generateRandomWord(int length) {
-		Random r = new Random(); // Intialize a Random Number Generator with SysTime as the seed
-		StringBuilder sb = new StringBuilder(length);
-		for(int i = 0; i < length; i++) { // For each letter in the word
-			char tmp = (char) ('a' + r.nextInt('z' - 'a')); // Generate a letter between a and z
-			sb.append(tmp); // Add it to the String
-		}
-		return sb.toString();
-	}
+    private String generateRandomWord(int length) {
+        Random r = new Random(); // Intialize a Random Number Generator with SysTime as the seed
+        StringBuilder sb = new StringBuilder(length);
+        for (int i = 0; i < length; i++) { // For each letter in the word
+            char tmp = (char) ('a' + r.nextInt('z' - 'a')); // Generate a letter between a and z
+            sb.append(tmp); // Add it to the String
+        }
+        return sb.toString();
+    }
 
-	private JSONArray getResultForJava(StringBuffer sb) throws Exception {
-		JSONArray json = new JSONArray();
-		JSONObject obj = new JSONObject();
-		obj.put("output", sb);
-		json.put(obj);
-		return json;
-	}
+    private JSONArray getResultForJava(StringBuffer sb) throws Exception {
+        JSONArray json = new JSONArray();
+        JSONObject obj = new JSONObject();
+        obj.put("output", sb);
+        json.put(obj);
+        return json;
+    }
 
-	private List getJsonArrayAsList(JSONArray jsona) {
-		return jsona.toList();
-	}
-	
-	public GetDomainDataPayload getReportCard() {
+    private List getJsonArrayAsList(JSONArray jsona) {
+        return jsona.toList();
+    }
+
+    public GetDomainDataPayload getReportCard() {
         List<Object[]> listObj = cRepo.generateReport();
         List<CReport> list = new ArrayList<>();
         listObj.stream().map((obj) -> {
@@ -230,15 +223,15 @@ public class CService {
         }).forEachOrdered((report) -> {
             list.add(report);
         });
-        if(list.isEmpty()) {
-        	return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(),"No Data Found");
+        if (list.isEmpty()) {
+            return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "No Data Found");
         }
-        return new GetDomainDataPayload(HttpStatus.OK.value(), list,"SUCCESS");
+        return new GetDomainDataPayload(HttpStatus.OK.value(), list, "SUCCESS");
     }
 
     public List<CReportAnalysisPayload> generateReportAnalysis(String createdAt, Long createdBy, int domainId) {
         List<Object[]> listObj = cRepo.generateReportAnalysis(createdAt, createdBy, domainId);
-        logger.info("------------- I am here----------------"+listObj.size());
+        logger.info("------------- I am here----------------" + listObj.size());
         List<CReportAnalysisPayload> list = new ArrayList<>();
         listObj.stream().map((object) -> {
             CReportAnalysisPayload load = new CReportAnalysisPayload();
@@ -257,13 +250,13 @@ public class CService {
             if (i != null) {
                 try {
                     date = new SimpleDateFormat("yyyy-MM-dd").parse(i.toString());
-                } catch (Exception ex) {
+                } catch (ParseException ex) {
                 }
                 SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");
                 load.setFeedbackDate(formatter.format(date));
             }
-             java.sql.Timestamp j = (java.sql.Timestamp) object[11];
-             load.setCreatedAt(j.toString());
+            java.sql.Timestamp j = (java.sql.Timestamp) object[11];
+            load.setCreatedAt(j.toString());
             return load;
         }).forEachOrdered((load) -> {
             list.add(load);
@@ -274,8 +267,8 @@ public class CService {
     public CPojo findByTechnologyRepo(String createdAt, int questionId) {
         return cRepo.searchCRepo(createdAt, questionId);
     }
-    
-     public Set<DomainResponsePayload> getDomainResponse(long created_by, String createdAt) {
+
+    public Set<DomainResponsePayload> getDomainResponse(long created_by, String createdAt) {
         Set<DomainResponsePayload> domainName = new HashSet<>();
         List<Object[]> getDomain = cRepo.getDomainAnalsisRepo(created_by, createdAt);
         getDomain.stream().map((object) -> {
