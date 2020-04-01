@@ -34,9 +34,6 @@ public class JavaController {
     
     @GetMapping("/getJavaReport")
     public ResponseEntity<?> generateReportCard(){
-    	if(javaservice.getReportCard().isEmpty()) {
-    		return ResponseEntity.ok("No Record");
-    	}
 		return ResponseEntity.ok(javaservice.getReportCard());   	
     }
     

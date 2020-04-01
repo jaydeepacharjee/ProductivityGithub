@@ -13,16 +13,14 @@ import javax.persistence.Lob;
 
 import org.springframework.data.annotation.CreatedDate;
 
+import com.aroha.pet.model.audit.DateAudit;
+
 @Entity
-public class JavaPojo {
+public class JavaPojo extends DateAudit {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-
-	@CreatedDate
-	@Column(insertable = true, updatable = false)
-	private String createdAt;
 	
 	private long createdBy;
 
@@ -77,15 +75,6 @@ public class JavaPojo {
 	public void setQuestionId(int questionId) {
 		this.questionId = questionId;
 	}
-
-	public String getCreatedAt() {
-		return createdAt;
-	}
-	public void setCreatedAt(String createdAt) {
-		this.createdAt = createdAt;
-	}
-	
-	
 	public long getCreatedBy() {
 		return createdBy;
 	}

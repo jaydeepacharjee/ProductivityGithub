@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.aroha.pet.model.CPojo;
@@ -31,6 +32,7 @@ import com.aroha.pet.model.JavaPojo;
 import com.aroha.pet.payload.CReport;
 import com.aroha.pet.payload.CReportAnalysisPayload;
 import com.aroha.pet.payload.DomainResponsePayload;
+import com.aroha.pet.payload.GetDomainDataPayload;
 import com.aroha.pet.payload.JavaPayload;
 import com.aroha.pet.payload.JavaReport;
 import com.aroha.pet.payload.JavaReportAnalysisPayload;
@@ -228,7 +230,7 @@ public class JavaService {
 		return sb1.toString(); 
 	}
 
-	public List<JavaReport> getReportCard() {
+	public GetDomainDataPayload getReportCard() {
 		List<Object[]> listObj = javaRepo.generateReport();
 		List<JavaReport> list = new ArrayList<>();
 		listObj.stream().map((obj) -> {
@@ -245,7 +247,10 @@ public class JavaService {
 		}).forEachOrdered((report) -> {
 			list.add(report);
 		});
-		return list;
+		if (list.isEmpty()) {
+            return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "No Data Found");
+        }
+        return new GetDomainDataPayload(HttpStatus.OK.value(), list, "SUCCESS");
 	}
 
 	public List<JavaReportAnalysisPayload> generateReportAnalysis(String createdAt, Long createdBy, int domainId) {

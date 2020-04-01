@@ -32,7 +32,7 @@ public interface JavaRepo extends JpaRepository<JavaPojo, Long>{
 			    "        user_roles r              \r\n" +
 			    "            on u.id=r.user_id      \r\n" +
 			    "    WHERE\r\n" +
-			    "        r.role_id =3       \r\n" +
+			    "        r.role_id =1       \r\n" +
 			    "    GROUP BY\r\n" +
 			    "        u.id,\r\n" +
 			    "        DAY(q.created_at)       \r\n" +

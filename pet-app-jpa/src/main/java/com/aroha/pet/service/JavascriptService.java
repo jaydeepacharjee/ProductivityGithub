@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
@@ -22,9 +23,11 @@ import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.aroha.pet.model.JavascriptPojo;
 import com.aroha.pet.payload.DomainResponsePayload;
+import com.aroha.pet.payload.GetDomainDataPayload;
 import com.aroha.pet.payload.JavascriptPayload;
 import com.aroha.pet.payload.JavascriptReport;
 import com.aroha.pet.payload.JavascriptReportAnalysisPayload;
@@ -58,7 +61,6 @@ public class JavascriptService {
         String fileString = generateRandomWord(8);
         File newFile = new File(dirName);
         newFile.mkdir();
-        logger.info("--------------file is:------"+newFile.getAbsolutePath());
 
         DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
         Date dateobj = new Date();
@@ -66,7 +68,6 @@ public class JavascriptService {
         //logger.info("JAVA_PROGRAMS_PET:  "+absolutePath);
 
         String uName = currentUser.getName();
-        logger.info("---------------------current user-------"+uName);
         sb2 = new StringBuffer();
 
         //Generate Random Name for each Javascript Program
@@ -76,7 +77,6 @@ public class JavascriptService {
         int qId = payload.getQuestionId();
         String text = payload.getJavascriptpojo().getJavascriptstr();
         sb = new StringBuffer(text);
-        logger.info("-------------------javascriptstr-------"+sb.toString());
 
         String filename = "/" + random + ".js";
         //System.out.println("Name is : "+filename);
@@ -108,9 +108,15 @@ public class JavascriptService {
             System.out.println("Error is: " + error);
             int r = error.toString().indexOf("at");
             int m = error.toString().indexOf("\n");
+            //cpojo.setResultstr(sb.toString().substring(sb.toString().indexOf("error")));
             javascriptpojo.setResultstr(error.toString().substring(m + 1, r));
+
+            //javascriptpojo.setResultstr(sb2.toString());
+            //javascriptpojo.setCreatedAt(currTimeAndDate);
             javascriptpojo.setCreatedBy(currentUser.getId());
             javascriptpojo.setError(error.toString().substring(m + 1, r));
+            //javascriptresponse.setJavascript(text);
+            //javascriptresponse.setJavascriptresult(getJsonArrayAsList(jsona));
             javascriptresponse.setJavascripterror(error.toString().substring(m + 1, r));
             javascriptresponse.setJavascriptstatus("ERROR");
             javascriptRepo.save(javascriptpojo);
@@ -121,7 +127,9 @@ public class JavascriptService {
             javascriptpojo.setResultstr(sb2.toString());
             javascriptpojo.setQuestionId(qId);
             javascriptpojo.setScenario(payload.getJavascriptpojo().getScenario());
+            //javascriptpojo.setCreatedAt(currTimeAndDate);
             javascriptpojo.setCreatedBy(currentUser.getId());
+            //javascriptresponse.setJavascript(text);
             javascriptresponse.setJavascriptresult(sb2.toString());
             javascriptresponse.setJavascriptstatus("SUCCESS");
             javascriptRepo.save(javascriptpojo);
@@ -181,7 +189,7 @@ public class JavascriptService {
         return sb.toString();
     }
 
-    public List<JavascriptReport> getReportCard() {
+    public GetDomainDataPayload getReportCard() {
         // TODO Auto-generated method stub
         List<Object[]> listObj = javascriptRepo.generateReport();
         List<JavascriptReport> list = new ArrayList<>();
@@ -199,7 +207,10 @@ public class JavascriptService {
         }).forEachOrdered((report) -> {
             list.add(report);
         });
-        return list;
+        if (list.isEmpty()) {
+            return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "No Data Found");
+        }
+        return new GetDomainDataPayload(HttpStatus.OK.value(), list, "SUCCESS");
     }
 
     public List<JavascriptReportAnalysisPayload> generateReportAnalysis(String createdAt, long createdBy, int domainId) {

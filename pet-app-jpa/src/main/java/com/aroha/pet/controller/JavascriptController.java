@@ -31,9 +31,6 @@ public class JavascriptController {
 
     @GetMapping("/getJavascriptReport")
     public ResponseEntity<?> generateReportCard() {
-        if (javascriptservice.getReportCard().isEmpty()) {
-            return ResponseEntity.ok("No Record");
-        }
         return ResponseEntity.ok(javascriptservice.getReportCard());
     }
 
@@ -51,7 +48,6 @@ public class JavascriptController {
             return ResponseEntity.ok(data);
         }
         JavascriptData data = new JavascriptData();
-        System.out.println("I am here");
         data.setData(javascriptservice.generateReportAnalysis(createdAt, created_by, domainId));
         data.setMessage("SUCCESS");
         data.setStatusCode(HttpStatus.OK.value());
