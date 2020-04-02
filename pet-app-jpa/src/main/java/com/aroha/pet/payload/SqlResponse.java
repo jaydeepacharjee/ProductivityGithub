@@ -2,7 +2,6 @@ package com.aroha.pet.payload;
 
 import java.io.Serializable;
 import java.util.List;
-
 import com.aroha.pet.model.DbInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -17,6 +16,7 @@ public class SqlResponse implements Serializable {
     private List result;
     private String exception;
     private String status;
+    private String message;
 
     @JsonIgnore
     public DbInfo getDbInfo() {
@@ -58,5 +58,13 @@ public class SqlResponse implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
 }

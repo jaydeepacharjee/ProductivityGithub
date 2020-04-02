@@ -13,7 +13,7 @@ public interface FeedBackRepository extends JpaRepository<QueryInfo, Long> {
     @Query(value = "SELECT q.created_by,u.name as name,\r\n"
             + "q.created_at as created_at,COUNT(q.exception_str) as noOfException ,\r\n"
             + "COUNT(DISTINCT q.scenario ) as noOfScenario, COUNT(q.sql_str) as noOfSqlStr ,\r\n"
-            + "CAST(((count(q.exception_str))/(count(q.sql_str)))*100 as decimal(5,2))as productivity\r\n"
+            + "CAST(100-((count(q.exception_str))/(count(q.sql_str)))*100 as decimal(5,2))as productivity\r\n"
             + "FROM users u LEFT JOIN query_info q ON u.id=q.created_by \r\n"
             + "left join user_roles r on u.id=r.user_id WHERE r.role_id=1\r\n"
             + "GROUP BY u.id,DAY(q.created_at)\r\n"

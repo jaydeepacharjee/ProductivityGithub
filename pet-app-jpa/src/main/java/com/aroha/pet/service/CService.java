@@ -54,16 +54,14 @@ public class CService {
         String projectPath = currentPath.toAbsolutePath().toString();
         String dirName = projectPath + "\\" + "CPrograms";
         String fileString = generateRandomWord(8);
-        String compileFileName = fileString + "_" + currentUser.getName() + ".c";
-        String executableFileName = fileString + "_" + currentUser.getName();
+        String uName=currentUser.getName();
+        uName=uName.replaceAll("\\s","");
+        String compileFileName = fileString + "_" + uName + ".c";
+        String executableFileName = fileString + "_" + uName;
         File newFile = new File(projectPath + "\\" + "CPrograms");
         newFile.mkdir();
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(dirName + "\\" + compileFileName));
-//		String cCode="#include<stdio.h>"+"\n"+"#include<conio.h>"+"\n"
-//				+"#include<assert.h>"+"\n"+"#include<math.h>"+"\n"+
-//				"#include<stdlib.h>"+"\n"+"#include<string.h>"+"\n"+"#include<ctype.h>"+                                           
-//				"\n"+cpayload.getCpojo().getCstr();
         String cCode = cpayload.getCpojo().getCstr();
         //System.out.println("C Code is: "+cCode);
         sbuffer = new StringBuffer(cCode);

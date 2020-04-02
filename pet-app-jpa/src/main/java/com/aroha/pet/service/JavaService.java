@@ -75,10 +75,12 @@ public class JavaService {
 		sb=new StringBuffer(text);
 		int endIdx=sb.indexOf("{");
 		int startIdx=sb.indexOf("public");
-		sb.replace(startIdx,endIdx, "class "+random);
-
-		String name="/"+random+"_"+currentUser.getName()+".java";
-		String name1="/  "+random;
+		//sb.replace(startIdx,endIdx, "class "+random);
+        String uName=currentUser.getName();
+        uName=uName.replaceAll("\\s","");
+        sb.replace(startIdx,endIdx, "class "+random+"_"+uName);
+		String name="/"+random+"_"+uName+".java";
+		String name1="/  "+random+"_"+uName;
 
 		System.out.println("Name is: "+name);
 		System.out.println("Name1 is: "+name1);
@@ -107,6 +109,7 @@ public class JavaService {
 		//javaresponse.setJava(text);
 		//jsona=getResultForJava(sb1);
 		//System.out.println("Jsona is: "+jsona);
+		System.out.println("Sb1 is: "+sb1);
 		if(sb1.toString().contains("Exception:")) {
 			//javaresponse.setJavaresult(getJsonArrayAsList(jsona));
 			String exception=sb1.toString().substring(sb1.toString().indexOf("Exception"));

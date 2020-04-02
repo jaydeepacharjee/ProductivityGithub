@@ -72,7 +72,6 @@ public class DataBaseInfoController {
 
     @PostMapping("/executeQuery")
     public ResponseEntity<?> executeQuery(@Valid @RequestBody SqlRequest sqlReq, @CurrentUser UserPrincipal currentUser) {
-//		System.out.println("Scenario : "+sqlReq.getScenario());
         return ResponseEntity.ok(dbService.executeQuery(sqlReq.getDbInfo(), sqlReq.getSql(), currentUser, sqlReq.getQuestion()));
     }
 

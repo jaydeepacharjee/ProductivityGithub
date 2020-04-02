@@ -1,12 +1,9 @@
 package com.aroha.pet.repository;
 
 import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import com.aroha.pet.model.CPojo;
 import com.aroha.pet.model.JavascriptPojo;
 
 @Repository
@@ -19,7 +16,7 @@ public interface JavascriptRepo extends JpaRepository<JavascriptPojo, Long> {
             + "        COUNT(q.error) as noOfError ,\r\n"
             + "        COUNT(DISTINCT q.scenario ) as noOfQuestion,\r\n"
             + "        COUNT(q.javascriptstr) as noOfAttempt ,\r\n"
-            + "        CAST(((COUNT(Distinct(q.scenario)))/(count(q.javascriptstr)))*100 as decimal(5,\r\n"
+            + "        CAST(100-((COUNT(q.error))/(count(q.javascriptstr)))*100 as decimal(5,\r\n"
             + "        2))as productivity       \r\n"
             + "    FROM\r\n"
             + "        users u      \r\n"

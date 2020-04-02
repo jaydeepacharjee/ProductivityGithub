@@ -23,7 +23,7 @@ public abstract class DateAudit implements Serializable {
     private Instant createdAt;
 
     @LastModifiedDate
-    @Column(insertable = false, updatable = true)
+    @Column(insertable = true, updatable = true)
     private Instant updatedAt;
 
     public Instant getCreatedAt() {

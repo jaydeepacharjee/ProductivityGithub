@@ -9,6 +9,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -142,7 +143,7 @@ public class DBService {
         queryInfo.setJdbcUrl(dbInfo.getJdbcUrl());
         queryInfo.setUserName(dbInfo.getUserName());
         queryInfo.setPassword(dbInfo.getPassword());
-        queryInfo = queryInfoService.save(queryInfo);
+//        queryInfo = queryInfoService.save(queryInfo);
         SqlResponse sqlResponse = new SqlResponse();
         sqlResponse.setDbInfo(dbInfo);
         sqlResponse.setSql(sqlStr);
@@ -223,8 +224,12 @@ public class DBService {
             }
         }
         queryInfo.setExceptionStr(sqlResponse.getException());
-        queryInfoService.update(queryInfo);
-        logger.info("execute query saved successfully in table query_info");
+        Date date=new Date();
+        if(queryInfoService.checkDuplicateQuery(question.getQuestionId(),date,currentUser.getId(),sqlStr)) {
+        	sqlResponse.setMessage("Duplicate query for the same question");
+        }else {
+        	queryInfoService.save(queryInfo);
+        }
         return sqlResponse;
     }
 
@@ -253,7 +258,7 @@ public class DBService {
             ResultSetMetaData metadata = rs.getMetaData();
             int numColumns = metadata.getColumnCount();
             for (int i = 1; i <= numColumns; i++) {
-                columnList.put(metadata.getColumnName(i), metadata.getColumnTypeName(i) + "(" + metadata.getColumnDisplaySize(i)+")"); //+metadata.getColumnClassName(i)
+                columnList.put(metadata.getColumnName(i), metadata.getColumnTypeName(i) + "(" + metadata.getColumnDisplaySize(i) + ")"); //+metadata.getColumnClassName(i)
             }
         } catch (Exception ex) {
             logger.error("Get table column list connection is failed " + ex.getMessage());

@@ -72,14 +72,10 @@ public class DomainService {
             DomainList.add(domainData);
         }
         if (DomainList.isEmpty()) {
-            data.setMessage("No Domain is added for the technology, please add one");
-            data.setStatusCode(HttpStatus.NO_CONTENT.value());
+            return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "No Domain is added for the technology, please add one");
         } else {
-            data.setStatusCode(HttpStatus.OK.value());
-            data.setData(DomainList);
-            data.setMessage("SUCCESS");
+            return new GetDomainDataPayload(HttpStatus.OK.value(), DomainList, "Domain Details loaded Succeessfully");
         }
-        return data;
 
     }
 

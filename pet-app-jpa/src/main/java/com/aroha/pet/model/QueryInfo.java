@@ -25,10 +25,10 @@ public class QueryInfo extends UserDateAudit {
     @Column(insertable = true, updatable = false)
     private String sqlStr;
     @Lob
-    @Column(insertable = false, updatable = true)
+    //@Column(insertable = false, updatable = true)
     private String resultStr;
     @Lob
-    @Column(insertable = false, updatable = true)
+    //@Column(insertable = false, updatable = true)
     private String exceptionStr;
 //	@ManyToOne
 //	@JoinColumn
@@ -140,9 +140,9 @@ public class QueryInfo extends UserDateAudit {
 
 	@Override
 	public String toString() {
-		return "QueryInfo [id=" + id + ", sqlStr=" + sqlStr + ", resultStr=" + resultStr + ", exceptionStr="
-				+ exceptionStr + ", dbType=" + dbType + ", jdbcUrl=" + jdbcUrl + ", userName=" + userName
-				+ ", password=" + password + ", scenario=" + scenario + ", questionId=" + questionId + "]";
+		return "QueryInfo [id=" + id + ",\n sqlStr=" + sqlStr + ",\n resultStr=" + resultStr + ",\n exceptionStr="
+				+ exceptionStr + ",\n dbType=" + dbType + ",\n jdbcUrl=" + jdbcUrl + ",\n userName=" + userName
+				+ ",\n password=" + password + ",\n scenario=" + scenario + ",\n questionId=" + questionId + ",\n]";
 	}
 
 }

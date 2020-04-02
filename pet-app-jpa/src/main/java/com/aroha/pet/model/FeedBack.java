@@ -30,9 +30,11 @@ public class FeedBack extends DateAuditnew {
     private String question;
     @Lob
     private String resulstr;
+    @Lob
     private String exceptionStr;
     private String error;
     private String sqlStr;
+    @Lob
     private String cStr;
     private int notification;
     private String query_date;

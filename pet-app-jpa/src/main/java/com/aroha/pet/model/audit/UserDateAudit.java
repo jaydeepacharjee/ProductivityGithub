@@ -22,7 +22,7 @@ public abstract class UserDateAudit extends DateAudit {
 	private Long createdBy;
 
 	@LastModifiedBy
-	@Column(insertable = false, updatable = true)
+	@Column(insertable = true, updatable = true)
 	private Long updatedBy;
 
 	public Long getCreatedBy() {
