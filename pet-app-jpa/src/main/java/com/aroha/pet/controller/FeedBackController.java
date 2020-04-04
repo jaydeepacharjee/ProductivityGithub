@@ -77,6 +77,10 @@ public class FeedBackController {
                 return ResponseEntity.ok(feedService.saveFeedback(mentorFeedback, user));
             case 2:
                 return ResponseEntity.ok(feedService.saveCPoramFeedback(mentorFeedback, user));
+            case 3:
+            	return ResponseEntity.ok(feedService.saveJavaFeedback(mentorFeedback, user));
+            case 4:
+            	return ResponseEntity.ok(feedService.saveJavaScriptFeedback(mentorFeedback, user));
             default:
                 return ResponseEntity.ok("Invalid Technology Id");
         }

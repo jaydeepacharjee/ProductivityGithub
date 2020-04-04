@@ -26,6 +26,7 @@ import com.aroha.pet.model.RoleName;
 import com.aroha.pet.model.User;
 import com.aroha.pet.payload.ApiResponse;
 import com.aroha.pet.payload.ForgetPassword;
+import com.aroha.pet.payload.ForgetPasswordPayload;
 import com.aroha.pet.payload.JwtAuthenticationResponse;
 import com.aroha.pet.payload.LoginRequest;
 import com.aroha.pet.payload.SignUpRequest;
@@ -152,16 +153,20 @@ public class AuthController {
         boolean mailExist = userService.existsByEmail(login.getUsernameOrEmail());
         if (!mailExist) {
 //            return ResponseEntity.ok(login.getUsernameOrEmail() + " does not exist");
-              return ResponseEntity.ok(new ApiResponse(Boolean.FALSE,login.getUsernameOrEmail() + " does not exist" ));
+//            return ResponseEntity.ok(new ApiResponse(Boolean.FALSE, "Email does not exist"));
+        	return ResponseEntity.ok(new ForgetPasswordPayload(HttpStatus.BAD_REQUEST.value(),Boolean.FALSE, "Email does not exist"));
         } else {
             boolean istrue = userService.forgetPassword(login.getUsernameOrEmail());
             if (istrue) {
 //                return ResponseEntity.ok("OTP sent to registered emailId");
-                  return ResponseEntity.ok(new ApiResponse(Boolean.TRUE, "OTP sent to registered emailId"));
+//                return ResponseEntity.ok(new ApiResponse(Boolean.TRUE, "OTP sent to registered emailId"));
+            	return ResponseEntity.ok(new ForgetPasswordPayload(HttpStatus.OK.value(),Boolean.TRUE, "OTP sent to registered emailId"));
             }
         }
 //        return ResponseEntity.ok("Failed to send mail");
-          return ResponseEntity.ok(new ApiResponse(Boolean.FALSE,"Failed to send mail" ));
+//        return ResponseEntity.ok(new ApiResponse(Boolean.FALSE, "Failed to send mail"));
+        return ResponseEntity.ok(new ForgetPasswordPayload(HttpStatus.BAD_REQUEST.value(),Boolean.FALSE, "Failed to send mail"));
+
     }
 
     @PostMapping("/UpdatePassword")

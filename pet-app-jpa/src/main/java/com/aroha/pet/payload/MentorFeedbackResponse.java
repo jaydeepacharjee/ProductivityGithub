@@ -1,6 +1,5 @@
 package com.aroha.pet.payload;
 
-import java.math.BigInteger;
 
 public class MentorFeedbackResponse {
 
@@ -15,7 +14,7 @@ public class MentorFeedbackResponse {
     private String resulstr;
     private String exceptionStr;
     private String sqlStr;
-    private String cStr;
+    private String programingStr;
     private String technologyName;
     private String error;
     private int notification;
@@ -96,6 +95,7 @@ public class MentorFeedbackResponse {
     }
 
     public String getSqlStr() {
+
         return sqlStr;
     }
 
@@ -127,15 +127,16 @@ public class MentorFeedbackResponse {
         this.feedbackDate = feedbackDate;
     }
 
-    public String getcStr() {
-        return cStr;
-    }
 
-    public void setcStr(String cStr) {
-        this.cStr = cStr;
-    }
+    public String getProgramingStr() {
+		return programingStr;
+	}
 
-    public String getTechnologyName() {
+	public void setProgramingStr(String programingStr) {
+		this.programingStr = programingStr;
+	}
+
+	public String getTechnologyName() {
         return technologyName;
     }
 

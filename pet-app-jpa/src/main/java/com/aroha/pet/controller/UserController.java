@@ -24,6 +24,7 @@ import com.aroha.pet.model.User;
 import com.aroha.pet.payload.ApiResponse;
 import com.aroha.pet.payload.PagedResponse;
 import com.aroha.pet.payload.SignUpRequest;
+import com.aroha.pet.payload.UserControllerPayload;
 import com.aroha.pet.payload.UserIdentityAvailability;
 import com.aroha.pet.payload.UserProfile;
 import com.aroha.pet.payload.UserSummary;
@@ -34,6 +35,7 @@ import com.aroha.pet.service.DBService;
 import com.aroha.pet.service.QueryInfoService;
 import com.aroha.pet.service.UserService;
 import com.aroha.pet.util.AppConstants;
+import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/api")
@@ -52,9 +54,14 @@ public class UserController {
 
     @GetMapping("/user/me")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_MENTOR')") // just for example
-    public ResponseEntity<UserSummary> getCurrentUser(@CurrentUser UserPrincipal currentUser) {
+    public ResponseEntity<?> getCurrentUser(@CurrentUser UserPrincipal currentUser) {
         UserSummary userSummary = new UserSummary(currentUser.getId(), currentUser.getUsername(), currentUser.getName(), currentUser.getAuthorities());
         return ResponseEntity.ok(userSummary);
+//        if (userSummary != null) {
+//            return ResponseEntity.ok(new UserControllerPayload(HttpStatus.OK.value(), "SUCCESS", userSummary));
+//        } else {
+//            return ResponseEntity.ok(new UserControllerPayload(HttpStatus.NO_CONTENT.value(), "FAIL"));
+//        }
     }
 
     @GetMapping("/user/checkEmailAvailability")
@@ -91,9 +98,10 @@ public class UserController {
     }
 
     @GetMapping("/user/me/dbs")
-    public PagedResponse<DbInfo> getMyDataBases(@CurrentUser UserPrincipal currentUser,
+    public PagedResponse<?> getMyDataBases(@CurrentUser UserPrincipal currentUser,
             @RequestParam(value = "page", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int page,
             @RequestParam(value = "size", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int size) {
+        logger.info("--------------size is----------" + currentUser);
         return dbService.getDataBasesCreatedBy(currentUser, page, size);
     }
 
@@ -175,14 +183,8 @@ public class UserController {
     //	 Updating user details
     @PostMapping("/user/updDetails")
     public ResponseEntity<?> updateUsers(@RequestBody User user) {
-        try {
-            userService.updateData(user);
-            logger.info("user data updated successfully");
-            return ResponseEntity.ok("User Data Updated");
 
-        } catch (Exception ex) {
-            logger.error("Error updating user data " + ex.getMessage());
-            return ResponseEntity.ok(ex.getMessage());
-        }
+        return ResponseEntity.ok(userService.updateData(user));
+
     }
 }

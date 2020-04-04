@@ -5,6 +5,8 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +17,7 @@ import com.aroha.pet.model.RoleName;
 import com.aroha.pet.model.User;
 import com.aroha.pet.payload.ApiResponse;
 import com.aroha.pet.payload.ForgetPassword;
+import com.aroha.pet.payload.ForgetPasswordPayload;
 import com.aroha.pet.payload.UsersListPayload;
 import com.aroha.pet.repository.RoleRepository;
 import com.aroha.pet.repository.UserRepository;
@@ -101,7 +104,7 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public User updateData(User user) {
+    public ForgetPasswordPayload updateData(User user) {
 
         User getUserEmail = userRepository.findByEmail(user.getEmail())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "username", user.getEmail()));
@@ -130,7 +133,15 @@ public class UserService {
             getUserEmail.setSecondarySkills(user.getSecondarySkills());
         }
 
-        return userRepository.save(getUserEmail);
+//        return userRepository.save(getUserEmail);
+        try {
+            userRepository.save(getUserEmail);
+//            return new ApiResponse(Boolean.TRUE, "Successfully updated user data");
+            	return new ForgetPasswordPayload(HttpStatus.OK.value(), Boolean.TRUE, "Successfully updated user data");
+        } catch (Exception ex) {
+//            return new ApiResponse(Boolean.FALSE, ex.getMessage());
+        	return new ForgetPasswordPayload(HttpStatus.BAD_REQUEST.value(),Boolean.FALSE,ex.getMessage());
+        }
 
     }
 
@@ -191,17 +202,20 @@ public class UserService {
             if (passwordEncoder.matches(object.getPassword(), user.getPassword())) {
                 logger.info("Error You can not give previous password, please enter a new password");
                 //                return "You can not give previous password, please enter a new password";
-                return new ApiResponse(Boolean.FALSE, "Password is same as the old one,please enter new password");
+//                return new ApiResponse(Boolean.FALSE, "Password is same as the old one,please enter new password");
+            	return new ForgetPasswordPayload(HttpStatus.CONFLICT.value(),Boolean.FALSE, "Password is same as the old one,please enter new password");
             } else {
                 user.setPassword(passwordEncoder.encode(object.getPassword()));
                 userRepository.save(user);
                 logger.info("password changed for :" + user.getName());
                 //                return "Password updated successfully, please login with your new password";
-                return new ApiResponse(Boolean.TRUE, "Password updated successfully, please login with your new password");
+//                return new ApiResponse(Boolean.TRUE, "Password updated successfully, please login with your new password");
+                return new ForgetPasswordPayload(HttpStatus.OK.value(),Boolean.TRUE, "Password updated successfully, please login with your new password");
             }
         } else {
             logger.error("OTP didn't matched");
-            return new ApiResponse(Boolean.FALSE, "OTP didn't matched");
+//            return new ApiResponse(Boolean.FALSE, "OTP didn't matched");
+            return  new ForgetPasswordPayload(HttpStatus.CONFLICT.value(),Boolean.FALSE, "OTP didn't matched");
         }
     }
 }

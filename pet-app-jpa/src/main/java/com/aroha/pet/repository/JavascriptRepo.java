@@ -73,8 +73,8 @@ public interface JavascriptRepo extends JpaRepository<JavascriptPojo, Long> {
             + "        scenario;", nativeQuery = true)
     public List<Object[]> generateReportAnalysis(String createdAt, Long createdBy, int domainId);
 
-    @Query(value = "select * from javascript_pojo where created_at=?1 and question_id=?2", nativeQuery = true)
-    public JavascriptPojo searchJavascriptRepo(String createdAt, int questionId);
+    @Query(value = "select * from javascript_pojo where created_at=?1 and question_id=?2 and created_by=?3", nativeQuery = true)
+    public JavascriptPojo searchJavascriptRepo(String createdAt, int questionId,Long createdBy);
 
     @Query(value = " select\r\n"
             + "        d.domain_id,\r\n"

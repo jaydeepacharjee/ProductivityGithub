@@ -35,7 +35,7 @@ public class FeedBack extends DateAuditnew {
     private String error;
     private String sqlStr;
     @Lob
-    private String cStr;
+    private String programingStr;
     private int notification;
     private String query_date;
 
@@ -159,15 +159,15 @@ public class FeedBack extends DateAuditnew {
         this.technologyName = technologyName;
     }
 
-    public String getcStr() {
-        return cStr;
-    }
+    public String getProgramingStr() {
+		return programingStr;
+	}
 
-    public void setcStr(String cStr) {
-        this.cStr = cStr;
-    }
+	public void setProgramingStr(String programingStr) {
+		this.programingStr = programingStr;
+	}
 
-    public int getTechnologyId() {
+	public int getTechnologyId() {
         return technologyId;
     }
 

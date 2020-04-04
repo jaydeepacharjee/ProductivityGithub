@@ -29,17 +29,17 @@ public class JavaController {
         JavaResponse javaResponse = javaservice.executeJava(currentUser, payload);
         return ResponseEntity.ok(javaResponse);
     }
-    
+
     @GetMapping("/getJavaReport")
-    public ResponseEntity<?> generateReportCard(){
-		return ResponseEntity.ok(javaservice.getReportCard());   	
+    public ResponseEntity<?> generateReportCard() {
+        return ResponseEntity.ok(javaservice.getReportCard());
     }
-    
+
     @PostMapping("/getDomainAnalysisForJavaProgramming")
     public ResponseEntity<?> getDomainAnalysisForJavaPrograming(@RequestParam String createdAt, @RequestParam long created_by) {
         return ResponseEntity.ok(javaservice.getDomainResponse(created_by, createdAt));
     }
-    
+
     @PostMapping("/showAnalysisForJava")
     public ResponseEntity<?> showAnalysis(@RequestParam String createdAt, @RequestParam long created_by, @RequestParam int domainId) {
         if (javaservice.generateReportAnalysis(createdAt, created_by, domainId).isEmpty()) {

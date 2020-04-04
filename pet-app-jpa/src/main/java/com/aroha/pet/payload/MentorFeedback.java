@@ -7,6 +7,7 @@ package com.aroha.pet.payload;
 public class MentorFeedback {
     
     private String createdAt;
+    private Long createdBy;
     private int questionId;
     private String feedback;
     private int technologyId;
@@ -42,5 +43,13 @@ public class MentorFeedback {
     public void setTechnologyId(int technologyId) {
         this.technologyId = technologyId;
     }
+
+	public Long getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(Long createdBy) {
+		this.createdBy = createdBy;
+	}
     
 }

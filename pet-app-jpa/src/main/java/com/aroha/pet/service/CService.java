@@ -262,8 +262,8 @@ public class CService {
         return list;
     }
 
-    public CPojo findByTechnologyRepo(String createdAt, int questionId) {
-        return cRepo.searchCRepo(createdAt, questionId);
+    public CPojo findByTechnologyRepo(String createdAt, int questionId,Long createdBy) {
+        return cRepo.searchCRepo(createdAt, questionId,createdBy);
     }
 
     public Set<DomainResponsePayload> getDomainResponse(long created_by, String createdAt) {

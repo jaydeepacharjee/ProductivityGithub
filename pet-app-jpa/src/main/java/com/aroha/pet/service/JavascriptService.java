@@ -259,8 +259,8 @@ public class JavascriptService {
         return list;
 	}
 	
-    public JavascriptPojo findByTechnologyRepo(String createdAt, int questionId) {
-        return javascriptRepo.searchJavascriptRepo(createdAt, questionId);
+    public JavascriptPojo findByTechnologyRepo(String createdAt, int questionId,Long createdBy) {
+        return javascriptRepo.searchJavascriptRepo(createdAt, questionId,createdBy);
     }
     
     public Set<DomainResponsePayload> getDomainResponse(long created_by, String createdAt) {

@@ -224,11 +224,11 @@ public class DBService {
             }
         }
         queryInfo.setExceptionStr(sqlResponse.getException());
-        Date date=new Date();
-        if(queryInfoService.checkDuplicateQuery(question.getQuestionId(),date,currentUser.getId(),sqlStr)) {
-        	sqlResponse.setMessage("Duplicate query for the same question");
-        }else {
-        	queryInfoService.save(queryInfo);
+        Date date = new Date();
+        if (queryInfoService.checkDuplicateQuery(question.getQuestionId(), date, currentUser.getId(), sqlStr)) {
+            sqlResponse.setMessage("Duplicate query for the same question");
+        } else {
+            queryInfoService.save(queryInfo);
         }
         return sqlResponse;
     }
