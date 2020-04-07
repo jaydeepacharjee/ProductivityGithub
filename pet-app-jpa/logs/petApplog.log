@@ -1,53 +1,53 @@
-04-04-2020 12:19:16.654 [restartedMain] INFO  com.aroha.pet.PetApplication.logStarting - Starting PetApplication on LAPTOP-7VFDP9Q8 with PID 1384 (F:\PetArohaGitHub\ProductivityTesting\pet-app-jpa\target\classes started by jaydeep in F:\PetArohaGitHub\ProductivityTesting\pet-app-jpa)
-04-04-2020 12:19:16.681 [restartedMain] INFO  com.aroha.pet.PetApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
-04-04-2020 12:19:17.680 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor.logTo - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-04-04-2020 12:19:17.681 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor.logTo - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-04-04-2020 12:19:22.926 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data repositories in DEFAULT mode.
-04-04-2020 12:19:23.231 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 265ms. Found 16 repository interfaces.
-04-04-2020 12:19:24.148 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$16973450] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 12:19:24.223 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration$$EnhancerBySpringCGLIB$$af44fc8a] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 12:19:24.232 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 12:19:24.235 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@485cea53' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 12:19:24.237 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration$$EnhancerBySpringCGLIB$$d4199f3c] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 12:19:24.266 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.config.annotation.method.configuration.Jsr250MetadataSourceConfiguration' of type [org.springframework.security.config.annotation.method.configuration.Jsr250MetadataSourceConfiguration$$EnhancerBySpringCGLIB$$f96eb752] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 12:19:24.271 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'jsr250MethodSecurityMetadataSource' of type [org.springframework.security.access.annotation.Jsr250MethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 12:19:24.273 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 12:19:24.295 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$96178182] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 12:19:25.486 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port(s): 8080 (http)
-04-04-2020 12:19:25.577 [restartedMain] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
-04-04-2020 12:19:25.578 [restartedMain] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/9.0.16]
-04-04-2020 12:19:25.604 [restartedMain] INFO  o.a.c.core.AprLifecycleListener.log - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk1.8.0_221\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:/Program Files/Java/jdk1.8.0_221/bin/../jre/bin/server;C:/Program Files/Java/jdk1.8.0_221/bin/../jre/bin;C:/Program Files/Java/jdk1.8.0_221/bin/../jre/lib/amd64;C:\Program Files\Java\jdk1.8.0_221\bin;C:\Progams\apache-maven-3.6.1\bin;C:\Progams\apache-ant-1.9.14\bin;C:\oraclexe\app\oracle\product\11.2.0\server\bin;F:\oracle\product\10.2.0\db_1\bin;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\TDM-GCC-64\bin;C:\Program Files\JetBrains\WebStorm 2019.1.1\bin;;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2019.1.2\bin;;C:\Program Files\JetBrains\IntelliJ IDEA Educational Edition 2019.1\bin;;C:\Program Files\JetBrains\IntelliJ IDEA 2019.1.3\bin;;C:\Users\jaydeep\AppData\Roaming\npm;C:\Users\jaydeep\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\jaydeep\AppData\Local\Microsoft\WindowsApps;;F:\software\spring-tool-suite-4-4.6.0.RELEASE-e4.15.0-win32.win32.x86_64.self-extracting\contents\sts-4.6.0.RELEASE;;.]
-04-04-2020 12:19:26.042 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring embedded WebApplicationContext
-04-04-2020 12:19:26.043 [restartedMain] INFO  o.s.web.context.ContextLoader.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 8360 ms
-04-04-2020 12:19:27.300 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
-04-04-2020 12:19:27.534 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
-04-04-2020 12:19:27.786 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [
+07-04-2020 09:26:34.147 [restartedMain] INFO  com.aroha.pet.PetApplication.logStarting - Starting PetApplication on jaydeep-HP-Notebook with PID 4549 (/home/jaydeep/PetArohaGitHub/ProductivityTesting/pet-app-jpa/target/classes started by jaydeep in /home/jaydeep/PetArohaGitHub/ProductivityTesting/pet-app-jpa)
+07-04-2020 09:26:34.172 [restartedMain] INFO  com.aroha.pet.PetApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
+07-04-2020 09:26:34.619 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor.logTo - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+07-04-2020 09:26:34.620 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor.logTo - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+07-04-2020 09:26:38.748 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data repositories in DEFAULT mode.
+07-04-2020 09:26:39.068 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 301ms. Found 16 repository interfaces.
+07-04-2020 09:26:39.781 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$af8fc6b0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+07-04-2020 09:26:39.858 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration$$EnhancerBySpringCGLIB$$483d8eea] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+07-04-2020 09:26:39.868 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+07-04-2020 09:26:39.871 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@5f341af1' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+07-04-2020 09:26:39.876 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration$$EnhancerBySpringCGLIB$$6d12319c] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+07-04-2020 09:26:39.906 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.config.annotation.method.configuration.Jsr250MetadataSourceConfiguration' of type [org.springframework.security.config.annotation.method.configuration.Jsr250MetadataSourceConfiguration$$EnhancerBySpringCGLIB$$926749b2] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+07-04-2020 09:26:39.912 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'jsr250MethodSecurityMetadataSource' of type [org.springframework.security.access.annotation.Jsr250MethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+07-04-2020 09:26:39.914 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+07-04-2020 09:26:39.928 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$2f1013e2] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+07-04-2020 09:26:41.607 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port(s): 8080 (http)
+07-04-2020 09:26:41.696 [restartedMain] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
+07-04-2020 09:26:41.697 [restartedMain] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/9.0.16]
+07-04-2020 09:26:41.737 [restartedMain] INFO  o.a.c.core.AprLifecycleListener.log - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib]
+07-04-2020 09:26:42.019 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring embedded WebApplicationContext
+07-04-2020 09:26:42.020 [restartedMain] INFO  o.s.web.context.ContextLoader.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 7400 ms
+07-04-2020 09:26:43.006 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
+07-04-2020 09:26:43.359 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
+07-04-2020 09:26:43.640 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [
 	name: default
 	...]
-04-04-2020 12:19:27.939 [restartedMain] INFO  org.hibernate.Version.logVersion - HHH000412: Hibernate Core {5.3.7.Final}
-04-04-2020 12:19:27.942 [restartedMain] INFO  org.hibernate.cfg.Environment.<clinit> - HHH000206: hibernate.properties not found
-04-04-2020 12:19:29.296 [restartedMain] INFO  o.h.annotations.common.Version.<clinit> - HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
-04-04-2020 12:19:29.824 [restartedMain] INFO  org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
-04-04-2020 12:19:33.445 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
-04-04-2020 12:19:34.594 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer.startServer - LiveReload server is running on port 35729
-04-04-2020 12:19:35.604 [restartedMain] INFO  o.h.h.i.QueryTranslatorFactoryInitiator.initiateService - HHH000397: Using ASTQueryTranslatorFactory
-04-04-2020 12:19:37.108 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-04-04-2020 12:19:38.645 [restartedMain] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping.initHandlerMethods - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
-04-04-2020 12:19:38.851 [restartedMain] INFO  o.s.s.web.DefaultSecurityFilterChain.<init> - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6d3fd925, org.springframework.security.web.context.SecurityContextPersistenceFilter@5f27f4f8, org.springframework.security.web.header.HeaderWriterFilter@73f27d13, org.springframework.web.filter.CorsFilter@7df3db0a, org.springframework.security.web.authentication.logout.LogoutFilter@fe8efff, com.aroha.pet.security.JwtAuthenticationFilter@3e4748a7, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6af73d18, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@30f49965, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6b002d66, org.springframework.security.web.session.SessionManagementFilter@6db0e004, org.springframework.security.web.access.ExceptionTranslationFilter@2f0e5df6, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6c30bb72]
-04-04-2020 12:19:39.218 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor.initialize - Initializing ExecutorService 'applicationTaskExecutor'
-04-04-2020 12:19:40.176 [restartedMain] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper.start - Context refreshed
-04-04-2020 12:19:40.216 [restartedMain] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper.start - Found 1 custom documentation plugin(s)
-04-04-2020 12:19:40.271 [restartedMain] INFO  s.d.s.w.s.ApiListingReferenceScanner.scan - Scanning for api listing references
-04-04-2020 12:19:40.744 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator.startingWith - Generating unique operation named: generateReportCardUsingGET_1
-04-04-2020 12:19:40.747 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator.startingWith - Generating unique operation named: showAnalysisUsingPOST_1
-04-04-2020 12:19:40.754 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator.startingWith - Generating unique operation named: generateReportCardUsingGET_2
-04-04-2020 12:19:40.757 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator.startingWith - Generating unique operation named: showAnalysisUsingPOST_2
-04-04-2020 12:19:40.878 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port(s): 8080 (http) with context path ''
-04-04-2020 12:19:40.882 [restartedMain] INFO  com.aroha.pet.PetApplication.logStarted - Started PetApplication in 26.395 seconds (JVM running for 31.393)
-04-04-2020 12:21:30.282 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring DispatcherServlet 'dispatcherServlet'
-04-04-2020 12:21:30.283 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Initializing Servlet 'dispatcherServlet'
-04-04-2020 12:21:30.316 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Completed initialization in 33 ms
-04-04-2020 12:21:31.395 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL.logStatement - 
+07-04-2020 09:26:44.008 [restartedMain] INFO  org.hibernate.Version.logVersion - HHH000412: Hibernate Core {5.3.7.Final}
+07-04-2020 09:26:44.020 [restartedMain] INFO  org.hibernate.cfg.Environment.<clinit> - HHH000206: hibernate.properties not found
+07-04-2020 09:26:45.145 [restartedMain] INFO  o.h.annotations.common.Version.<clinit> - HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+07-04-2020 09:26:45.746 [restartedMain] INFO  org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
+07-04-2020 09:26:47.781 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
+07-04-2020 09:26:48.539 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer.startServer - LiveReload server is running on port 35729
+07-04-2020 09:26:49.052 [restartedMain] INFO  o.h.h.i.QueryTranslatorFactoryInitiator.initiateService - HHH000397: Using ASTQueryTranslatorFactory
+07-04-2020 09:26:49.914 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+07-04-2020 09:26:50.884 [restartedMain] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping.initHandlerMethods - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+07-04-2020 09:26:51.047 [restartedMain] INFO  o.s.s.web.DefaultSecurityFilterChain.<init> - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5fe7598, org.springframework.security.web.context.SecurityContextPersistenceFilter@3bf98666, org.springframework.security.web.header.HeaderWriterFilter@69a2c11c, org.springframework.web.filter.CorsFilter@688339fd, org.springframework.security.web.authentication.logout.LogoutFilter@1063ed57, com.aroha.pet.security.JwtAuthenticationFilter@11704ab8, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@b23c70a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@55aa60fa, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3c319242, org.springframework.security.web.session.SessionManagementFilter@4405e6da, org.springframework.security.web.access.ExceptionTranslationFilter@45bfc6d3, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@4289f7e]
+07-04-2020 09:26:51.265 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor.initialize - Initializing ExecutorService 'applicationTaskExecutor'
+07-04-2020 09:26:51.874 [restartedMain] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper.start - Context refreshed
+07-04-2020 09:26:51.933 [restartedMain] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper.start - Found 1 custom documentation plugin(s)
+07-04-2020 09:26:51.957 [restartedMain] INFO  s.d.s.w.s.ApiListingReferenceScanner.scan - Scanning for api listing references
+07-04-2020 09:26:52.316 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator.startingWith - Generating unique operation named: generateReportCardUsingGET_1
+07-04-2020 09:26:52.320 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator.startingWith - Generating unique operation named: showAnalysisUsingPOST_1
+07-04-2020 09:26:52.330 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator.startingWith - Generating unique operation named: generateReportCardUsingGET_2
+07-04-2020 09:26:52.334 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator.startingWith - Generating unique operation named: showAnalysisUsingPOST_2
+07-04-2020 09:26:52.465 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port(s): 8080 (http) with context path ''
+07-04-2020 09:26:52.482 [restartedMain] INFO  com.aroha.pet.PetApplication.logStarted - Started PetApplication in 20.297 seconds (JVM running for 26.252)
+07-04-2020 09:27:12.681 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring DispatcherServlet 'dispatcherServlet'
+07-04-2020 09:27:12.683 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Initializing Servlet 'dispatcherServlet'
+07-04-2020 09:27:12.706 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Completed initialization in 23 ms
+07-04-2020 09:27:13.144 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL.logStatement - 
     select
         user0_.id as id1_14_,
         user0_.created_at as created_2_14_,
@@ -67,7 +67,7 @@
         users user0_ 
     where
         user0_.email=?
-04-04-2020 12:21:31.453 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL.logStatement - 
+07-04-2020 09:27:13.204 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL.logStatement - 
     select
         roles0_.user_id as user_id1_13_0_,
         roles0_.role_id as role_id2_13_0_,
@@ -80,7 +80,8 @@
             on roles0_.role_id=role1_.id 
     where
         roles0_.user_id=?
-04-04-2020 12:21:32.544 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL.logStatement - 
+07-04-2020 09:27:13.388 [http-nio-8080-exec-1] ERROR c.a.p.s.JwtAuthenticationEntryPoint.commence - Responding with unauthorized error. Message - Bad credentials
+07-04-2020 09:27:20.428 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL.logStatement - 
     select
         user0_.id as id1_14_,
         user0_.created_at as created_2_14_,
@@ -100,28 +101,7 @@
         users user0_ 
     where
         user0_.email=?
-04-04-2020 12:21:32.547 [http-nio-8080-exec-2] INFO  c.a.pet.controller.AuthController.authenticateUser - Admin logged in successfully
-04-04-2020 12:22:55.477 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL.logStatement - 
-    select
-        user0_.id as id1_14_0_,
-        user0_.created_at as created_2_14_0_,
-        user0_.updated_at as updated_3_14_0_,
-        user0_.address as address4_14_0_,
-        user0_.alt_phone_no as alt_phon5_14_0_,
-        user0_.date_of_join as date_of_6_14_0_,
-        user0_.email as email7_14_0_,
-        user0_.name as name8_14_0_,
-        user0_.password as password9_14_0_,
-        user0_.phone_no as phone_n10_14_0_,
-        user0_.primary_skills as primary11_14_0_,
-        user0_.secondary_skills as seconda12_14_0_,
-        user0_.soe as soe13_14_0_,
-        user0_.soe_ref as soe_ref14_14_0_ 
-    from
-        users user0_ 
-    where
-        user0_.id=?
-04-04-2020 12:22:55.482 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL.logStatement - 
+07-04-2020 09:27:20.433 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL.logStatement - 
     select
         roles0_.user_id as user_id1_13_0_,
         roles0_.role_id as role_id2_13_0_,
@@ -134,16 +114,28 @@
             on roles0_.role_id=role1_.id 
     where
         roles0_.user_id=?
-04-04-2020 12:22:55.575 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL.logStatement - 
+07-04-2020 09:27:21.296 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL.logStatement - 
     select
-        * 
+        user0_.id as id1_14_,
+        user0_.created_at as created_2_14_,
+        user0_.updated_at as updated_3_14_,
+        user0_.address as address4_14_,
+        user0_.alt_phone_no as alt_phon5_14_,
+        user0_.date_of_join as date_of_6_14_,
+        user0_.email as email7_14_,
+        user0_.name as name8_14_,
+        user0_.password as password9_14_,
+        user0_.phone_no as phone_n10_14_,
+        user0_.primary_skills as primary11_14_,
+        user0_.secondary_skills as seconda12_14_,
+        user0_.soe as soe13_14_,
+        user0_.soe_ref as soe_ref14_14_ 
     from
-        javascript_pojo 
+        users user0_ 
     where
-        created_at=? 
-        and question_id=? 
-        and created_by=?
-04-04-2020 12:22:55.652 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL.logStatement - 
+        user0_.email=?
+07-04-2020 09:27:21.300 [http-nio-8080-exec-3] INFO  c.a.pet.controller.AuthController.authenticateUser - Jaydeep logged in successfully
+07-04-2020 09:28:18.123 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL.logStatement - 
     select
         user0_.id as id1_14_0_,
         user0_.created_at as created_2_14_0_,
@@ -163,39 +155,27 @@
         users user0_ 
     where
         user0_.id=?
-04-04-2020 12:22:55.657 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL.logStatement - 
+07-04-2020 09:28:18.127 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL.logStatement - 
     select
-        technology0_.tech_id as tech_id1_12_0_,
-        technology0_.technology_name as technolo2_12_0_ 
+        roles0_.user_id as user_id1_13_0_,
+        roles0_.role_id as role_id2_13_0_,
+        role1_.id as id1_10_1_,
+        role1_.name as name2_10_1_ 
     from
-        technology technology0_ 
+        user_roles roles0_ 
+    inner join
+        roles role1_ 
+            on roles0_.role_id=role1_.id 
     where
-        technology0_.tech_id=?
-04-04-2020 12:22:55.663 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL.logStatement - 
-    select
-        notification 
-    from
-        mentor_feedback 
-    where
-        learner_id=? 
-        and technology_name=? 
-    order by
-        created_at DESC LIMIT 1;
-04-04-2020 12:22:56.001 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL.logStatement - 
+        roles0_.user_id=?
+07-04-2020 09:28:23.106 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL.logStatement - 
     insert 
     into
-        mentor_feedback
-        (created_at, error, exception_str, feedback, learner_id, learner_name, mentor_id, mentor_name, notification, programing_str, query_date, question, question_id, resulstr, sql_str, technology_id, technology_name) 
+        java_pojo
+        (created_at, updated_at, created_by, exceptionstr, javastr, question_id, resultstr, scenario) 
     values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-04-04-2020 12:26:00.454 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL.logStatement - 
-    select
-        user0_.id as col_0_0_ 
-    from
-        users user0_ 
-    where
-        user0_.email=? limit ?
-04-04-2020 12:26:00.460 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL.logStatement - 
+        (?, ?, ?, ?, ?, ?, ?, ?)
+07-04-2020 09:28:55.542 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL.logStatement - 
     select
         user0_.id as id1_14_,
         user0_.created_at as created_2_14_,
@@ -215,74 +195,20 @@
         users user0_ 
     where
         user0_.email=?
-04-04-2020 12:26:00.463 [http-nio-8080-exec-8] INFO  com.aroha.pet.service.UserService.forgetPassword - Forget Password OTP generated for the user : Jaydeep
-04-04-2020 12:26:38.847 [http-nio-8080-exec-8] INFO  com.aroha.pet.service.UserService.sendEmail - Email sent to registered email
-04-04-2020 12:27:58.711 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL.logStatement - 
+07-04-2020 09:28:55.546 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL.logStatement - 
     select
-        user0_.id as col_0_0_ 
+        roles0_.user_id as user_id1_13_0_,
+        roles0_.role_id as role_id2_13_0_,
+        role1_.id as id1_10_1_,
+        role1_.name as name2_10_1_ 
     from
-        users user0_ 
+        user_roles roles0_ 
+    inner join
+        roles role1_ 
+            on roles0_.role_id=role1_.id 
     where
-        user0_.email=? limit ?
-04-04-2020 12:29:04.608 [http-nio-8080-exec-4] INFO  com.aroha.pet.service.UserService.updatePassword - ------ OTP PASWORD 43638
-04-04-2020 12:29:04.609 [http-nio-8080-exec-4] INFO  com.aroha.pet.service.UserService.updatePassword - eNTERED PASSWORD IS: 436380
-04-04-2020 12:29:04.609 [http-nio-8080-exec-4] ERROR com.aroha.pet.service.UserService.updatePassword - OTP didn't matched
-04-04-2020 12:30:25.742 [Thread-7] INFO  o.s.s.c.ThreadPoolTaskExecutor.shutdown - Shutting down ExecutorService 'applicationTaskExecutor'
-04-04-2020 12:30:25.765 [Thread-7] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy - Closing JPA EntityManagerFactory for persistence unit 'default'
-04-04-2020 12:30:25.772 [Thread-7] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown initiated...
-04-04-2020 12:30:25.789 [Thread-7] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown completed.
-04-04-2020 07:00:26.563 [restartedMain] INFO  com.aroha.pet.PetApplication.logStarting - Starting PetApplication on LAPTOP-7VFDP9Q8 with PID 1384 (F:\PetArohaGitHub\ProductivityTesting\pet-app-jpa\target\classes started by jaydeep in F:\PetArohaGitHub\ProductivityTesting\pet-app-jpa)
-04-04-2020 07:00:26.564 [restartedMain] INFO  com.aroha.pet.PetApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
-04-04-2020 07:00:27.397 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data repositories in DEFAULT mode.
-04-04-2020 07:00:27.470 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 73ms. Found 16 repository interfaces.
-04-04-2020 07:00:27.591 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$16973450] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 07:00:27.598 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration$$EnhancerBySpringCGLIB$$af44fc8a] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 07:00:27.600 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 07:00:27.601 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@4f865472' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 07:00:27.602 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration$$EnhancerBySpringCGLIB$$d4199f3c] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 07:00:27.606 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.config.annotation.method.configuration.Jsr250MetadataSourceConfiguration' of type [org.springframework.security.config.annotation.method.configuration.Jsr250MetadataSourceConfiguration$$EnhancerBySpringCGLIB$$f96eb752] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 07:00:27.607 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'jsr250MethodSecurityMetadataSource' of type [org.springframework.security.access.annotation.Jsr250MethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 07:00:27.607 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 07:00:27.612 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$96178182] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 07:00:27.862 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port(s): 8080 (http)
-04-04-2020 07:00:27.863 [restartedMain] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
-04-04-2020 07:00:27.864 [restartedMain] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/9.0.16]
-04-04-2020 07:00:27.906 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring embedded WebApplicationContext
-04-04-2020 07:00:27.907 [restartedMain] INFO  o.s.web.context.ContextLoader.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 1340 ms
-04-04-2020 07:00:28.226 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-2 - Starting...
-04-04-2020 07:00:28.232 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-2 - Start completed.
-04-04-2020 07:00:28.253 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [
-	name: default
-	...]
-04-04-2020 07:00:28.281 [restartedMain] INFO  org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
-04-04-2020 07:00:28.816 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
-04-04-2020 07:00:29.009 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer.startServer - LiveReload server is running on port 35729
-04-04-2020 07:00:29.302 [restartedMain] INFO  o.h.h.i.QueryTranslatorFactoryInitiator.initiateService - HHH000397: Using ASTQueryTranslatorFactory
-04-04-2020 07:00:29.810 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-04-04-2020 07:00:30.123 [restartedMain] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping.initHandlerMethods - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
-04-04-2020 07:00:30.205 [restartedMain] INFO  o.s.s.web.DefaultSecurityFilterChain.<init> - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5051daca, org.springframework.security.web.context.SecurityContextPersistenceFilter@6233be27, org.springframework.security.web.header.HeaderWriterFilter@76eefa23, org.springframework.web.filter.CorsFilter@1de5adf9, org.springframework.security.web.authentication.logout.LogoutFilter@46397a51, com.aroha.pet.security.JwtAuthenticationFilter@6897d003, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@a86157f, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@bb8d9ee, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@46525a4f, org.springframework.security.web.session.SessionManagementFilter@3b9ceb6, org.springframework.security.web.access.ExceptionTranslationFilter@1e8eca74, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@1f65b6fe]
-04-04-2020 07:00:30.285 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor.initialize - Initializing ExecutorService 'applicationTaskExecutor'
-04-04-2020 07:00:30.497 [restartedMain] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper.start - Context refreshed
-04-04-2020 07:00:30.499 [restartedMain] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper.start - Found 1 custom documentation plugin(s)
-04-04-2020 07:00:30.506 [restartedMain] INFO  s.d.s.w.s.ApiListingReferenceScanner.scan - Scanning for api listing references
-04-04-2020 07:00:30.691 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator.startingWith - Generating unique operation named: generateReportCardUsingGET_1
-04-04-2020 07:00:30.693 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator.startingWith - Generating unique operation named: showAnalysisUsingPOST_1
-04-04-2020 07:00:30.700 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator.startingWith - Generating unique operation named: generateReportCardUsingGET_2
-04-04-2020 07:00:30.703 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator.startingWith - Generating unique operation named: showAnalysisUsingPOST_2
-04-04-2020 07:00:30.746 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port(s): 8080 (http) with context path ''
-04-04-2020 07:00:30.749 [restartedMain] INFO  com.aroha.pet.PetApplication.logStarted - Started PetApplication in 4.233 seconds (JVM running for 681.26)
-04-04-2020 07:00:30.758 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener.onApplicationEvent - Condition evaluation unchanged
-04-04-2020 07:01:03.314 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring DispatcherServlet 'dispatcherServlet'
-04-04-2020 07:01:03.316 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Initializing Servlet 'dispatcherServlet'
-04-04-2020 07:01:03.326 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet.initServletBean - Completed initialization in 10 ms
-04-04-2020 07:01:03.340 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL.logStatement - 
-    select
-        user0_.id as col_0_0_ 
-    from
-        users user0_ 
-    where
-        user0_.email=? limit ?
-04-04-2020 07:01:03.346 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL.logStatement - 
+        roles0_.user_id=?
+07-04-2020 09:28:55.699 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL.logStatement - 
     select
         user0_.id as id1_14_,
         user0_.created_at as created_2_14_,
@@ -302,127 +228,120 @@
         users user0_ 
     where
         user0_.email=?
-04-04-2020 07:01:03.349 [http-nio-8080-exec-2] INFO  com.aroha.pet.service.UserService.forgetPassword - Forget Password OTP generated for the user : Jaydeep
-04-04-2020 07:01:07.380 [http-nio-8080-exec-2] INFO  com.aroha.pet.service.UserService.sendEmail - Email sent to registered email
-04-04-2020 07:01:23.431 [http-nio-8080-exec-3] INFO  com.aroha.pet.service.UserService.updatePassword - ------ OTP PASWORD 19336
-04-04-2020 07:01:23.432 [http-nio-8080-exec-3] INFO  com.aroha.pet.service.UserService.updatePassword - eNTERED PASSWORD IS: 193366
-04-04-2020 07:01:23.433 [http-nio-8080-exec-3] ERROR com.aroha.pet.service.UserService.updatePassword - OTP didn't matched
-04-04-2020 07:01:58.931 [http-nio-8080-exec-4] INFO  com.aroha.pet.service.UserService.updatePassword - ------ OTP PASWORD 19336
-04-04-2020 07:01:58.931 [http-nio-8080-exec-4] INFO  com.aroha.pet.service.UserService.updatePassword - eNTERED PASSWORD IS: 19336
-04-04-2020 07:01:58.939 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL.logStatement - 
+07-04-2020 09:28:55.701 [http-nio-8080-exec-5] INFO  c.a.pet.controller.AuthController.authenticateUser - Admin logged in successfully
+07-04-2020 09:29:11.322 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL.logStatement - 
     select
-        user0_.id as id1_14_,
-        user0_.created_at as created_2_14_,
-        user0_.updated_at as updated_3_14_,
-        user0_.address as address4_14_,
-        user0_.alt_phone_no as alt_phon5_14_,
-        user0_.date_of_join as date_of_6_14_,
-        user0_.email as email7_14_,
-        user0_.name as name8_14_,
-        user0_.password as password9_14_,
-        user0_.phone_no as phone_n10_14_,
-        user0_.primary_skills as primary11_14_,
-        user0_.secondary_skills as seconda12_14_,
-        user0_.soe as soe13_14_,
-        user0_.soe_ref as soe_ref14_14_ 
+        user0_.id as id1_14_0_,
+        user0_.created_at as created_2_14_0_,
+        user0_.updated_at as updated_3_14_0_,
+        user0_.address as address4_14_0_,
+        user0_.alt_phone_no as alt_phon5_14_0_,
+        user0_.date_of_join as date_of_6_14_0_,
+        user0_.email as email7_14_0_,
+        user0_.name as name8_14_0_,
+        user0_.password as password9_14_0_,
+        user0_.phone_no as phone_n10_14_0_,
+        user0_.primary_skills as primary11_14_0_,
+        user0_.secondary_skills as seconda12_14_0_,
+        user0_.soe as soe13_14_0_,
+        user0_.soe_ref as soe_ref14_14_0_ 
     from
         users user0_ 
     where
-        user0_.email=?
-04-04-2020 07:01:59.098 [http-nio-8080-exec-4] INFO  com.aroha.pet.service.UserService.updatePassword - Error You can not give previous password, please enter a new password
-04-04-2020 07:02:25.191 [http-nio-8080-exec-5] INFO  com.aroha.pet.service.UserService.updatePassword - ------ OTP PASWORD 19336
-04-04-2020 07:02:25.193 [http-nio-8080-exec-5] INFO  com.aroha.pet.service.UserService.updatePassword - eNTERED PASSWORD IS: 19336
-04-04-2020 07:02:25.195 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL.logStatement - 
+        user0_.id=?
+07-04-2020 09:29:11.324 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL.logStatement - 
     select
-        user0_.id as id1_14_,
-        user0_.created_at as created_2_14_,
-        user0_.updated_at as updated_3_14_,
-        user0_.address as address4_14_,
-        user0_.alt_phone_no as alt_phon5_14_,
-        user0_.date_of_join as date_of_6_14_,
-        user0_.email as email7_14_,
-        user0_.name as name8_14_,
-        user0_.password as password9_14_,
-        user0_.phone_no as phone_n10_14_,
-        user0_.primary_skills as primary11_14_,
-        user0_.secondary_skills as seconda12_14_,
-        user0_.soe as soe13_14_,
-        user0_.soe_ref as soe_ref14_14_ 
+        roles0_.user_id as user_id1_13_0_,
+        roles0_.role_id as role_id2_13_0_,
+        role1_.id as id1_10_1_,
+        role1_.name as name2_10_1_ 
+    from
+        user_roles roles0_ 
+    inner join
+        roles role1_ 
+            on roles0_.role_id=role1_.id 
+    where
+        roles0_.user_id=?
+07-04-2020 09:29:11.360 [http-nio-8080-exec-6] DEBUG org.hibernate.SQL.logStatement - 
+    SELECT
+        q.created_by,
+        u.name as name,
+        q.created_at as created_at,
+        COUNT(q.exceptionstr) as noOfError ,
+        COUNT(DISTINCT q.scenario ) as noOfQuestion,
+        COUNT(q.javastr) as noOfAttempt ,
+        CAST(100-((COUNT(q.exceptionstr))/(count(q.javastr)))*100 as decimal(5,
+        2))as productivity             
+    FROM
+        users u            
+    LEFT JOIN
+        java_pojo q                            
+            ON u.id=q.created_by              
+    left join
+        user_roles r                            
+            on u.id=r.user_id            
+    WHERE
+        r.role_id =1             
+    GROUP BY
+        u.id,
+        DAY(q.created_at)             
+    having
+        count(distinct q.scenario)>0;
+07-04-2020 09:29:44.530 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL.logStatement - 
+    select
+        user0_.id as id1_14_0_,
+        user0_.created_at as created_2_14_0_,
+        user0_.updated_at as updated_3_14_0_,
+        user0_.address as address4_14_0_,
+        user0_.alt_phone_no as alt_phon5_14_0_,
+        user0_.date_of_join as date_of_6_14_0_,
+        user0_.email as email7_14_0_,
+        user0_.name as name8_14_0_,
+        user0_.password as password9_14_0_,
+        user0_.phone_no as phone_n10_14_0_,
+        user0_.primary_skills as primary11_14_0_,
+        user0_.secondary_skills as seconda12_14_0_,
+        user0_.soe as soe13_14_0_,
+        user0_.soe_ref as soe_ref14_14_0_ 
     from
         users user0_ 
     where
-        user0_.email=?
-04-04-2020 07:02:25.515 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL.logStatement - 
-    update
-        users 
-    set
-        updated_at=?,
-        address=?,
-        alt_phone_no=?,
-        date_of_join=?,
-        name=?,
-        password=?,
-        phone_no=?,
-        primary_skills=?,
-        secondary_skills=?,
-        soe=?,
-        soe_ref=? 
+        user0_.id=?
+07-04-2020 09:29:44.532 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL.logStatement - 
+    select
+        roles0_.user_id as user_id1_13_0_,
+        roles0_.role_id as role_id2_13_0_,
+        role1_.id as id1_10_1_,
+        role1_.name as name2_10_1_ 
+    from
+        user_roles roles0_ 
+    inner join
+        roles role1_ 
+            on roles0_.role_id=role1_.id 
     where
-        id=?
-04-04-2020 07:02:25.602 [http-nio-8080-exec-5] INFO  com.aroha.pet.service.UserService.updatePassword - password changed for :Jaydeep
-04-04-2020 07:03:57.373 [RMI TCP Connection(33)-127.0.0.1] INFO  o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin.shutdown - Application shutdown requested.
-04-04-2020 07:03:57.378 [RMI TCP Connection(33)-127.0.0.1] INFO  o.s.s.c.ThreadPoolTaskExecutor.shutdown - Shutting down ExecutorService 'applicationTaskExecutor'
-04-04-2020 07:03:57.385 [RMI TCP Connection(33)-127.0.0.1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy - Closing JPA EntityManagerFactory for persistence unit 'default'
-04-04-2020 07:03:57.386 [RMI TCP Connection(33)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-2 - Shutdown initiated...
-04-04-2020 07:03:57.396 [RMI TCP Connection(33)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-2 - Shutdown completed.
-04-04-2020 12:41:08.598 [restartedMain] INFO  com.aroha.pet.PetApplication.logStarting - Starting PetApplication on LAPTOP-7VFDP9Q8 with PID 11744 (F:\PetArohaGitHub\ProductivityTesting\pet-app-jpa\target\classes started by jaydeep in F:\PetArohaGitHub\ProductivityTesting\pet-app-jpa)
-04-04-2020 12:41:08.604 [restartedMain] INFO  com.aroha.pet.PetApplication.logStartupProfileInfo - No active profile set, falling back to default profiles: default
-04-04-2020 12:41:08.671 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor.logTo - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-04-04-2020 12:41:08.671 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor.logTo - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-04-04-2020 12:41:10.263 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Bootstrapping Spring Data repositories in DEFAULT mode.
-04-04-2020 12:41:10.415 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn - Finished Spring Data repository scanning in 144ms. Found 16 repository interfaces.
-04-04-2020 12:41:10.966 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$366f528a] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 12:41:11.021 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration$$EnhancerBySpringCGLIB$$cf1d1ac4] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 12:41:11.032 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 12:41:11.036 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@c94853' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 12:41:11.062 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration$$EnhancerBySpringCGLIB$$f3f1bd76] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 12:41:11.073 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.security.config.annotation.method.configuration.Jsr250MetadataSourceConfiguration' of type [org.springframework.security.config.annotation.method.configuration.Jsr250MetadataSourceConfiguration$$EnhancerBySpringCGLIB$$1946d58c] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 12:41:11.076 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'jsr250MethodSecurityMetadataSource' of type [org.springframework.security.access.annotation.Jsr250MethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 12:41:11.078 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 12:41:11.096 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker.postProcessAfterInitialization - Bean 'org.springframework.hateoas.config.HateoasConfiguration' of type [org.springframework.hateoas.config.HateoasConfiguration$$EnhancerBySpringCGLIB$$b5ef9fbc] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
-04-04-2020 12:41:11.805 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer.initialize - Tomcat initialized with port(s): 8080 (http)
-04-04-2020 12:41:11.833 [restartedMain] INFO  o.a.catalina.core.StandardService.log - Starting service [Tomcat]
-04-04-2020 12:41:11.834 [restartedMain] INFO  o.a.catalina.core.StandardEngine.log - Starting Servlet engine: [Apache Tomcat/9.0.16]
-04-04-2020 12:41:11.844 [restartedMain] INFO  o.a.c.core.AprLifecycleListener.log - The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk1.8.0_221\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:/Program Files/Java/jdk1.8.0_221/bin/../jre/bin/server;C:/Program Files/Java/jdk1.8.0_221/bin/../jre/bin;C:/Program Files/Java/jdk1.8.0_221/bin/../jre/lib/amd64;C:\Program Files\Java\jdk1.8.0_221\bin;C:\Progams\apache-maven-3.6.1\bin;C:\Progams\apache-ant-1.9.14\bin;C:\oraclexe\app\oracle\product\11.2.0\server\bin;F:\oracle\product\10.2.0\db_1\bin;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\TDM-GCC-64\bin;C:\Program Files\JetBrains\WebStorm 2019.1.1\bin;;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2019.1.2\bin;;C:\Program Files\JetBrains\IntelliJ IDEA Educational Edition 2019.1\bin;;C:\Program Files\JetBrains\IntelliJ IDEA 2019.1.3\bin;;C:\Users\jaydeep\AppData\Roaming\npm;C:\Users\jaydeep\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\jaydeep\AppData\Local\Microsoft\WindowsApps;;F:\software\spring-tool-suite-4-4.6.0.RELEASE-e4.15.0-win32.win32.x86_64.self-extracting\contents\sts-4.6.0.RELEASE;;.]
-04-04-2020 12:41:12.176 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/].log - Initializing Spring embedded WebApplicationContext
-04-04-2020 12:41:12.177 [restartedMain] INFO  o.s.web.context.ContextLoader.prepareWebApplicationContext - Root WebApplicationContext: initialization completed in 3505 ms
-04-04-2020 12:41:12.972 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Starting...
-04-04-2020 12:41:13.108 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource.getConnection - HikariPool-1 - Start completed.
-04-04-2020 12:41:13.224 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper.logPersistenceUnitInformation - HHH000204: Processing PersistenceUnitInfo [
-	name: default
-	...]
-04-04-2020 12:41:13.350 [restartedMain] INFO  org.hibernate.Version.logVersion - HHH000412: Hibernate Core {5.3.7.Final}
-04-04-2020 12:41:13.353 [restartedMain] INFO  org.hibernate.cfg.Environment.<clinit> - HHH000206: hibernate.properties not found
-04-04-2020 12:41:13.507 [restartedMain] INFO  o.h.annotations.common.Version.<clinit> - HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
-04-04-2020 12:41:13.699 [restartedMain] INFO  org.hibernate.dialect.Dialect.<init> - HHH000400: Using dialect: org.hibernate.dialect.MariaDBDialect
-04-04-2020 12:41:15.122 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory - Initialized JPA EntityManagerFactory for persistence unit 'default'
-04-04-2020 12:41:15.832 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer.startServer - LiveReload server is running on port 35729
-04-04-2020 12:41:16.245 [restartedMain] INFO  o.h.h.i.QueryTranslatorFactoryInitiator.initiateService - HHH000397: Using ASTQueryTranslatorFactory
-04-04-2020 12:41:17.528 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration$JpaWebMvcConfiguration.openEntityManagerInViewInterceptor - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-04-04-2020 12:41:18.437 [restartedMain] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping.initHandlerMethods - Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
-04-04-2020 12:41:18.637 [restartedMain] INFO  o.s.s.web.DefaultSecurityFilterChain.<init> - Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1cd479b7, org.springframework.security.web.context.SecurityContextPersistenceFilter@3481018, org.springframework.security.web.header.HeaderWriterFilter@3200bc9a, org.springframework.web.filter.CorsFilter@6b09cbd9, org.springframework.security.web.authentication.logout.LogoutFilter@156f3fc, com.aroha.pet.security.JwtAuthenticationFilter@786b3d7f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@63f92954, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@8398173, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@26ec15e7, org.springframework.security.web.session.SessionManagementFilter@56211e1a, org.springframework.security.web.access.ExceptionTranslationFilter@24b6f8c2, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6032311c]
-04-04-2020 12:41:18.918 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor.initialize - Initializing ExecutorService 'applicationTaskExecutor'
-04-04-2020 12:41:19.533 [restartedMain] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper.start - Context refreshed
-04-04-2020 12:41:19.552 [restartedMain] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper.start - Found 1 custom documentation plugin(s)
-04-04-2020 12:41:19.582 [restartedMain] INFO  s.d.s.w.s.ApiListingReferenceScanner.scan - Scanning for api listing references
-04-04-2020 12:41:19.948 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator.startingWith - Generating unique operation named: generateReportCardUsingGET_1
-04-04-2020 12:41:19.952 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator.startingWith - Generating unique operation named: showAnalysisUsingPOST_1
-04-04-2020 12:41:19.959 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator.startingWith - Generating unique operation named: generateReportCardUsingGET_2
-04-04-2020 12:41:19.962 [restartedMain] INFO  s.d.s.w.r.o.CachingOperationNameGenerator.startingWith - Generating unique operation named: showAnalysisUsingPOST_2
-04-04-2020 12:41:20.060 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer.start - Tomcat started on port(s): 8080 (http) with context path ''
-04-04-2020 12:41:20.065 [restartedMain] INFO  com.aroha.pet.PetApplication.logStarted - Started PetApplication in 11.937 seconds (JVM running for 13.348)
-04-04-2020 12:54:54.694 [RMI TCP Connection(24)-127.0.0.1] INFO  o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin.shutdown - Application shutdown requested.
-04-04-2020 12:54:54.705 [RMI TCP Connection(24)-127.0.0.1] INFO  o.s.s.c.ThreadPoolTaskExecutor.shutdown - Shutting down ExecutorService 'applicationTaskExecutor'
-04-04-2020 12:54:54.718 [RMI TCP Connection(24)-127.0.0.1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy - Closing JPA EntityManagerFactory for persistence unit 'default'
-04-04-2020 12:54:54.723 [RMI TCP Connection(24)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown initiated...
-04-04-2020 12:54:54.735 [RMI TCP Connection(24)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource.close - HikariPool-1 - Shutdown completed.
+        roles0_.user_id=?
+07-04-2020 09:29:44.538 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL.logStatement - 
+    SELECT
+        q.created_by,
+        u.name as name,
+        q.created_at as created_at,
+        COUNT(q.exceptionstr) as noOfError ,
+        COUNT(DISTINCT q.scenario ) as noOfQuestion,
+        COUNT(q.javastr) as noOfAttempt ,
+        CAST(100-((COUNT(q.exceptionstr))/(count(q.javastr)))*100 as decimal(5,
+        2))as productivity             
+    FROM
+        users u            
+    LEFT JOIN
+        java_pojo q                            
+            ON u.id=q.created_by              
+    left join
+        user_roles r                            
+            on u.id=r.user_id            
+    WHERE
+        r.role_id =1             
+    GROUP BY
+        u.id,
+        DAY(q.created_at)             
+    having
+        count(distinct q.scenario)>0;

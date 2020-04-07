@@ -247,6 +247,7 @@ public class FeedBackService {
 	//    Mentor FeedbackService
 	public DeleteDomainPayload saveFeedback(MentorFeedback feed, UserPrincipal user) {
 		int count = 1;
+		logger.info("----------queryInfo"+feed.getCreatedBy());
 		QueryInfo query = fedRepo.getFeedback(feed.getCreatedAt(), feed.getQuestionId(),feed.getCreatedBy());
 		long learnerId = query.getCreatedBy();
 		Optional<User> userData = userService.findByLearnerId(learnerId);

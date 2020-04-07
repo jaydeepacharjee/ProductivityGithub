@@ -20,7 +20,7 @@ public interface FeedBackRepository extends JpaRepository<QueryInfo, Long> {
             + "having count(distinct q.scenario)>0;", nativeQuery = true)
     public List<Object[]> getFeedBackStatus(); 
     
-    @Query(value = "select * from query_info where created_at=?1 and question_id=?3 and created_by=?3", nativeQuery = true)
+    @Query(value = "select * from query_info where created_at=?1 and question_id=?2 and created_by=?3", nativeQuery = true)
     public QueryInfo getFeedback(String createdAt, int qyestionId,Long createdBy);
     
     @Query(value="select d.domain_id,d.domain_name from query_info q \r\n" + 
