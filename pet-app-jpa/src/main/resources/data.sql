@@ -14,4 +14,5 @@ INSERT IGNORE INTO `technology` (`tech_id`,`technology_name`) VALUES
         (1,'SQL'),
         (2,'C'),
         (3,'JAVA'),
-        (4,'JAVASCRIPT');
+        (4,'JAVASCRIPT'),
+        (5,'PYTHON');

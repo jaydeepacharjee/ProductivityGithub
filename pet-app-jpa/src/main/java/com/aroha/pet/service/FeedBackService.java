@@ -15,11 +15,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.aroha.pet.model.CPojo;
 import com.aroha.pet.model.FeedBack;
 import com.aroha.pet.model.JavaPojo;
 import com.aroha.pet.model.JavascriptPojo;
+import com.aroha.pet.model.PythonPojo;
 import com.aroha.pet.model.QueryInfo;
 import com.aroha.pet.model.ShowMentorFeebackApi;
 import com.aroha.pet.model.Technology;
@@ -66,6 +68,9 @@ public class FeedBackService {
 
 	@Autowired
 	private JavaService javaService;
+	
+	@Autowired
+	private PythonService pythonService;
 	
 	@Autowired
 	private JavascriptService javaScriptService;
@@ -418,6 +423,49 @@ public class FeedBackService {
 		}
 		return new DeleteDomainPayload("FeedBack Saved successfully", HttpStatus.OK.value());
 	}
+	
+	public DeleteDomainPayload savePythonFeedback(MentorFeedback feed, UserPrincipal user) {
+		// TODO Auto-generated method stub
+		int count=1;
+		PythonPojo pythonPojo=pythonService.findByTechnologyRepo(feed.getCreatedAt(),feed.getQuestionId(),feed.getCreatedBy());
+		Long learnerId=pythonPojo.getCreatedBy();
+		Optional<User> userData = userService.findByLearnerId(learnerId);
+		Optional<Technology> tech = techService.findById(feed.getTechnologyId());
+		if (!userData.isPresent()) {
+			throw new RuntimeException("User with id " + learnerId + " not found");
+		}
+		if (!tech.isPresent()) {
+			throw new RuntimeException("Technology with Id " + feed.getTechnologyId() + " not found");
+		}
+		User userObj = userData.get();
+		Technology technology = tech.get();
+		FeedBack feedback = new FeedBack();
+		feedback.setTechnologyName(technology.getTechnologyName());
+		feedback.setTechnologyId(technology.getTechId());
+		feedback.setFeedback(feed.getFeedback());
+		feedback.setLearnerId(userObj.getId());
+		feedback.setLearnerName(userObj.getName());
+		feedback.setMentorId(user.getId());
+		feedback.setMentorName(user.getName());
+		feedback.setQuestionId(pythonPojo.getQuestionId());
+		feedback.setQuestion(pythonPojo.getScenario());
+		feedback.setResulstr(pythonPojo.getResultstr());
+		feedback.setError(pythonPojo.getError());
+		feedback.setProgramingStr(pythonPojo.getPythonstr());
+		feedback.setQuery_date(pythonPojo.getCreatedAt().toString().replaceAll("T", " ").replaceAll("Z", " ").trim());
+		Integer getNotify = mentorFeedbackRepo.getLastNotification(learnerId, technology.getTechnologyName());
+		if (getNotify == null || getNotify == 0) {
+			feedback.setNotification(count++);
+		} else {
+			feedback.setNotification(++getNotify);
+		}
+		try {
+			mentorFeedbackRepo.save(feedback);
+		} catch (Exception ex) {
+			return new DeleteDomainPayload("Error saving feedback", HttpStatus.BAD_REQUEST.value());
+		}
+		return new DeleteDomainPayload("FeedBack Saved successfully", HttpStatus.OK.value());
+	}
 
 	// Show mentor feedback
 	public ShowMentorFeebackApi showFeedback(UserPrincipal user, int techId) {
@@ -443,28 +491,28 @@ public class FeedBackService {
 			mentorFeedback.setFeedback(fobj.getFeedback());
 			mentorFeedback.setQuestion(fobj.getQuestion());
 			if (fobj.getResulstr() == null) {
-				mentorFeedback.setResulstr("No results to display");
+				mentorFeedback.setResulstr("None");
 			} else {
 				mentorFeedback.setResulstr(fobj.getResulstr());
 			}
 			if (fobj.getExceptionStr() == null) {
-				mentorFeedback.setExceptionStr("No results to display");
+				mentorFeedback.setExceptionStr("None");
 			} else {
 				mentorFeedback.setExceptionStr(fobj.getExceptionStr());
 			}
 			if (fobj.getSqlStr() == null) {
-				mentorFeedback.setSqlStr("No results to display");
+				mentorFeedback.setSqlStr("None");
 			} else {
 				mentorFeedback.setSqlStr(fobj.getSqlStr());
 			}
 			if (fobj.getProgramingStr() == null) {
-				mentorFeedback.setProgramingStr("No results to display");
+				mentorFeedback.setProgramingStr("None");
 			} else {
 				mentorFeedback.setProgramingStr(fobj.getProgramingStr());
 			}
 			mentorFeedback.setTechnologyName(fobj.getTechnologyName());
 			if (fobj.getError() == null) {
-				mentorFeedback.setError("No results to display");
+				mentorFeedback.setError("None");
 			} else {
 				mentorFeedback.setError(fobj.getError());
 			}

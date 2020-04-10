@@ -130,20 +130,12 @@ public class CService {
 			String error = sb.toString().substring(sb.toString().indexOf("error"));
 			int r = error.toString().indexOf("\n");
 			int m = error.toString().indexOf("error");
-			//            System.out.println("-------error is\n"+error);
-			//            System.out.println("----------------r index is "+r);
-			//            System.out.println("---------m index is "+m);
-			//            cpojo.setError(sb.toString().substring(sb.toString().indexOf("error")));
-			cpojo.setError(error);
-			//            cpojo.setResultstr(error.toString().substring(m, r));
-			//cResponse.setCprogram(cCode);
-			//cResponse.setCexception(sb.toString().substring(sb.toString().indexOf("error")));
+			cpojo.setError(error.toString().substring(m, r));
 			cResponse.setCerror(error.toString().substring(m, r));
 			cResponse.setCstatus("ERROR");
 			cRepo.save(cpojo);
 			return cResponse;
 		}
-
 	}
 
 	private StringBuffer printLines(String cmd, InputStream ins) throws Exception {
@@ -233,7 +225,6 @@ public class CService {
 
 	public List<CReportAnalysisPayload> generateReportAnalysis(String createdAt, Long createdBy, int domainId) {
 		List<Object[]> listObj = cRepo.generateReportAnalysis(createdAt, createdBy, domainId);
-		logger.info("------------- I am here----------------" + listObj.size());
 		List<CReportAnalysisPayload> list = new ArrayList<>();
 		listObj.stream().map((object) -> {
 			CReportAnalysisPayload load = new CReportAnalysisPayload();

@@ -76,35 +76,21 @@ public interface CRepo extends JpaRepository<CPojo, Long> {
     @Query(value = "select * from cpojo where created_at=?1 and question_id=?2 and created_by=?3", nativeQuery = true)
     public CPojo searchCRepo(String createdAt, int questionId,Long createdBy);
 
-    @Query(value = " select\r\n"
-            + "        d.domain_id,\r\n"
-            + "        d.domain_name      \r\n"
-            + "    from\r\n"
-            + "        cpojo q                    \r\n"
-            + "                \r\n"
-            + "    inner join\r\n"
-            + "        question ques              \r\n"
-            + "            on  q.question_id=ques.question_id      \r\n"
-            + "    inner join\r\n"
-            + "        scenario s              \r\n"
-            + "            on s.scenario_id=ques.scenario_id       \r\n"
-            + "    inner join\r\n"
-            + "        function_table f              \r\n"
-            + "            on f.function_id=s.function_id      \r\n"
-            + "    inner join\r\n"
-            + "        domain d              \r\n"
-            + "            on d.domain_id=f.domain_id       \r\n"
-            + "    left join\r\n"
-            + "        question qus              \r\n"
-            + "            on q.question_id=qus.question_id \r\n"
-            + "	 left join\r\n"
-            + "        mentor_feedback m \r\n"
-            + "		    on q.created_at=m.query_date      \r\n"
-            + "    where\r\n"
-            + "        DATE(q.created_at)=DATE(?2)          \r\n"
-            + "        and q.created_by=?1      \r\n"
-            + "    order by\r\n"
-            + "        scenario;\r\n"
-            + "", nativeQuery = true)
+    @Query(value = "SELECT DISTINCT d.domain_id, \r\n" + 
+    		"                d.domain_name \r\n" + 
+    		"FROM   domain d \r\n" + 
+    		"       INNER JOIN function_table f \r\n" + 
+    		"               ON d.domain_id = f.domain_id \r\n" + 
+    		"       INNER JOIN scenario s \r\n" + 
+    		"               ON f.function_id = s.function_id \r\n" + 
+    		"       INNER JOIN question q \r\n" + 
+    		"               ON s.scenario_id = q.scenario_id \r\n" + 
+    		"       INNER JOIN cpojo q1 \r\n" + 
+    		"               ON q1.question_id = q.question_id \r\n" + 
+    		"       INNER JOIN users u \r\n" + 
+    		"               ON u.id = q1.created_by \r\n" + 
+    		"WHERE  Date(q1.created_at) = Date(?2) \r\n" + 
+    		"       AND q1.created_by = ?1 \r\n" + 
+    		"ORDER  BY scenario; ", nativeQuery = true)
     public List<Object[]> getDomainAnalsisRepo(long created_by, String createdAt);
 }
