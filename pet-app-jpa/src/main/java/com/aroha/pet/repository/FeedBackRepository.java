@@ -10,14 +10,32 @@ import java.util.List;
 public interface FeedBackRepository extends JpaRepository<QueryInfo, Long> {
 
     
-    @Query(value = "SELECT q.created_by,u.name as name,\r\n"
-            + "q.created_at as created_at,COUNT(q.exception_str) as noOfException ,\r\n"
-            + "COUNT(DISTINCT q.scenario ) as noOfScenario, COUNT(q.sql_str) as noOfSqlStr ,\r\n"
-            + "CAST(100-((count(q.exception_str))/(count(q.sql_str)))*100 as decimal(5,2))as productivity\r\n"
-            + "FROM users u LEFT JOIN query_info q ON u.id=q.created_by \r\n"
-            + "left join user_roles r on u.id=r.user_id WHERE r.role_id=1\r\n"
-            + "GROUP BY u.id,DAY(q.created_at)\r\n"
-            + "having count(distinct q.scenario)>0;", nativeQuery = true)
+    @Query(value = " SELECT\r\n" + 
+    		"        q.created_by,\r\n" + 
+    		"        u.name as name,\r\n" + 
+    		"        q.created_at as created_at,\r\n" + 
+    		"        COUNT(q.exception_str) as noOfException ,\r\n" + 
+    		"        COUNT(DISTINCT q.scenario ) as noOfScenario,\r\n" + 
+    		"        COUNT(q.sql_str) as noOfSqlStr ,\r\n" + 
+    		"        CAST(100-((count(q.exception_str))/(count(q.sql_str)))*100 as decimal(5,\r\n" + 
+    		"        2))as productivity  \r\n" + 
+    		"    FROM\r\n" + 
+    		"        users u \r\n" + 
+    		"    LEFT JOIN\r\n" + 
+    		"        query_info q \r\n" + 
+    		"            ON u.id=q.created_by   \r\n" + 
+    		"    left join\r\n" + 
+    		"        user_roles r \r\n" + 
+    		"            on u.id=r.user_id \r\n" + 
+    		"    WHERE\r\n" + 
+    		"        r.role_id=1  \r\n" + 
+    		"    GROUP BY\r\n" + 
+    		"        u.id,\r\n" + 
+    		"        DAY(q.created_at)  \r\n" + 
+    		"    having\r\n" + 
+    		"        count(distinct q.scenario)>0\r\n" + 
+    		"	ORDER BY created_at Desc;\r\n" + 
+    		"", nativeQuery = true)
     public List<Object[]> getFeedBackStatus(); 
     
     @Query(value = "select * from query_info where created_at=?1 and question_id=?2 and created_by=?3", nativeQuery = true)

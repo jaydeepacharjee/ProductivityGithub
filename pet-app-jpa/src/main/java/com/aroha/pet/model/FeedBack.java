@@ -33,6 +33,7 @@ public class FeedBack extends DateAuditnew {
     @Lob
     private String exceptionStr;
     private String error;
+    @Lob
     private String sqlStr;
     @Lob
     private String programingStr;
