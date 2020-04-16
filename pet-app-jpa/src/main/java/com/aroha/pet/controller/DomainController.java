@@ -235,5 +235,10 @@ public class DomainController {
     public ResponseEntity<?> deleteQuestionName(@RequestBody DomainRequest domainRequest) {
         return ResponseEntity.ok(questionService.deleteQuestionName(domainRequest.getQuestionId()));
     }
+    
+    @PostMapping("/UpdateScenarioImage")
+    public ResponseEntity<?> updateScenariImage(@RequestParam("scenarioId") int scenarioId,@RequestPart(name = "file", required = false) MultipartFile file){
+        return ResponseEntity.ok(scenarioService.updateImage(scenarioId,file));
+    }
 
 }
