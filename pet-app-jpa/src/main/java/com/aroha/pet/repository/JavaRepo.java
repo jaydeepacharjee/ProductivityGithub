@@ -15,31 +15,31 @@ import com.aroha.pet.model.QueryInfo;
 @Repository
 public interface JavaRepo extends JpaRepository<JavaPojo, Long> {
 
-    @Query(value = "SELECT\n" + 
-    		"        q.created_by,\n" + 
-    		"        u.name as name,\n" + 
-    		"        q.created_at as created_at,\n" + 
-    		"        COUNT(q.exceptionstr) as noOfError ,\n" + 
-    		"        COUNT(DISTINCT q.scenario ) as noOfQuestion,\n" + 
-    		"        COUNT(q.javastr) as noOfAttempt ,\n" + 
-    		"        CAST(100-((COUNT(q.exceptionstr))/(count(q.javastr)))*100 as decimal(5,\n" + 
-    		"        2))as productivity             \n" + 
-    		"    FROM\n" + 
-    		"        users u            \n" + 
-    		"    LEFT JOIN\n" + 
-    		"        java_pojo q                            \n" + 
-    		"            ON u.id=q.created_by              \n" + 
-    		"    left join\n" + 
-    		"        user_roles r                            \n" + 
-    		"            on u.id=r.user_id            \n" + 
-    		"    WHERE\n" + 
-    		"        r.role_id =1             \n" + 
-    		"    GROUP BY\n" + 
-    		"        u.id,\n" + 
-    		"        DAY(q.created_at)             \n" + 
-    		"    having\n" + 
-    		"        count(distinct q.scenario)>0\n" + 
-    		"		  ORDER BY created_at Desc;", nativeQuery = true)
+    @Query(value = "SELECT\n"
+            + "        q.created_by,\n"
+            + "        u.name as name,\n"
+            + "        q.created_at as created_at,\n"
+            + "        COUNT(q.exceptionstr) as noOfError ,\n"
+            + "        COUNT(DISTINCT q.scenario ) as noOfQuestion,\n"
+            + "        COUNT(q.javastr) as noOfAttempt ,\n"
+            + "        CAST(100-((COUNT(q.exceptionstr))/(count(q.javastr)))*100 as decimal(5,\n"
+            + "        2))as productivity             \n"
+            + "    FROM\n"
+            + "        users u            \n"
+            + "    LEFT JOIN\n"
+            + "        java_pojo q                            \n"
+            + "            ON u.id=q.created_by              \n"
+            + "    left join\n"
+            + "        user_roles r                            \n"
+            + "            on u.id=r.user_id            \n"
+            + "    WHERE\n"
+            + "        r.role_id =1             \n"
+            + "    GROUP BY\n"
+            + "        u.id,\n"
+            + "        DAY(q.created_at)             \n"
+            + "    having\n"
+            + "        count(distinct q.scenario)>0\n"
+            + "		  ORDER BY created_at Desc;", nativeQuery = true)
     public List<Object[]> generateReport();
 
     @Query(value = "select\r\n"
@@ -81,24 +81,24 @@ public interface JavaRepo extends JpaRepository<JavaPojo, Long> {
     public List<Object[]> generateReportAnalysis(String createdAt, Long createdBy, int domainId);
 
     @Query(value = "select * from java_pojo where created_at=?1 and question_id=?2 and created_by=?3", nativeQuery = true)
-    public JavaPojo searchJavaRepo(String createdAt, int questionId,Long createdBy);
+    public JavaPojo searchJavaRepo(String createdAt, int questionId, Long createdBy);
 
-    @Query(value = "SELECT DISTINCT d.domain_id, \n" + 
-    		"                d.domain_name \n" + 
-    		"FROM   domain d \n" + 
-    		"       INNER JOIN function_table f \n" + 
-    		"               ON d.domain_id = f.domain_id \n" + 
-    		"       INNER JOIN scenario s \n" + 
-    		"               ON f.function_id = s.function_id \n" + 
-    		"       INNER JOIN question q \n" + 
-    		"               ON s.scenario_id = q.scenario_id \n" + 
-    		"       INNER JOIN java_pojo q1 \n" + 
-    		"               ON q1.question_id = q.question_id \n" + 
-    		"       INNER JOIN users u \n" + 
-    		"               ON u.id = q1.created_by \n" + 
-    		"WHERE  Date(q1.created_at) = Date(?2) \n" + 
-    		"       AND q1.created_by = ?1 \n" + 
-    		"ORDER  BY scenario; ", nativeQuery = true)
+    @Query(value = "SELECT DISTINCT d.domain_id, \n"
+            + "                d.domain_name \n"
+            + "FROM   domain d \n"
+            + "       INNER JOIN function_table f \n"
+            + "               ON d.domain_id = f.domain_id \n"
+            + "       INNER JOIN scenario s \n"
+            + "               ON f.function_id = s.function_id \n"
+            + "       INNER JOIN question q \n"
+            + "               ON s.scenario_id = q.scenario_id \n"
+            + "       INNER JOIN java_pojo q1 \n"
+            + "               ON q1.question_id = q.question_id \n"
+            + "       INNER JOIN users u \n"
+            + "               ON u.id = q1.created_by \n"
+            + "WHERE  Date(q1.created_at) = Date(?2) \n"
+            + "       AND q1.created_by = ?1 \n"
+            + "ORDER  BY scenario; ", nativeQuery = true)
     public List<Object[]> getDomainAnalsisRepo(long created_by, String createdAt);
 
 }

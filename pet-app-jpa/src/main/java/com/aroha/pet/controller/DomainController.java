@@ -237,7 +237,7 @@ public class DomainController {
     }
     
     @PostMapping("/UpdateScenarioImage")
-    public ResponseEntity<?> updateScenariImage(@RequestParam("scenarioId") int scenarioId,@RequestPart(name = "file", required = false) MultipartFile file){
+    public ResponseEntity<?> updateScenariImage(@RequestParam("scenarioId") int scenarioId,@RequestParam(name = "file", required = false) MultipartFile file){
         return ResponseEntity.ok(scenarioService.updateImage(scenarioId,file));
     }
 

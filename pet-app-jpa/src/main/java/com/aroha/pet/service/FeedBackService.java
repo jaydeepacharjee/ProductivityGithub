@@ -383,7 +383,9 @@ public class FeedBackService {
     public DeleteDomainPayload saveJavaScriptFeedback(MentorFeedback feed, UserPrincipal user) {
         int count = 1;
         JavascriptPojo javaScriptPojo = javaScriptService.findByTechnologyRepo(feed.getCreatedAt(), feed.getQuestionId(), feed.getCreatedBy());
+        logger.info("----------------------Javascript Pojo-------"+javaScriptPojo);
         Long learnerId = javaScriptPojo.getCreatedBy();
+        logger.info("------------------ Learner Id---------------"+learnerId);
         Optional<User> userData = userService.findByLearnerId(learnerId);
         Optional<Technology> tech = techService.findById(feed.getTechnologyId());
         if (!userData.isPresent()) {
