@@ -24,7 +24,6 @@ import com.aroha.pet.model.User;
 import com.aroha.pet.payload.ApiResponse;
 import com.aroha.pet.payload.PagedResponse;
 import com.aroha.pet.payload.SignUpRequest;
-import com.aroha.pet.payload.UserControllerPayload;
 import com.aroha.pet.payload.UserIdentityAvailability;
 import com.aroha.pet.payload.UserProfile;
 import com.aroha.pet.payload.UserSummary;
@@ -35,7 +34,6 @@ import com.aroha.pet.service.DBService;
 import com.aroha.pet.service.QueryInfoService;
 import com.aroha.pet.service.UserService;
 import com.aroha.pet.util.AppConstants;
-import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/api")

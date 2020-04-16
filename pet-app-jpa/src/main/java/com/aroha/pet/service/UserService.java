@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import org.springframework.mail.MailException;
+import org.springframework.mail.javamail.MimeMessageHelper;
 
 /**
  *
@@ -38,7 +40,7 @@ public class UserService {
 
     @Autowired
     UserRepository userRepository;
-
+    
     @Autowired
     RoleRepository roleRepository;
 
@@ -161,16 +163,17 @@ public class UserService {
         logger.info("Forget Password OTP generated for the user : " + getUser.getName());
 //        Long i = new Long(code);
 //        unique_password = i.toString();
-        boolean istrue = sendEmail(code, userOrEmail);
+        boolean istrue = sendEmail(code, userOrEmail,getUser.getName());
         return istrue;
     }
 
     //	Send Email With unique OTP
-    public boolean sendEmail(Long unique_password, String userOrEmail) {
+    public boolean sendEmail(Long unique_password, String userOrEmail,String name) {
         //logger.info("OTP Password is "+unique_password);
-        SimpleMailMessage msg = new SimpleMailMessage();
+/*        SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(userOrEmail);
         msg.setSubject("Forget Password");
+        
         msg.setText("Dear User ,\n"
                 + "\n"
                 + "The OTP generated for your Account with ID " + userOrEmail + "  is: " + unique_password
@@ -191,7 +194,32 @@ public class UserService {
 
         }
         return false;
+         */
 
+        MimeMessage msg = javaMailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+            helper.setTo(userOrEmail);
+            helper.setSubject("Forget Password");
+            helper.setText("Hi "+ name+",<br><br>\n"
+                    + "\n"
+                    + "The OTP generated for your Account with ID " + userOrEmail + "  is: <br>" + unique_password
+                    + "<br><br>" 
+                    + "\nUse this OTP to change the password, <b>OTP will expire in 3 minutes.</b>\n <br><br>"
+                    + "In case of any queries, kindly contact our customer service desk at the details below\n<br><br>"
+                    + "\n"
+                    + "\n"
+                    + "Warm Regards,<br>\n"
+                    + "\n"
+                    + "ArohaTechnologies",true);
+            javaMailSender.send(msg);
+            logger.info("Email sent to registered email");
+            return true;
+
+        } catch (MessagingException | MailException ex) {
+             logger.error("Failed to send mail " + ex.getMessage());
+        }
+        return false;
     }
 
     public static long Code() //this code returns the  unique 16 digit code  
@@ -201,17 +229,27 @@ public class UserService {
     }
 
     public Object updatePassword(ForgetPassword object) {
+        logger.info("----I am here------ 1 ");
+        if(map==null){
+            return new ForgetPasswordPayload(HttpStatus.CONFLICT.value(),Boolean.FALSE,"Something went wrong,try again later");
+        }
         ForgetPasswordCheck code = map.get(object.getUsernameOrEmail());
+        logger.info("----I am here------ 2 ");
         String getOtpFromUser = object.getOneTimePass();
         logger.info("--------Generated OTP with object-----" + code.getCode());
         //logger.info("------ OTP PASWORD " + unique_password);
         logger.info("eNTERED PASSWORD IS: " + getOtpFromUser);
-
+        
+        
+    
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
+        
         String enteredDate = formatter.format(date);
         Date date1 = null;
         Date date2 = null;
+        
+        
         Long diffMinutes = null;
         try {
             date1 = formatter.parse(code.getGeneratedDate());
@@ -224,7 +262,7 @@ public class UserService {
         }
 
         if (diffMinutes > 3) {
-            return new ForgetPasswordPayload(HttpStatus.GATEWAY_TIMEOUT.value(), Boolean.FALSE, "OTP time expired,generate again");
+            return new ForgetPasswordPayload(HttpStatus.CONFLICT.value(), Boolean.FALSE, "OTP time expired,generate again");
         } else {
 
             if (getOtpFromUser.equals(code.getCode().toString())) {
