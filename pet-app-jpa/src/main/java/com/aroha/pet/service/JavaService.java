@@ -49,6 +49,7 @@ public class JavaService {
     public JavaResponse executeJava(final UserPrincipal currentUser, JavaPayload payload) throws Exception {
         Path currentPath = Paths.get("");
         String projectPath = currentPath.toAbsolutePath().toString();
+        logger.info("-------------------Project path-----------"+projectPath);
 
         //String absolutePathToIndexJSP=context.getRealPath("/");
         DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
@@ -79,6 +80,7 @@ public class JavaService {
         //String dirName = my_path;
         //String dirName=absolutePathToIndexJSP;
         String dirName = projectPath + "\\" + "JavaPrograms";
+        logger.info("-------------------DirectoryName--------"+dirName);
         File newFile = new File(projectPath + "\\" + "JavaPrograms");
         newFile.mkdir();
 
@@ -112,8 +114,9 @@ public class JavaService {
             //cpojo.setResultstr(sb.toString().substring(sb.toString().indexOf("error")));
             //javapojo.setResultstr(exception);
             //javaresponse.setJavaexception(exception);
+            logger.info("------Exception-------"+exception.toString().substring(m, r));
 
-            javapojo.setResultstr(exception.toString().substring(m, r));
+           // javapojo.setResultstr(exception.toString().substring(m, r));
             javapojo.setExceptionstr(exception.toString().substring(m, r));
             javaresponse.setJavaexception(exception.toString().substring(m, r));
             javaresponse.setJavastatus("EXCEPTION");
@@ -130,8 +133,9 @@ public class JavaService {
             int r = error.toString().indexOf("\n");
             int m = error.toString().indexOf("error");
             //cpojo.setResultstr(sb.toString().substring(sb.toString().indexOf("error")));
-            javapojo.setResultstr(error.toString().substring(m, r));
+            //javapojo.setResultstr(error.toString().substring(m, r));
             javapojo.setExceptionstr(error.toString().substring(m, r));
+            logger.info("------Error-------"+error.toString().substring(m, r));
             javaresponse.setJavaexception(error.toString().substring(m, r));
 
             javapojo.setQuestionId(qId);
@@ -270,6 +274,8 @@ public class JavaService {
                 SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");
                 load.setFeedbackDate(formatter.format(date));
             }
+            java.sql.Timestamp j = (java.sql.Timestamp) object[11];
+			load.setCreatedAt(j.toString());
             return load;
         }).forEachOrdered((load) -> {
             list.add(load);

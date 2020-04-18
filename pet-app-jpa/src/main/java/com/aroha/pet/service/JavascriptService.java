@@ -248,6 +248,8 @@ public class JavascriptService {
                 SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");
                 load.setFeedbackDate(formatter.format(date));
             }
+            java.sql.Timestamp j = (java.sql.Timestamp) object[11];
+			load.setCreatedAt(j.toString());
             return load;
         }).forEachOrdered((load) -> {
             list.add(load);

@@ -203,9 +203,9 @@ public class UserService {
             helper.setSubject("Forget Password");
             helper.setText("Hi "+ name+",<br><br>\n"
                     + "\n"
-                    + "The OTP generated for your Account with ID " + userOrEmail + "  is: <br>" + unique_password
+                    + "The OTP generated for your Account with ID <i style=\"color:green\"><b>" + userOrEmail + "</b></i>  is: <br>" +"<b style=\"color:blue\">" + unique_password+"</b>"
                     + "<br><br>" 
-                    + "\nUse this OTP to change the password, <b>OTP will expire in 3 minutes.</b>\n <br><br>"
+                    + "\nUse this OTP to change the password, <b style=\"color:red\">OTP will expire in 3 minutes.</b>\n <br><br>"
                     + "In case of any queries, kindly contact our customer service desk at the details below\n<br><br>"
                     + "\n"
                     + "\n"
@@ -224,7 +224,7 @@ public class UserService {
 
     public static long Code() //this code returns the  unique 16 digit code  
     {  //creating a 16 digit code using Math.random function 
-        long code = (long) ((Math.random() * Math.pow(9, 5)));
+        long code = (long) ((Math.random() * Math.pow(9, 7)));
         return code; //returning the code 
     }
 

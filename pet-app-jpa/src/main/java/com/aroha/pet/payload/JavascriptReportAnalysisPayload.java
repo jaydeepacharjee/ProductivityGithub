@@ -5,6 +5,7 @@ public class JavascriptReportAnalysisPayload {
     private String domainName;
     private String functionName;
     private String scenarioTitle;
+    private String createdAt;
     private String javascriptStr;
     private String error;
     private int questionId;
@@ -78,6 +79,12 @@ public class JavascriptReportAnalysisPayload {
 	}
 	public void setMentorName(String mentorName) {
 		this.mentorName = mentorName;
+	}
+	public String getCreatedAt() {
+		return createdAt;
+	}
+	public void setCreatedAt(String createdAt) {
+		this.createdAt = createdAt;
 	}
     
     
