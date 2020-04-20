@@ -22,7 +22,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	//select * from users a, user_roles b,roles c where a.id = b.user_id and b.role_id = c.id and c.name = 'ROLE_ADMIN'
 //	@Query("select user from User user where user.roles.name =:roleName")
-	@Query(nativeQuery = true, value = "select * from users a, user_roles b,roles c where a.id = b.user_id and b.role_id = c.id and c.name = ?")
+	@Query(nativeQuery = true, value = "SELECT * \r\n" + 
+			"FROM   users a, \r\n" + 
+			"       user_roles b, \r\n" + 
+			"       roles c \r\n" + 
+			"WHERE  a.id = b.user_id \r\n" + 
+			"       AND b.role_id = c.id \r\n" + 
+			"       AND c.NAME =?\r\n" + 
+			"       order by a.name asc")
 	List<User> findByRoles(String roleName);
 
 //    Optional<User> findByUsername(String username);
