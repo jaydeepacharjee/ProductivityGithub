@@ -1,5 +1,6 @@
 package com.aroha.pet.payload;
 
+import java.util.List;
 
 public class MentorFeedbackResponse {
 
@@ -11,7 +12,8 @@ public class MentorFeedbackResponse {
     private String learnerName;
     private String feedback;
     private String question;
-    private String resulstr;
+    private List resultStr;
+    private String programingResult;
     private String exceptionStr;
     private String sqlStr;
     private String programingStr;
@@ -78,15 +80,17 @@ public class MentorFeedbackResponse {
         this.question = question;
     }
 
-    public String getResulstr() {
-        return resulstr;
-    }
 
-    public void setResulstr(String resulstr) {
-        this.resulstr = resulstr;
-    }
 
-    public String getExceptionStr() {
+    public List getResultStr() {
+		return resultStr;
+	}
+
+	public void setResultStr(List resultStr) {
+		this.resultStr = resultStr;
+	}
+
+	public String getExceptionStr() {
         return exceptionStr;
     }
 
@@ -151,5 +155,14 @@ public class MentorFeedbackResponse {
     public void setError(String error) {
         this.error = error;
     }
+
+	public String getProgramingResult() {
+		return programingResult;
+	}
+
+	public void setProgramingResult(String programingResult) {
+		this.programingResult = programingResult;
+	}
+    
 
 }

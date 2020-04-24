@@ -31,6 +31,8 @@ public class FeedBack extends DateAuditnew {
     @Lob
     private String resulstr;
     @Lob
+    private String programmingResult;
+    @Lob
     private String exceptionStr;
     private String error;
     @Lob
@@ -175,5 +177,14 @@ public class FeedBack extends DateAuditnew {
     public void setTechnologyId(int technologyId) {
         this.technologyId = technologyId;
     }
+
+	public String getProgrammingResult() {
+		return programmingResult;
+	}
+
+	public void setProgrammingResult(String programmingResult) {
+		this.programmingResult = programmingResult;
+	}
+
 
 }
