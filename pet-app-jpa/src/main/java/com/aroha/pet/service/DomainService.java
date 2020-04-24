@@ -83,7 +83,7 @@ public class DomainService {
 
         Optional<Technology> tech = techService.findById(technologyId);
         if (!tech.isPresent()) {
-            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), "Selected technology is missing from the database");
+            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), "Select technology to save domain");
         }
         Technology technology = tech.get();
         domain.setTechnology(technology);
@@ -93,7 +93,7 @@ public class DomainService {
             logger.info("Domain saved");
         } catch (Exception ex) {
             logger.error("Domain not saved" + ex.getMessage());
-            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(),"Domain not saved successfully");
         }
         return new GetDomainDataPayload(HttpStatus.OK.value(), "Domain Saved Successfully");
     }

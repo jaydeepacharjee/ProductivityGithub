@@ -54,7 +54,7 @@ public class ScenarioService {
             listScenarioData.add(scData);
         }
         if (listScenarioData.isEmpty()) {
-            return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "No Data is found");
+            return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "No Scenario is added for the function, please add one");
         }
         return new GetDomainDataPayload(HttpStatus.OK.value(), listScenarioData, "SUCCESS");
     }
@@ -64,10 +64,10 @@ public class ScenarioService {
         Optional<Domain> byIdDomain = domainRepository.findById(domainId);
         Optional<Function> byIdFunction = functionRepository.findById(functionId);
         if (!byIdDomain.isPresent()) {
-            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), "Selected Domain is missing from the database");
+            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), "Select domain to add a scenario");
         }
         if (!byIdFunction.isPresent()) {
-            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), "Selected Function is missing from the database");
+            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), "Select function to add a scenario");
         }
         Domain d = byIdDomain.get();
         Function f = byIdFunction.get();
@@ -78,7 +78,7 @@ public class ScenarioService {
             logger.info("Scenario saved successfully");
         } catch (Exception ex) {
             logger.error("Scenario failed saved " + ex.getMessage());
-            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(),"Scenario not saved successfully");
         }
         return new GetDomainDataPayload(HttpStatus.OK.value(), "Scenario Saved Successfully");
 

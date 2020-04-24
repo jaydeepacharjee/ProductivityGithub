@@ -37,7 +37,7 @@ public class FunctionService {
 
         Optional<Domain> byId = domainRepository.findById(domainId);
         if (!byId.isPresent()) {
-              return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), "Selected domain is mising from the database");
+              return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), "Select domain to save a function");
         }
         Domain d = byId.get();
         function.setDomain(d);
@@ -46,7 +46,7 @@ public class FunctionService {
             logger.info("function saved successfully");
         } catch (Exception ex) {
             logger.error("Failed saving function " + ex.getMessage());
-            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(),ex.getMessage());
+            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(),"Function not saved successfully");
         }
         return new GetDomainDataPayload(HttpStatus.OK.value(),"Function Saved Successfully");
 
@@ -67,7 +67,7 @@ public class FunctionService {
             functionDataList.add(functionData);
         }
         if(functionDataList.isEmpty()){
-            return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(),"No data is found");
+            return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(),"No Function is added for the domain, please add one");
         }else{
             return new GetDomainDataPayload(HttpStatus.OK.value(),functionDataList ,"SUCCESS");
         }    

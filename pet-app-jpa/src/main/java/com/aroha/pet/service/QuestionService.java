@@ -50,15 +50,15 @@ public class QuestionService {
 
         if (!byDomainId.isPresent()) {
 //            throw new ResourceNotFoundException("Domain with  id " + domainId + " not Exist");
-            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), "Selected Domain is missing from the database");
+            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), "Select domain to add a question");
         }
         if (!byFunctionId.isPresent()) {
 //            throw new ResourceNotFoundException("Function with  id " + functionId + " not Exist");
-            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), "Selected Function is missing from the database");
+            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), "Select function to add a scenario");
         }
         if (!byScenarioId.isPresent()) {
 //            throw new ResourceNotFoundException("Scenario with id " + scenarioId + " not Exist");
-            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(),"Selected Scenario is missing from the database");
+            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(),"Select scenario to add a scenario");
         }
         Domain d = byDomainId.get();
         Function f = byFunctionId.get();
@@ -100,7 +100,7 @@ public class QuestionService {
             listQuestionDataRequest.add(questionData);
         }
         if(listQuestionDataRequest.isEmpty()){
-            return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(),"No data is found");
+            return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(),"No question is added for the scenario, please add one");
         }
         return new GetDomainDataPayload(HttpStatus.OK.value(), listQuestionDataRequest, "SUCCESS");
     }

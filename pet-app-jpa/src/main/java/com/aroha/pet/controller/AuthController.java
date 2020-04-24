@@ -132,7 +132,7 @@ public class AuthController {
 				throw new RuntimeException("Only admin can create another admin");
 			}
 		}
-
+		logger.info("-----------------------------Iam here--------------");
 		user.setPhoneNo(signUpRequest.getPhoneNo());
 		user.setAltPhoneNo(signUpRequest.getAltPhoneNo());
 		user.setPrimarySkills(signUpRequest.getPrimarySkills());
@@ -161,17 +161,19 @@ public class AuthController {
 
 		MimeMessage msg = javaMailSender.createMimeMessage();
 		try {
+			logger.info("-----------Email is---------"+signUpRequest.getEmail());
 			MimeMessageHelper helper = new MimeMessageHelper(msg, true);
 			helper.setTo(signUpRequest.getEmail());
 			helper.setSubject("Successfully Added in Productivity App");
 			helper.setText("Hi "+signUpRequest.getName()+",<br><br>\n"
+				
 
         		   +"You are successfully added in Productivity App <br><br>"+"\n\n"
         		   +"<b style=\"color:green\"><u> Following are you credentials</u></b><br>\n"
         		   +"<b>Username:</b>&nbsp;&nbsp;<i style=\"color:#6600ff\">"+signUpRequest.getEmail()+"</i><br>\n"
         		   +"<b>Password:</b>&nbsp;&nbsp;<i style=\"color:#6600ff\">"+signUpRequest.getPassword()+"</i><br><br>\n\n"
         		   +"Please visit the link to SignIn:<b> http://productivity.aroha.co.in/  </b><br>\n"
-        		   +"<b style=\"color:#ff0066\">You can reset the password using ForgetPassword link</b><br> "
+        		   +"<b style=\"color:#ff0066\">You can reset the password using ForgetPassword option from Signin menu</b><br> "
         		   +"In case of any queries, kindly contact our customer service desk at the details below\n<br><br>"
         		   +"\n\n"
         		   +"Warm Regards,<br>\n"
@@ -181,7 +183,7 @@ public class AuthController {
 			  logger.info("--------Email sent to User-------");
 			}catch(Exception ex) {
 			sendEmail=false;
-			logger.info("--------Email failed to sent to User-------");
+			logger.info("--------Email failed to sent to User-------"+ex.getMessage());
 		}
 
 		if(sendEmail) {
@@ -196,19 +198,13 @@ public class AuthController {
 
 		boolean mailExist = userService.existsByEmail(login.getUsernameOrEmail());
 		if (!mailExist) {
-			//            return ResponseEntity.ok(login.getUsernameOrEmail() + " does not exist");
-			//            return ResponseEntity.ok(new ApiResponse(Boolean.FALSE, "Email does not exist"));
 			return ResponseEntity.ok(new ForgetPasswordPayload(HttpStatus.BAD_REQUEST.value(),Boolean.FALSE, "Email does not exist"));
 		} else {
 			boolean istrue = userService.forgetPassword(login.getUsernameOrEmail());
 			if (istrue) {
-				//                return ResponseEntity.ok("OTP sent to registered emailId");
-				//                return ResponseEntity.ok(new ApiResponse(Boolean.TRUE, "OTP sent to registered emailId"));
 				return ResponseEntity.ok(new ForgetPasswordPayload(HttpStatus.OK.value(),Boolean.TRUE, "OTP sent to registered emailId"));
 			}
 		}
-		//        return ResponseEntity.ok("Failed to send mail");
-		//        return ResponseEntity.ok(new ApiResponse(Boolean.FALSE, "Failed to send mail"));
 		return ResponseEntity.ok(new ForgetPasswordPayload(HttpStatus.BAD_REQUEST.value(),Boolean.FALSE, "Failed to send mail"));
 
 	}
