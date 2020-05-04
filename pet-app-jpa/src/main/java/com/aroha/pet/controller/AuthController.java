@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -36,10 +38,6 @@ import com.aroha.pet.security.JwtTokenProvider;
 import com.aroha.pet.security.UserPrincipal;
 import com.aroha.pet.service.DBService;
 import com.aroha.pet.service.UserService;
-import javax.mail.MessagingException;
-import org.springframework.mail.MailException;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 
 /**
  */
@@ -93,6 +91,7 @@ public class AuthController {
 		return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
 		//return ResponseEntity.ok(jwtResponse);
 	}
+	
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest, @CurrentUser UserPrincipal currentUser) {

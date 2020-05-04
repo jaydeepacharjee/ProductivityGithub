@@ -54,11 +54,11 @@ public class QuestionService {
         }
         if (!byFunctionId.isPresent()) {
 //            throw new ResourceNotFoundException("Function with  id " + functionId + " not Exist");
-            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), "Select function to add a scenario");
+            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), "Select function to add a question");
         }
         if (!byScenarioId.isPresent()) {
 //            throw new ResourceNotFoundException("Scenario with id " + scenarioId + " not Exist");
-            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(),"Select scenario to add a scenario");
+            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(),"Select scenario to add a question");
         }
         Domain d = byDomainId.get();
         Function f = byFunctionId.get();
@@ -102,7 +102,7 @@ public class QuestionService {
         if(listQuestionDataRequest.isEmpty()){
             return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(),"No question is added for the scenario, please add one");
         }
-        return new GetDomainDataPayload(HttpStatus.OK.value(), listQuestionDataRequest, "SUCCESS");
+        return new GetDomainDataPayload(HttpStatus.OK.value(), listQuestionDataRequest, "Question Details loaded Successfully");
     }
 
     public Object checkDuplicateQuestion(DomainRequest domainData) {
@@ -115,6 +115,7 @@ public class QuestionService {
         	Question obj=itr.next();
         	if(question.equals(obj.getQuestionDesc().toLowerCase().trim().replaceAll("\\s+",""))) {
         		flag=true;
+        		break;
         	}
         }
         if(flag) {

@@ -208,7 +208,16 @@ public class CService {
 			report.setUserId((java.math.BigInteger) obj[0]);
 			report.setName((String) obj[1]);
 			java.sql.Timestamp i = (java.sql.Timestamp) obj[2];
-			report.setCreated_at(i.toString());
+			
+//			report.setCreated_at(i.toString());
+			Date date=null;
+			try {
+				date=new SimpleDateFormat("yyyy-MM-dd").parse(i.toString());
+			}catch(Exception ex) {}
+			SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");
+			report.setCreated_at(formatter.format(date));
+			
+			
 			report.setNoOfError((java.math.BigInteger) obj[3]);
 			report.setNoOfQuestion((java.math.BigInteger) obj[4]);
 			report.setNoOfAttempt((java.math.BigInteger) obj[5]);
@@ -224,6 +233,12 @@ public class CService {
 	}
 
 	public List<CReportAnalysisPayload> generateReportAnalysis(String createdAt, Long createdBy, int domainId) {
+		Date date2=null;
+		try {
+			date2=new SimpleDateFormat("dd MMMM yyyy").parse(createdAt);
+		}catch(Exception ex) {}
+		SimpleDateFormat formatter2 = new SimpleDateFormat("YYYY-MM-dd hh:MM:ss");
+		createdAt=formatter2.format(date2);
 		List<Object[]> listObj = cRepo.generateReportAnalysis(createdAt, createdBy, domainId);
 		List<CReportAnalysisPayload> list = new ArrayList<>();
 		listObj.stream().map((object) -> {
@@ -263,6 +278,12 @@ public class CService {
 
 	public Set<DomainResponsePayload> getDomainResponse(long created_by, String createdAt) {
 		Set<DomainResponsePayload> domainName = new HashSet<>();
+		Date date=null;
+		try {
+			date=new SimpleDateFormat("dd MMMM yyyy").parse(createdAt);
+		}catch(Exception ex) {}
+		SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd hh:MM:ss");
+		createdAt=formatter.format(date);		
 		List<Object[]> getDomain = cRepo.getDomainAnalsisRepo(created_by, createdAt);
 		getDomain.stream().map((object) -> {
 			DomainResponsePayload dLoad = new DomainResponsePayload();

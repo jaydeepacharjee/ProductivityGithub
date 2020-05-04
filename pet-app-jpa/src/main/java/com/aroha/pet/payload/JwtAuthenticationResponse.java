@@ -1,14 +1,12 @@
 package com.aroha.pet.payload;
 
-import java.util.Collection;
-import org.springframework.security.core.GrantedAuthority;
-
 /**
  */
 public class JwtAuthenticationResponse {
 
     private String accessToken;
     private String tokenType = "Bearer";
+
 //    private Long id;
 //    private String username;
 //    private String name;
@@ -37,6 +35,7 @@ public class JwtAuthenticationResponse {
     public void setTokenType(String tokenType) {
         this.tokenType = tokenType;
     }
+
 
 	/*
 	 * public Long getId() { return id; }

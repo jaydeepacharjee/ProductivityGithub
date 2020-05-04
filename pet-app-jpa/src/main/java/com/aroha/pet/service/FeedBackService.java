@@ -86,7 +86,15 @@ public class FeedBackService {
 			load.setCreated_by(id);
 			String name = (String) obj[1];
 			load.setName(name);
-			load.setCreated_at(i.toString());
+
+			//            load.setCreated_at(i.toString());
+			Date date=null;
+			try {
+				date=new SimpleDateFormat("yyyy-MM-dd").parse(i.toString());
+			}catch(Exception ex) {}
+			SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");
+			load.setCreated_at(formatter.format(date));
+
 			java.math.BigInteger j = (java.math.BigInteger) obj[3];
 			load.setNoOfException(j);
 			java.math.BigInteger k = (java.math.BigInteger) obj[4];
@@ -106,6 +114,15 @@ public class FeedBackService {
 	}
 
 	public GetDomainDataPayload showAnalysis(long created_by, String createdAt, int domainId) {
+
+		Date date2=null;
+		try {
+			date2=new SimpleDateFormat("dd MMMM yyyy").parse(createdAt);
+		}catch(Exception ex) {}
+		SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd hh:MM:ss");
+		createdAt=formatter.format(date2);
+
+
 		List<Object[]> list = quesRepo.getReport(created_by, createdAt, domainId);
 		List<QueryObject> queryList = new ArrayList<>();
 		list.stream().map((object) -> {
@@ -152,6 +169,12 @@ public class FeedBackService {
 
 	public Set<DomainResponsePayload> getDomainResponse(long created_by, String createdAt) {
 		Set<DomainResponsePayload> domainName = new HashSet<>();
+		Date date=null;
+		try {
+			date=new SimpleDateFormat("dd MMMM yyyy").parse(createdAt);
+		}catch(Exception ex) {}
+		SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd hh:MM:ss");
+		createdAt=formatter.format(date);
 		List<Object[]> getDomain = fedRepo.getDomainRepo(created_by, createdAt);
 		getDomain.stream().map((object) -> {
 			DomainResponsePayload dLoad = new DomainResponsePayload();
@@ -320,7 +343,7 @@ public class FeedBackService {
 		feedback.setMentorName(user.getName());
 		feedback.setQuestionId(cpojo.getQuestionId());
 		feedback.setQuestion(cpojo.getScenario());
-//		feedback.setResulstr(cpojo.getResultstr());
+		//		feedback.setResulstr(cpojo.getResultstr());
 		feedback.setProgrammingResult(cpojo.getResultstr());
 		feedback.setError(cpojo.getError());
 		feedback.setProgramingStr(cpojo.getCstr());
@@ -363,7 +386,7 @@ public class FeedBackService {
 		feedback.setMentorName(user.getName());
 		feedback.setQuestionId(javapojo.getQuestionId());
 		feedback.setQuestion(javapojo.getScenario());
-//		feedback.setResulstr(javapojo.getResultstr());
+		//		feedback.setResulstr(javapojo.getResultstr());
 		feedback.setProgrammingResult(javapojo.getResultstr());
 		feedback.setError(javapojo.getExceptionstr());
 		feedback.setProgramingStr(javapojo.getJavastr());
@@ -385,9 +408,9 @@ public class FeedBackService {
 	public DeleteDomainPayload saveJavaScriptFeedback(MentorFeedback feed, UserPrincipal user) {
 		int count = 1;
 		JavascriptPojo javaScriptPojo = javaScriptService.findByTechnologyRepo(feed.getCreatedAt(), feed.getQuestionId(), feed.getCreatedBy());
-		logger.info("----------------------Javascript Pojo-------"+javaScriptPojo);
+		logger.info("----------------------Javascript Pojo-------" + javaScriptPojo);
 		Long learnerId = javaScriptPojo.getCreatedBy();
-		logger.info("------------------ Learner Id---------------"+learnerId);
+		logger.info("------------------ Learner Id---------------" + learnerId);
 		Optional<User> userData = userService.findByLearnerId(learnerId);
 		Optional<Technology> tech = techService.findById(feed.getTechnologyId());
 		if (!userData.isPresent()) {
@@ -408,7 +431,7 @@ public class FeedBackService {
 		feedback.setMentorName(user.getName());
 		feedback.setQuestionId(javaScriptPojo.getQuestionId());
 		feedback.setQuestion(javaScriptPojo.getScenario());
-//		feedback.setResulstr(javaScriptPojo.getResultstr());
+		//		feedback.setResulstr(javaScriptPojo.getResultstr());
 		feedback.setProgrammingResult(javaScriptPojo.getResultstr());
 		feedback.setError(javaScriptPojo.getError());
 		feedback.setProgramingStr(javaScriptPojo.getJavascriptstr());
@@ -452,7 +475,7 @@ public class FeedBackService {
 		feedback.setMentorName(user.getName());
 		feedback.setQuestionId(pythonPojo.getQuestionId());
 		feedback.setQuestion(pythonPojo.getScenario());
-//		feedback.setResulstr(pythonPojo.getResultstr());
+		//		feedback.setResulstr(pythonPojo.getResultstr());
 		feedback.setProgrammingResult(pythonPojo.getResultstr());
 		feedback.setError(pythonPojo.getError());
 		feedback.setProgramingStr(pythonPojo.getPythonstr());
@@ -495,21 +518,15 @@ public class FeedBackService {
 			mentorFeedback.setFeedback(fobj.getFeedback());
 			mentorFeedback.setQuestion(fobj.getQuestion());
 
-			//            if (fobj.getResulstr() == null) {
-			//                mentorFeedback.setResulstr("None");
-			//            } else {
-			//                mentorFeedback.setResulstr(fobj.getResulstr());
-			//            }
-
-			if(fobj.getResulstr()!=null) {
+			if (fobj.getResulstr() != null) {
 				JSONArray jsona = new JSONArray(fobj.getResulstr());
 				mentorFeedback.setResultStr(dbservice.getJsonArrayAsList(jsona));
 			}
-			
-			if(fobj.getProgrammingResult()!=null) {
+
+			if (fobj.getProgrammingResult() != null) {
 				mentorFeedback.setProgramingResult(fobj.getProgrammingResult());
 			}
-			
+
 			if (fobj.getExceptionStr() == null) {
 				mentorFeedback.setExceptionStr("None");
 			} else {

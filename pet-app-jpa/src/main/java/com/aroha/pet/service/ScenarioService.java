@@ -56,7 +56,7 @@ public class ScenarioService {
         if (listScenarioData.isEmpty()) {
             return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "No Scenario is added for the function, please add one");
         }
-        return new GetDomainDataPayload(HttpStatus.OK.value(), listScenarioData, "SUCCESS");
+        return new GetDomainDataPayload(HttpStatus.OK.value(), listScenarioData, "Scenario Details loaded Successfully");
     }
 
     public GetDomainDataPayload createScenario(int domainId, int functionId, Scenario scenario) {
@@ -98,6 +98,7 @@ public class ScenarioService {
             Scenario obj = itr.next();
             if (scenarioTitle.equals(obj.getScenarioTitle().toLowerCase().trim().replaceAll("\\s+", ""))) {
                 flag = true;
+                break;
             }
         }
         if (flag) {
@@ -137,7 +138,8 @@ public class ScenarioService {
             }
         } catch (IOException ex) {
             err=ex.getMessage();
+            logger.info("unable to update image"+ex.getMessage());
         }
-        return new DeleteDomainPayload(err, HttpStatus.BAD_REQUEST.value());
+        return new DeleteDomainPayload("Failed to update image", HttpStatus.BAD_REQUEST.value());
     }
 }

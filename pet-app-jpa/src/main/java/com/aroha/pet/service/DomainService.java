@@ -30,189 +30,213 @@ import java.util.Base64;
 @Service
 public class DomainService {
 
-    @Autowired
-    private DomainRepository domainRepository;
+	@Autowired
+	private DomainRepository domainRepository;
 
-    @Autowired
-    private DomainTableRepository domainTableRepo;
+	@Autowired
+	private DomainTableRepository domainTableRepo;
 
-    @Autowired
-    private FunctionRepository functionRepository;
+	@Autowired
+	private FunctionRepository functionRepository;
 
-    @Autowired
-    private ScenarioRepository scenarioRepository;
+	@Autowired
+	private ScenarioRepository scenarioRepository;
 
-    @Autowired
-    private QuestionRepository questionRepository;
+	@Autowired
+	private QuestionRepository questionRepository;
 
-    @Autowired
-    private ScenarioService scenarioService;
+	@Autowired
+	private ScenarioService scenarioService;
 
-    @Autowired
-    private TechnologyService techService;
+	@Autowired
+	private TechnologyService techService;
 
-    private static final Logger logger = LoggerFactory.getLogger(DomainService.class);
+	@Autowired
+	private FunctionService functionService;
 
-    public GetDomainDataPayload getAllDomains(int techId) {
+	private static final Logger logger = LoggerFactory.getLogger(DomainService.class);
 
-        Optional<Technology> tech = techService.findById(techId);
-        if (!tech.isPresent()) {
-            return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "Selected technolgy is missing from the database");
-        }
+	public GetDomainDataPayload getAllDomains(int techId) {
 
-        List<Domain> list = domainRepository.getDomainOntechnology(techId);
-        Iterator<Domain> itr = list.iterator();
-        List<DomainDataRequest> DomainList = new ArrayList<>();
-        GetDomainDataPayload data = new GetDomainDataPayload();
-        while (itr.hasNext()) {
-            Domain d = itr.next();
-            DomainDataRequest domainData = new DomainDataRequest();
-            domainData.setDomainId(d.getDomainId());
-            domainData.setDomainName(d.getDomainName());
-            DomainList.add(domainData);
-        }
-        if (DomainList.isEmpty()) {
-            return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "No Domain is added for the technology, please add one");
-        } else {
-            return new GetDomainDataPayload(HttpStatus.OK.value(), DomainList, "Domain Details loaded Succeessfully");
-        }
+		Optional<Technology> tech = techService.findById(techId);
+		if (!tech.isPresent()) {
+			return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "Selected technolgy is missing from the database");
+		}
 
-    }
+		List<Domain> list = domainRepository.getDomainOntechnology(techId);
+		Iterator<Domain> itr = list.iterator();
+		List<DomainDataRequest> DomainList = new ArrayList<>();
+		GetDomainDataPayload data = new GetDomainDataPayload();
+		while (itr.hasNext()) {
+			Domain d = itr.next();
+			DomainDataRequest domainData = new DomainDataRequest();
+			domainData.setDomainId(d.getDomainId());
+			domainData.setDomainName(d.getDomainName());
+			DomainList.add(domainData);
+		}
+		if (DomainList.isEmpty()) {
+			return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "No Domain is added for the technology, please add one");
+		} else {
+			return new GetDomainDataPayload(HttpStatus.OK.value(), DomainList, "Domain Details loaded Successfully");
+		}
 
-    public GetDomainDataPayload saveDomain(int technologyId, Domain domain) {
+	}
 
-        Optional<Technology> tech = techService.findById(technologyId);
-        if (!tech.isPresent()) {
-            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), "Select technology to save domain");
-        }
-        Technology technology = tech.get();
-        domain.setTechnology(technology);
-        technology.getDomain().add(domain);
-        try {
-            domainRepository.save(domain);
-            logger.info("Domain saved");
-        } catch (Exception ex) {
-            logger.error("Domain not saved" + ex.getMessage());
-            return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(),"Domain not saved successfully");
-        }
-        return new GetDomainDataPayload(HttpStatus.OK.value(), "Domain Saved Successfully");
-    }
+	public GetDomainDataPayload saveDomain(int technologyId, Domain domain) {
 
-    public List<DomainTable> getDomain() {
-        List<Object[]> d = domainTableRepo.getDomainData();
-        List<DomainTable> list = new ArrayList<>();
-        for (Object[] object : d) {
-            DomainTable domainTable = new DomainTable();
-            domainTable.setQuestionId((int) object[0]);
-            domainTable.setDomainName((String) object[1]);
-            domainTable.setFunctionName((String) object[2]);
-            domainTable.setScenarioTitle((String) object[3]);
-            domainTable.setQuestionDesc((String) object[4]);
-            Scenario scenario = scenarioService.getFile((int) object[5]);
-            if (scenario.getImage() != null) {
-                byte[] encoded = Base64.getEncoder().encode(scenario.getImage());
-                domainTable.setImage(new String(encoded));
-            }
-            list.add(domainTable);
-        }
-        return list;
-    }
+		Optional<Technology> tech = techService.findById(technologyId);
+		if (!tech.isPresent()) {
+			return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), "Select technology to save domain");
+		}
+		Technology technology = tech.get();
+		domain.setTechnology(technology);
+		technology.getDomain().add(domain);
+		try {
+			domainRepository.save(domain);
+			logger.info("Domain saved");
+		} catch (Exception ex) {
+			logger.error("Domain not saved" + ex.getMessage());
+			return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(), "Domain not saved successfully");
+		}
+		return new GetDomainDataPayload(HttpStatus.OK.value(), "Domain Saved Successfully");
+	}
 
-    public GetDomainDataPayload updateData(int quetionId, Domain domain, Function function, Scenario scenario, Question question) {
+	public List<DomainTable> getDomain() {
+		List<Object[]> d = domainTableRepo.getDomainData();
+		List<DomainTable> list = new ArrayList<>();
+		for (Object[] object : d) {
+			DomainTable domainTable = new DomainTable();
+			domainTable.setTechnologyId((int)object[0]);
+			domainTable.setTechnologyName((String)object[1]);
+			domainTable.setQuestionId((int) object[2]);
+			domainTable.setDomainName((String) object[3]);
+			domainTable.setFunctionName((String) object[4]);
+			domainTable.setScenarioTitle((String) object[5]);
+			domainTable.setQuestionDesc((String) object[6]);
+			Scenario scenario = scenarioService.getFile((int) object[7]);
+			if (scenario.getImage() != null) {
+				byte[] encoded = Base64.getEncoder().encode(scenario.getImage());
+				domainTable.setImage(new String(encoded));
+			}
+			list.add(domainTable);
+		}
+		return list;
+	}
 
-        Optional<Question> ques = questionRepository.findById(quetionId);
-        if (ques.isPresent()) {
+	public GetDomainDataPayload updateData(DomainRequest domainRequest) {
+		int questionId = domainRequest.getQuestionId();
+		Question questObj = domainRequest.getQuestion();
+		Domain domainObj = domainRequest.getDomain();
+		Function funObj = domainRequest.getFunction();
+		Scenario scenaObj = domainRequest.getScenario();
 
-            DomainRequest obj = domainRepository.updateDomainData(quetionId);
-            if (domain != null) {
-                Optional<Domain> objData = domainRepository.findById(obj.getDomainId());
+		Optional<Question> ques = questionRepository.findById(questionId);
+		if (ques.isPresent()) {
 
-                if (!objData.isPresent()) {
-                    //                    throw new RuntimeException("Domai with id " + obj.getDomainId() + " not found");
-                    return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "Selected domain is missing from the database");
-                }
-                Domain domainObj = objData.get();
-                domainObj.setDomainName(domain.getDomainName());
-                domainRepository.save(domainObj);
-            }
+			DomainRequest obj = domainRepository.updateDomainData(questionId);
+			logger.info("DomainId " + obj.getDomainId());
+			logger.info("FunctionId " + obj.getFunctionId());
+			logger.info("ScenarioId " + obj.getScenarioId());
+			logger.info("QuestionId " + obj.getQuestionId());
+			if (domainObj != null) {
+				Optional<Domain> objData = domainRepository.findById(obj.getDomainId());
 
-            if (function != null) {
-                Optional<Function> functionData = functionRepository.findById(obj.getFunctionId());
+				if (!objData.isPresent()) {
+					return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "Selected domain not found");
+				}
+				ApiResponse res=(ApiResponse)checkDuplicate(domainRequest);
+				if(res.getSuccess()) {
+					return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(),"Domain already exists");
+				}
+				Domain domain = objData.get();
+				domain.setDomainName(domainObj.getDomainName());
+				domainRepository.save(domain);
 
-                if (!functionData.isPresent()) {
-                    //                    throw new RuntimeException("Function with id " + obj.getFunctionId() + " not found");
-                    return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "Selected function is missing from the database");
-                }
-                Function functionObj = functionData.get();
-                functionObj.setFunctionName(function.getFunctionName());
-                functionRepository.save(functionObj);
-            }
+			}
 
-            if (scenario != null) {
-                Optional<Scenario> scenarioData = scenarioRepository.findById(obj.getScenarioId());
+			if (funObj != null) {
+				Optional<Function> functionData = functionRepository.findById(obj.getFunctionId());
 
-                if (!scenarioData.isPresent()) {
-                    //                    throw new RuntimeException("Scenario with id " + obj.getScenarioId() + " not dound");
-                    return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "Selected scenario is missing from the database");
-                }
-                Scenario scenarioObj = scenarioData.get();
-                scenarioObj.setScenarioTitle(scenario.getScenarioTitle());
-                scenarioRepository.save(scenarioObj);
-            }
+				if (!functionData.isPresent()) {
+					return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "Selected function not found");
+				}			
+				ApiResponse res=(ApiResponse)functionService.checkDuplicateFunction(domainRequest);
+				if(res.getSuccess()) {
+					return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(),"Function already exists");
+				}
+				Function functionObj = functionData.get();
+				functionObj.setFunctionName(funObj.getFunctionName());
+				functionRepository.save(functionObj);
+				
+			}
 
-            if (question != null) {
-                Optional<Question> questionData = questionRepository.findById(obj.getQuestionId());
-                if (!questionData.isPresent()) {
-                    //                    throw new RuntimeException("Question with id " + obj.getQuestionId() + " not found");
-                    return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "Selected question is missing from the database");
-                }
-                Question questionObj = questionData.get();
-                questionObj.setQuestionDesc(question.getQuestionDesc());
-                questionRepository.save(questionObj);
-            }
-        } else {
-            //            throw new RuntimeException("Question with id " + quetionId + " not present");
-            return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "Selected question is missing from the database");
+			if (scenaObj != null) {
+				Optional<Scenario> scenarioData = scenarioRepository.findById(obj.getScenarioId());
 
-        }
-        if (domain != null || function != null || scenario != null || question != null) {
-            return new GetDomainDataPayload(HttpStatus.OK.value(), "Domain table updated successfully");
-        }
-        return new GetDomainDataPayload(HttpStatus.OK.value(), "No Changes done");
-    }
+				if (!scenarioData.isPresent()) {
+					//                    throw new RuntimeException("Scenario with id " + obj.getScenarioId() + " not dound");
+					return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "Selected scenario not found");
+				}
+				Scenario scenarioObj = scenarioData.get();
+				scenarioObj.setScenarioTitle(scenaObj.getScenarioTitle());
+				scenarioRepository.save(scenarioObj);
+			}
 
-    public Object checkDuplicate(DomainRequest domain) {
-        int techId = domain.getTechnologyId();
-        String domainName = domain.getDomain().getDomainName().toLowerCase().trim().replaceAll("\\s+", "");
-        Boolean flag = false;
-        List<Domain> domObj = domainRepository.getDomainOntechnology(techId);
-        Iterator<Domain> itr = domObj.iterator();
-        while (itr.hasNext()) {
-            Domain d = itr.next();
-            if (domainName.equals(d.getDomainName().toLowerCase().trim().replaceAll("\\s+", ""))) {
-                flag = true;
-            }
-        }
-        if (flag) {
-            return new ApiResponse(Boolean.TRUE, "Domain already exists");
-        } else {
-            return new ApiResponse(Boolean.FALSE, "Domain doesn't exists");
-        }
-    }
+			if (questObj != null) {
+				Optional<Question> questionData = questionRepository.findById(obj.getQuestionId());
+				if (!questionData.isPresent()) {
+					//                    throw new RuntimeException("Question with id " + obj.getQuestionId() + " not found");
+					return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "Selected question not found");
+				}
+				Question questionObj = questionData.get();
+				questionObj.setQuestionDesc(questObj.getQuestionDesc());
+				questionRepository.save(questionObj);
+			}
+		} else {
+			//            throw new RuntimeException("Question with id " + quetionId + " not present");
+			return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "Selected question is missing from the database");
 
-    public DeleteDomainPayload deleteDomain(int domainId) {
-        Optional<Domain> getDomain = domainRepository.findById(domainId);
-        if (!getDomain.isPresent()) {
-            return new DeleteDomainPayload("Domain Not Present", HttpStatus.NOT_FOUND.value());
-        }
-        Domain domain = getDomain.get();
-        try {
-            domainRepository.delete(domain);
-            return new DeleteDomainPayload("Domain deleted successfully along with its associated"
-                    + "functions,scenarios and questions", HttpStatus.OK.value());
+		}
+		if (domainObj != null || funObj != null || scenaObj != null || questObj != null) {
+			return new GetDomainDataPayload(HttpStatus.OK.value(), "Domain table updated successfully");
+		}
+		return new GetDomainDataPayload(HttpStatus.OK.value(), "No Changes done");
+	}
 
-        } catch (Exception ex) {
-            return new DeleteDomainPayload(ex.getMessage(), HttpStatus.BAD_REQUEST.value());
-        }
-    }
+	public Object checkDuplicate(DomainRequest domain) {
+		int techId = domain.getTechnologyId();
+		String domainName = domain.getDomain().getDomainName().toLowerCase().trim().replaceAll("\\s+", "");
+		Boolean flag = false;
+		List<Domain> domObj = domainRepository.getDomainOntechnology(techId);
+		Iterator<Domain> itr = domObj.iterator();
+		while (itr.hasNext()) {
+			Domain d = itr.next();
+			if (domainName.equals(d.getDomainName().toLowerCase().trim().replaceAll("\\s+", ""))) {
+				flag = true;
+				break;
+
+			}
+		}
+		if (flag) {
+			return new ApiResponse(Boolean.TRUE, "Domain already exists");
+		} else {
+			return new ApiResponse(Boolean.FALSE, "Domain doesn't exists");
+		}
+	}
+
+	public DeleteDomainPayload deleteDomain(int domainId) {
+		Optional<Domain> getDomain = domainRepository.findById(domainId);
+		if (!getDomain.isPresent()) {
+			return new DeleteDomainPayload("Domain Not Present", HttpStatus.NOT_FOUND.value());
+		}
+		Domain domain = getDomain.get();
+		try {
+			domainRepository.delete(domain);
+			return new DeleteDomainPayload("Domain deleted successfully along with its associated"
+					+ " functions,scenarios and questions", HttpStatus.OK.value());
+
+		} catch (Exception ex) {
+			return new DeleteDomainPayload(ex.getMessage(), HttpStatus.BAD_REQUEST.value());
+		}
+	}
 }

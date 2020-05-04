@@ -17,23 +17,25 @@ public interface JavascriptRepo extends JpaRepository<JavascriptPojo, Long> {
     		"        COUNT(DISTINCT q.scenario ) as noOfQuestion,\n" + 
     		"        COUNT(q.javascriptstr) as noOfAttempt ,\n" + 
     		"        CAST(100-((COUNT(q.error))/(count(q.javascriptstr)))*100 as decimal(5,\n" + 
-    		"        2))as productivity             \n" + 
+    		"        2))as productivity                  \n" + 
     		"    FROM\n" + 
-    		"        users u            \n" + 
-    		"    LEFT JOIN\n" + 
-    		"        javascript_pojo q                            \n" + 
-    		"            ON u.id=q.created_by              \n" + 
-    		"    left join\n" + 
-    		"        user_roles r                            \n" + 
-    		"            on u.id=r.user_id            \n" + 
+    		"        users u                 \n" + 
+    		"     JOIN\n" + 
+    		"        javascript_pojo q                                         \n" + 
+    		"            ON u.id=q.created_by                   \n" + 
+    		"     join\n" + 
+    		"        user_roles r                                         \n" + 
+    		"            on u.id=r.user_id                 \n" + 
     		"    WHERE\n" + 
-    		"        r.role_id =1             \n" + 
+    		"        r.role_id =1                  \n" + 
     		"    GROUP BY\n" + 
     		"        u.id,\n" + 
-    		"        DAY(q.created_at)             \n" + 
+    		"        date(q.created_at)                  \n" + 
     		"    having\n" + 
-    		"        count(distinct q.scenario)>0\n" + 
-    		"		  ORDER BY created_at Desc;", nativeQuery = true)
+    		"        count(distinct q.scenario)>0     \n" + 
+    		"    ORDER BY\n" + 
+    		"        created_at Desc;\n" + 
+    		"", nativeQuery = true)
     public List<Object[]> generateReport();
 
     @Query(value = "select\r\n"

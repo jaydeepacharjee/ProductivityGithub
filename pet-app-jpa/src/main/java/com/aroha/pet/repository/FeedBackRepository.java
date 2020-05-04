@@ -10,32 +10,32 @@ import java.util.List;
 public interface FeedBackRepository extends JpaRepository<QueryInfo, Long> {
 
     
-    @Query(value = " SELECT\r\n" + 
-    		"        q.created_by,\r\n" + 
-    		"        u.name as name,\r\n" + 
-    		"        q.created_at as created_at,\r\n" + 
-    		"        COUNT(q.exception_str) as noOfException ,\r\n" + 
-    		"        COUNT(DISTINCT q.scenario ) as noOfScenario,\r\n" + 
-    		"        COUNT(q.sql_str) as noOfSqlStr ,\r\n" + 
-    		"        CAST(100-((count(q.exception_str))/(count(q.sql_str)))*100 as decimal(5,\r\n" + 
-    		"        2))as productivity  \r\n" + 
-    		"    FROM\r\n" + 
-    		"        users u \r\n" + 
-    		"    LEFT JOIN\r\n" + 
-    		"        query_info q \r\n" + 
-    		"            ON u.id=q.created_by   \r\n" + 
-    		"    left join\r\n" + 
-    		"        user_roles r \r\n" + 
-    		"            on u.id=r.user_id \r\n" + 
-    		"    WHERE\r\n" + 
-    		"        r.role_id=1  \r\n" + 
-    		"    GROUP BY\r\n" + 
-    		"        u.id,\r\n" + 
-    		"        DAY(q.created_at)  \r\n" + 
-    		"    having\r\n" + 
-    		"        count(distinct q.scenario)>0\r\n" + 
-    		"	ORDER BY created_at Desc;\r\n" + 
-    		"", nativeQuery = true)
+    @Query(value = " SELECT\n" +
+"        q.created_by,\n" +
+"        u.name as name,\n" +
+"        q.created_at as created_at,\n" +
+"        COUNT(q.exception_str) as noOfException ,\n" +
+"        COUNT(DISTINCT q.scenario ) as noOfScenario,\n" +
+"        COUNT(q.sql_str) as noOfSqlStr ,\n" +
+"        CAST(100-((count(q.exception_str))/(count(q.sql_str)))*100 as decimal(5,\n" +
+"        2))as productivity        \n" +
+"    FROM\n" +
+"        users u       \n" +
+"     JOIN\n" +
+"        query_info q               \n" +
+"            ON u.id=q.created_by         \n" +
+"     join\n" +
+"        user_roles r               \n" +
+"            on u.id=r.user_id       \n" +
+"    WHERE\n" +
+"        r.role_id=1        \n" +
+"    GROUP BY\n" +
+"        u.id,\n" +
+"        date(q.created_at)        \n" +
+"    having\n" +
+"        count(distinct q.scenario)>0   \n" +
+"    ORDER BY\n" +
+"        created_at Desc", nativeQuery = true)
     public List<Object[]> getFeedBackStatus(); 
     
     @Query(value = "select * from query_info where created_at=?1 and question_id=?2 and created_by=?3", nativeQuery = true)

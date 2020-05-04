@@ -15,31 +15,32 @@ import com.aroha.pet.model.QueryInfo;
 @Repository
 public interface JavaRepo extends JpaRepository<JavaPojo, Long> {
 
-    @Query(value = "SELECT\n"
-            + "        q.created_by,\n"
-            + "        u.name as name,\n"
-            + "        q.created_at as created_at,\n"
-            + "        COUNT(q.exceptionstr) as noOfError ,\n"
-            + "        COUNT(DISTINCT q.scenario ) as noOfQuestion,\n"
-            + "        COUNT(q.javastr) as noOfAttempt ,\n"
-            + "        CAST(100-((COUNT(q.exceptionstr))/(count(q.javastr)))*100 as decimal(5,\n"
-            + "        2))as productivity             \n"
-            + "    FROM\n"
-            + "        users u            \n"
-            + "    LEFT JOIN\n"
-            + "        java_pojo q                            \n"
-            + "            ON u.id=q.created_by              \n"
-            + "    left join\n"
-            + "        user_roles r                            \n"
-            + "            on u.id=r.user_id            \n"
-            + "    WHERE\n"
-            + "        r.role_id =1             \n"
-            + "    GROUP BY\n"
-            + "        u.id,\n"
-            + "        DAY(q.created_at)             \n"
-            + "    having\n"
-            + "        count(distinct q.scenario)>0\n"
-            + "		  ORDER BY created_at Desc;", nativeQuery = true)
+    @Query(value = "SELECT\n" + 
+    		"        q.created_by,\n" + 
+    		"        u.name as name,\n" + 
+    		"        q.created_at as created_at,\n" + 
+    		"        COUNT(q.exceptionstr) as noOfError ,\n" + 
+    		"        COUNT(DISTINCT q.scenario ) as noOfQuestion,\n" + 
+    		"        COUNT(q.javastr) as noOfAttempt ,\n" + 
+    		"        CAST(100-((COUNT(q.exceptionstr))/(count(q.javastr)))*100 as decimal(5,\n" + 
+    		"        2))as productivity                  \n" + 
+    		"    FROM\n" + 
+    		"        users u                 \n" + 
+    		"     JOIN\n" + 
+    		"        java_pojo q                                         \n" + 
+    		"            ON u.id=q.created_by                   \n" + 
+    		"     join\n" + 
+    		"        user_roles r                                         \n" + 
+    		"            on u.id=r.user_id                 \n" + 
+    		"    WHERE\n" + 
+    		"        r.role_id =1                  \n" + 
+    		"    GROUP BY\n" + 
+    		"        u.id,\n" + 
+    		"        date(q.created_at)                  \n" + 
+    		"    having\n" + 
+    		"        count(distinct q.scenario)>0     \n" + 
+    		"    ORDER BY\n" + 
+    		"        created_at Desc;", nativeQuery = true)
     public List<Object[]> generateReport();
 
     @Query(value = "select\r\n"

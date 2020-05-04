@@ -48,7 +48,7 @@ public class DomainController {
 
     @Autowired
     DomainService domainService;
- 
+
     @Autowired
     ScenarioService scenarioService;
 
@@ -73,8 +73,8 @@ public class DomainController {
     }
 
     @PostMapping("/getDomains")
-    public ResponseEntity<?> getDomainData(@RequestParam("technologyId")int technologyId) {
-    	logger.info("------------------"+technologyId);
+    public ResponseEntity<?> getDomainData(@RequestParam("technologyId") int technologyId) {
+        logger.info("------------------" + technologyId);
         return ResponseEntity.ok(domainService.getAllDomains(technologyId));
     }
 
@@ -190,14 +190,13 @@ public class DomainController {
         int scenarioId = domainData.getScenarioId();
         return ResponseEntity.ok(questionService.getQuestionData(scenarioId));
     }
-    
 
     @GetMapping("/getDomain")
     public ResponseEntity<?> getDomain() {
-        if(domainService.getDomain().isEmpty()){
-            return ResponseEntity.ok(new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(),"No data is found"));
+        if (domainService.getDomain().isEmpty()) {
+            return ResponseEntity.ok(new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "No data is found"));
         }
-        return ResponseEntity.ok(new GetDomainDataPayload(HttpStatus.OK.value(),domainService.getDomain(),"SUCCESS"));
+        return ResponseEntity.ok(new GetDomainDataPayload(HttpStatus.OK.value(), domainService.getDomain(), "SUCCESS"));
     }
 
     @RequestMapping(value = "/updateDomain", method = RequestMethod.POST)
@@ -206,13 +205,16 @@ public class DomainController {
         if (user.isLearnerRole()) {
             throw new RuntimeException("Only Admin and mentor can update");
         }
-        int questionId = domainRequest.getQuestionId();
-        Question questObj = domainRequest.getQuestion();
-        Domain domainObj = domainRequest.getDomain();
-        Function funObj = domainRequest.getFunction();
-        Scenario scenaObj = domainRequest.getScenario();
+//        int questionId = domainRequest.getQuestionId();
+//        int technologyId=domainRequest.getTechnologyId();
+//        Question questObj = domainRequest.getQuestion();
+//        Domain domainObj = domainRequest.getDomain();
+//        Function funObj = domainRequest.getFunction();
+//        Scenario scenaObj = domainRequest.getScenario();
 
-        return ResponseEntity.ok(domainService.updateData(questionId, domainObj, funObj, scenaObj, questObj));
+//        return ResponseEntity.ok(domainService.updateData(technologyId,questionId, domainObj, funObj, scenaObj, questObj));
+        return ResponseEntity.ok(domainService.updateData(domainRequest));
+    
     }
 
     @PostMapping("/deleteDomainName")
@@ -235,10 +237,10 @@ public class DomainController {
     public ResponseEntity<?> deleteQuestionName(@RequestBody DomainRequest domainRequest) {
         return ResponseEntity.ok(questionService.deleteQuestionName(domainRequest.getQuestionId()));
     }
-    
+
     @PostMapping("/UpdateScenarioImage")
-    public ResponseEntity<?> updateScenariImage(@RequestParam("scenarioId") int scenarioId,@RequestParam(name = "file", required = false) MultipartFile file){
-        return ResponseEntity.ok(scenarioService.updateImage(scenarioId,file));
+    public ResponseEntity<?> updateScenariImage(@RequestParam("scenarioId") int scenarioId, @RequestParam(name = "file", required = false) MultipartFile file) {
+        return ResponseEntity.ok(scenarioService.updateImage(scenarioId, file));
     }
 
 }

@@ -285,7 +285,7 @@ public class UserService {
             } else {
                 logger.error("OTP didn't matched");
 //            return new ApiResponse(Boolean.FALSE, "OTP didn't matched");
-                return new ForgetPasswordPayload(HttpStatus.CONFLICT.value(), Boolean.FALSE, "OTP didn't matched");
+                return new ForgetPasswordPayload(HttpStatus.CONFLICT.value(), Boolean.FALSE, "OTP didn't match");
             }
         }
     }

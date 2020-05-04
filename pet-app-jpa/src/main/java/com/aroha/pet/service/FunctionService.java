@@ -69,7 +69,7 @@ public class FunctionService {
         if(functionDataList.isEmpty()){
             return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(),"No Function is added for the domain, please add one");
         }else{
-            return new GetDomainDataPayload(HttpStatus.OK.value(),functionDataList ,"SUCCESS");
+            return new GetDomainDataPayload(HttpStatus.OK.value(),functionDataList ,"Function Details loaded Successfully");
         }    
     }
 
@@ -83,6 +83,7 @@ public class FunctionService {
     	   Function funObject=itr.next();
     	   if(functionName.equals(funObject.getFunctionName().toLowerCase().trim().replaceAll("\\s+",""))) {
     		   flag=true;
+    		   break;
     	   }
        }
        if(flag) {
@@ -101,7 +102,7 @@ public class FunctionService {
         try {
             functionRepository.delete(funObj);
             return new DeleteDomainPayload("Function deleted successfully along with its associated"
-                    + "scenarios and questions", HttpStatus.OK.value());
+                    + " scenarios and questions", HttpStatus.OK.value());
         } catch (Exception e) {
             return new DeleteDomainPayload(e.getMessage(), HttpStatus.BAD_REQUEST.value());
         }
