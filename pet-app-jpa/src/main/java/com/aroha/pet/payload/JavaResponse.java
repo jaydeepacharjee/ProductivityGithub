@@ -31,6 +31,15 @@ public class JavaResponse implements Serializable {
 	public void setJavastatus(String javastatus) {
 		this.javastatus = javastatus;
 	}
+	public JavaResponse(String javaresult, String javaexception, String javastatus) {
+		super();
+		this.javaresult = javaresult;
+		this.javaexception = javaexception;
+		this.javastatus = javastatus;
+	}
+	public JavaResponse() {
+		super();
+	}
   
 	
 }

@@ -104,6 +104,37 @@ public class QuestionService {
         }
         return new GetDomainDataPayload(HttpStatus.OK.value(), listQuestionDataRequest, "Question Details loaded Successfully");
     }
+    
+    
+    
+    public GetDomainDataPayload updateQuestion(DomainRequest domainRequest) {
+ 		int questionId = domainRequest.getQuestionId(); 
+ 		Question questObj = domainRequest.getQuestion();
+ 		
+ 		Optional<Question> ques = questionRepository.findById(questionId);
+ 		if(ques.isPresent()) {
+ 			DomainRequest obj = domainRepository.updateDomainData(questionId);
+
+ 			
+ 			if (questObj != null) {
+ 				Optional<Question> queastionData = questionRepository.findById(obj.getQuestionId());
+
+ 				if (!queastionData.isPresent()) {
+ 					return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "Selected question not found");
+ 				}
+ 				ApiResponse res=(ApiResponse)checkDuplicateQuestion(domainRequest,obj);
+ 				if(res.getSuccess()) {
+ 					return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(),"Question already exists");
+ 				}
+ 				Question qeustionObj = queastionData.get();
+ 				qeustionObj.setQuestionDesc(questObj.getQuestionDesc());
+ 				questionRepository.save(qeustionObj);
+ 				return new GetDomainDataPayload(HttpStatus.OK.value(), "Question updated successfully");
+ 			}
+ 		}		
+ 		return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "Something went wrong");
+ 	}
+     
 
     public Object checkDuplicateQuestion(DomainRequest domainData) {
         int scenarioId=domainData.getScenarioId();
@@ -124,6 +155,29 @@ public class QuestionService {
         	return new ApiResponse(Boolean.FALSE,"Question doesn't exists");
         }
     }
+    
+    // Method overloading for check duplicate function from update qeustion page
+    
+    public Object checkDuplicateQuestion(DomainRequest domainData,DomainRequest questionObj) {
+        int scenarioId=questionObj.getScenarioId();
+        String question=domainData.getQuestion().getQuestionDesc().toLowerCase().trim().replaceAll("\\s+","");
+        boolean flag=false;
+        List<Question>ques=questionRepository.checkDuplicate(scenarioId);
+        Iterator<Question>itr=ques.iterator();
+        while(itr.hasNext()) {
+        	Question obj=itr.next();
+        	if(question.equals(obj.getQuestionDesc().toLowerCase().trim().replaceAll("\\s+",""))) {
+        		flag=true;
+        		break;
+        	}
+        }
+        if(flag) {
+        	return new ApiResponse(Boolean.TRUE,"Question already exists");
+        }else {
+        	return new ApiResponse(Boolean.FALSE,"Question doesn't exists");
+        }
+    }
+    
 
     public DeleteDomainPayload deleteQuestionName(int qestionId) {
         Optional<Question> question = questionRepository.findById(qestionId);

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.aroha.pet.exception.FileNotFoundException;
 import com.aroha.pet.model.Domain;
 import com.aroha.pet.model.Function;
+import com.aroha.pet.model.Question;
 import com.aroha.pet.model.Scenario;
 import com.aroha.pet.payload.ApiResponse;
 import com.aroha.pet.payload.DeleteDomainPayload;
@@ -20,6 +21,7 @@ import com.aroha.pet.payload.GetDomainDataPayload;
 import com.aroha.pet.payload.ScenarioDataRequest;
 import com.aroha.pet.repository.DomainRepository;
 import com.aroha.pet.repository.FunctionRepository;
+import com.aroha.pet.repository.QuestionRepository;
 import com.aroha.pet.repository.ScenarioRepository;
 import java.io.IOException;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,6 +37,9 @@ public class ScenarioService {
 
     @Autowired
     FunctionRepository functionRepository;
+    
+    @Autowired
+    QuestionRepository questionRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(ScenarioService.class);
 
@@ -87,6 +92,38 @@ public class ScenarioService {
     public Scenario getFile(int fileId) {
         return scenarioRepository.findById(fileId).orElseThrow(() -> new FileNotFoundException("Not found"));
     }
+    
+    
+    
+    public GetDomainDataPayload updateScenario(DomainRequest domainRequest) {
+		int questionId = domainRequest.getQuestionId(); 
+		Scenario scenaObj = domainRequest.getScenario();
+
+		Optional<Question> ques = questionRepository.findById(questionId);
+		if(ques.isPresent()) {
+			DomainRequest obj = domainRepository.updateDomainData(questionId);
+
+			
+			if (scenaObj != null) {
+				Optional<Scenario> scenarioData = scenarioRepository.findById(obj.getScenarioId());
+
+				if (!scenarioData.isPresent()) {
+					return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "Selected scenario not found");
+				}
+				ApiResponse res=(ApiResponse)checkDuplicate(domainRequest,obj);
+				if(res.getSuccess()) {
+					return new GetDomainDataPayload(HttpStatus.BAD_REQUEST.value(),"Scenario already exists");
+				}
+				Scenario scenarioObj = scenarioData.get();
+				scenarioObj.setScenarioTitle(scenaObj.getScenarioTitle());
+				scenarioRepository.save(scenarioObj);
+				return new GetDomainDataPayload(HttpStatus.OK.value(), "Scenario updated successfully");
+			}
+		}		
+		return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "Something went wrong");
+	}
+    
+    
 
     public Object checkDuplicate(DomainRequest domainData) {
         int functionId = domainData.getFunctionId();
@@ -107,6 +144,29 @@ public class ScenarioService {
             return new ApiResponse(Boolean.FALSE, "Scenario doesn't exists");
         }
     }
+    
+    // Method overloading for check duplicate function from update scenario page
+    
+    public Object checkDuplicate(DomainRequest domainData,DomainRequest functionObj) {
+        int functionId = functionObj.getFunctionId();
+        String scenarioTitle = domainData.getScenario().getScenarioTitle().toLowerCase().trim().replaceAll("\\s+", "");
+        boolean flag = false;
+        List<Scenario> scenario = scenarioRepository.checkDuplicate(functionId);
+        Iterator<Scenario> itr = scenario.iterator();
+        while (itr.hasNext()) {
+            Scenario obj = itr.next();
+            if (scenarioTitle.equals(obj.getScenarioTitle().toLowerCase().trim().replaceAll("\\s+", ""))) {
+                flag = true;
+                break;
+            }
+        }
+        if (flag) {
+            return new ApiResponse(Boolean.TRUE, "Scenario already exists");
+        } else {
+            return new ApiResponse(Boolean.FALSE, "Scenario doesn't exists");
+        }
+    }
+
 
     public DeleteDomainPayload deleteScenarioName(int scenarioId) {
         Optional<Scenario> scenario = scenarioRepository.findById(scenarioId);

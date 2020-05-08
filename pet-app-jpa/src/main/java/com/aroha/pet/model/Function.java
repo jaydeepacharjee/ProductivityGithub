@@ -27,7 +27,6 @@ public class Function implements Serializable {
 
     @NotNull
     private double businessSize;
-
     @NotNull
     private double businessValue;
     @NotBlank

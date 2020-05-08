@@ -74,7 +74,6 @@ public class DomainController {
 
     @PostMapping("/getDomains")
     public ResponseEntity<?> getDomainData(@RequestParam("technologyId") int technologyId) {
-        logger.info("------------------" + technologyId);
         return ResponseEntity.ok(domainService.getAllDomains(technologyId));
     }
 
@@ -200,23 +199,44 @@ public class DomainController {
     }
 
     @RequestMapping(value = "/updateDomain", method = RequestMethod.POST)
-    public ResponseEntity<?> updateDomain(@RequestBody DomainRequest domainRequest, @CurrentUser UserPrincipal user) {
+    public ResponseEntity<?> domainUpdate(@RequestBody DomainRequest domainRequest, @CurrentUser UserPrincipal user) {
 
         if (user.isLearnerRole()) {
             throw new RuntimeException("Only Admin and mentor can update");
         }
-//        int questionId = domainRequest.getQuestionId();
-//        int technologyId=domainRequest.getTechnologyId();
-//        Question questObj = domainRequest.getQuestion();
-//        Domain domainObj = domainRequest.getDomain();
-//        Function funObj = domainRequest.getFunction();
-//        Scenario scenaObj = domainRequest.getScenario();
-
-//        return ResponseEntity.ok(domainService.updateData(technologyId,questionId, domainObj, funObj, scenaObj, questObj));
-        return ResponseEntity.ok(domainService.updateData(domainRequest));
+        return ResponseEntity.ok(domainService.updateDomain(domainRequest));
     
     }
+    
+    @RequestMapping(value = "/updateFunction", method = RequestMethod.POST)
+    public ResponseEntity<?> functionUpdate(@RequestBody DomainRequest domainRequest, @CurrentUser UserPrincipal user) {
 
+        if (user.isLearnerRole()) {
+            throw new RuntimeException("Only Admin and mentor can update");
+        }
+        return ResponseEntity.ok(functionService.updateFunction(domainRequest));
+    
+    }
+    
+    @RequestMapping(value = "/updateScenario", method = RequestMethod.POST)
+    public ResponseEntity<?> scenarioUpdate(@RequestBody DomainRequest domainRequest, @CurrentUser UserPrincipal user) {
+
+        if (user.isLearnerRole()) {
+            throw new RuntimeException("Only Admin and mentor can update");
+        }
+        return ResponseEntity.ok(scenarioService.updateScenario(domainRequest));  
+    }
+        
+    @RequestMapping(value = "/updateQuestion", method = RequestMethod.POST)
+    public ResponseEntity<?> questionUpdate(@RequestBody DomainRequest domainRequest, @CurrentUser UserPrincipal user) {
+
+        if (user.isLearnerRole()) {
+            throw new RuntimeException("Only Admin and mentor can update");
+        }
+        return ResponseEntity.ok(questionService.updateQuestion(domainRequest));    
+    } 
+    
+   
     @PostMapping("/deleteDomainName")
     public ResponseEntity<?> deleteDomain(@RequestBody DomainRequest domainRequest) {
         int domainId = domainRequest.getDomainId();
