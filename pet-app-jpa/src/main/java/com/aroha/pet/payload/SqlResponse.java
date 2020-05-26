@@ -67,4 +67,11 @@ public class SqlResponse implements Serializable {
 		this.message = message;
 	}
 
+	@Override
+	public String toString() {
+		return "SqlResponse [result=" + result + "]";
+	}
+	
+	
+
 }

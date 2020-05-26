@@ -3,8 +3,8 @@ import java.io.*;
 import java.text.*;
 import java.util.regex.*;
 import java.sql.*;
-public class dvnlqKptHe_Admin{
+public class OzSLoYsXEm_JaydeepAcharjee{
      public static void main(String[] args){
-          System.out.println("HeLLO jaydeep");
+          System.out.println("Hello-World");
      }
 }

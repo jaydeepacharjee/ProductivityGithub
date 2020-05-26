@@ -9,8 +9,8 @@ import java.sql.ResultSetMetaData;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -35,6 +35,7 @@ import com.aroha.pet.payload.SqlResponse;
 import com.aroha.pet.repository.DBRepository;
 import com.aroha.pet.repository.UserRepository;
 import com.aroha.pet.security.UserPrincipal;
+import java.lang.reflect.Field;
 
 /**
  *
@@ -146,7 +147,6 @@ public class DBService {
 		Connection con = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		logger.info("-------------JDBC URL ---------"+queryInfo.getJdbcUrl());
 		try {
 			con = getConnection(queryInfo.getJdbcUrl(), queryInfo.getUserName(), queryInfo.getPassword());
 			logger.info("Database connected successfully");
@@ -187,8 +187,10 @@ public class DBService {
 					break;
 				}
 			} else {
+				System.out.println("Query" + res);
 				rs = stmt.executeQuery(res);
 				jsona = getResult(rs);
+				System.out.println("Back to main---------\n"+jsona);
 			}
 
 			sqlResponse.setResult(getJsonArrayAsList(jsona));
@@ -303,17 +305,57 @@ public class DBService {
 		return json;
 	}
 
-	private JSONArray getResult(ResultSet rs) throws Exception {
+	//    JSON Arrray for MYSQL, Mariadb
+
+	/*
+    private JSONArray getResult(ResultSet rs) throws Exception {
+        JSONArray json = new JSONArray();
+        ResultSetMetaData rsmd = rs.getMetaData();
+        while (rs.next()) {
+            int numColumns = rsmd.getColumnCount();
+//			JSONObject obj = new JSONObject();
+            Map<Object, Object> obj = new LinkedHashMap<>();
+            for (int i = 1; i <= numColumns; i++) {
+                String column_name = rsmd.getColumnName(i);
+                obj.put(column_name, rs.getObject(column_name));
+            }
+            json.put(obj);
+        }
+        return json;
+    }
+
+	 */    
+
+	private static JSONArray getResult(ResultSet rs) throws Exception {
 		JSONArray json = new JSONArray();
 		ResultSetMetaData rsmd = rs.getMetaData();
+		JSONObject userDetails = new JSONObject();
+		try {
+			Field changeMap = userDetails.getClass().getDeclaredField("map");
+			changeMap.setAccessible(true);
+			changeMap.set(userDetails, new LinkedHashMap<String, String>());
+			changeMap.setAccessible(false);
+		} catch (IllegalAccessException | NoSuchFieldException e) {
+		}
+
+	//	int ctr=0;
 		while (rs.next()) {
 			int numColumns = rsmd.getColumnCount();
-			JSONObject obj = new JSONObject();
 			for (int i = 1; i <= numColumns; i++) {
 				String column_name = rsmd.getColumnName(i);
-				obj.put(column_name, rs.getObject(column_name));
+				userDetails.put(column_name, rs.getObject(column_name));
 			}
-			json.put(obj);
+			json.put(userDetails);
+			userDetails = new JSONObject();
+			try {
+				Field changeMap = userDetails.getClass().getDeclaredField("map");
+				changeMap.setAccessible(true);
+				changeMap.set(userDetails, new LinkedHashMap<String, String>());
+				changeMap.setAccessible(false);
+			} catch (IllegalAccessException | NoSuchFieldException e) {
+			}
+
+			//ctr++;
 		}
 		return json;
 	}
@@ -514,6 +556,14 @@ public class DBService {
 	}
 
 	public List getJsonArrayAsList(JSONArray jsona) {
-		return jsona.toList();
+		System.out.println("---Before Inside \n"+jsona);
+		List temp=jsona.toList();
+//		List<Object> temp=new ArrayList<>();
+//		for(int i=0;i<jsona.length();i++) {
+//			temp.add(jsona.get(i));
+//		}
+		System.out.println("-----After \n"+temp);
+//		return jsona.toList();
+		return temp;
 	}
 }

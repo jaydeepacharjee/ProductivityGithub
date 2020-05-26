@@ -70,6 +70,10 @@ public class UserService {
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+    
+    public long findUserRole(Long userId) {
+    	return userRepository.getRole(userId);
+    }
 
     public List<UsersListPayload> findByRoles(String roleName) {
         //        return userRepository.findByRoles(roleName);
@@ -87,7 +91,6 @@ public class UserService {
             userPayload.setPrimarySkills(userObj.getPrimarySkills());
             userPayload.setSecondarySkills(userObj.getSecondarySkills());
             userPayload.setAddress(userObj.getAddress());
-
             if (userObj.getDateOfJoin() != null) {
                 Date date = null;
                 try {

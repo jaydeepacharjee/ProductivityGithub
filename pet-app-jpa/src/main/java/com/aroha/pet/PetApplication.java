@@ -1,7 +1,6 @@
 package com.aroha.pet;
 
 import java.util.TimeZone;
-
 import javax.annotation.PostConstruct;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,7 +16,7 @@ public class PetApplication {
 
     @PostConstruct
     void init() {
-        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Kolkata"));
         try {
             Class.forName("org.mariadb.jdbc.Driver");
             Class.forName("com.mysql.cj.jdbc.Driver");
