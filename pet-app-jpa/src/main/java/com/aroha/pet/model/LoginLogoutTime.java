@@ -1,14 +1,14 @@
 package com.aroha.pet.model;
 
 import com.aroha.pet.model.audit.LoginDateAudit;
-
-import javax.annotation.Generated;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="loginTable")
 public class LoginLogoutTime extends LoginDateAudit{
 
     @Id
@@ -39,6 +39,11 @@ public class LoginLogoutTime extends LoginDateAudit{
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return "LoginLogoutTime [id=" + id + ", userId=" + userId + ", loggedInTime=" + loggedInTime + "]";
 	} 
     
 }
