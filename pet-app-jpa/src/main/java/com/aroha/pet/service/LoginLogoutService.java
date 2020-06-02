@@ -137,59 +137,64 @@ public class LoginLogoutService {
 	}
 
 	// Method Overriding
-	public LoginResponse showLoginDetails(Long userId) {
-		List<LoginLogoutTime> list = loginRepo.findLatestRecordOfUser(userId);
-		Iterator<LoginLogoutTime> itr = list.iterator();
-		List<LoginPayloadResponse> listObj = new ArrayList<>();
+	public LoginResponse showLoginDetails(Long userId,int days) {
+		if(!(days<7 || days>30)) {
+			List<LoginLogoutTime> list = loginRepo.findLatestRecordOfUser(userId,days);
+			Iterator<LoginLogoutTime> itr = list.iterator();
+			List<LoginPayloadResponse> listObj = new ArrayList<>();
 
-		while (itr.hasNext()) {
-			LoginLogoutTime obj = itr.next();
-			LoginPayloadResponse loginObj = new LoginPayloadResponse();
-			Optional<User> userObj = userService.findByLearnerId(obj.getUserId());
-			if (!userObj.isPresent()) {
-				throw new RuntimeException("User is not found");
-			}
-			User user = userObj.get();
-			String getTime = "";
-			if(obj.getLogoutDateTime()!=null) {
-				String[] time = obj.getLoggedInTime().split(":");
-				if (!time[0].equals("00")) {
-					getTime += time[0] + " hours ";
+			while (itr.hasNext()) {
+				LoginLogoutTime obj = itr.next();
+				LoginPayloadResponse loginObj = new LoginPayloadResponse();
+				Optional<User> userObj = userService.findByLearnerId(obj.getUserId());
+				if (!userObj.isPresent()) {
+					throw new RuntimeException("User is not found");
 				}
-				if (!time[1].equals("00")) {
-					getTime += time[1] + " minutes ";
+				User user = userObj.get();
+				String getTime = "";
+				if(obj.getLogoutDateTime()!=null) {
+					String[] time = obj.getLoggedInTime().split(":");
+					if (!time[0].equals("00")) {
+						getTime += time[0] + " hours ";
+					}
+					if (!time[1].equals("00")) {
+						getTime += time[1] + " minutes ";
+					}
+					if (!time[2].equals("00")) {
+						getTime += time[2] + " seconds";
+					}
 				}
-				if (!time[2].equals("00")) {
-					getTime += time[2] + " seconds";
+				loginObj.setName(user.getName());
+				if(obj.getLoggedInTime()!=null) {
+					loginObj.setLogedeInTime(getTime);
 				}
-			}
-			loginObj.setName(user.getName());
-			if(obj.getLoggedInTime()!=null) {
-				loginObj.setLogedeInTime(getTime);
-			}
-			loginObj.setUserId(user.getId());
+				loginObj.setUserId(user.getId());
 
-			String inputValue = obj.getLoginDateTime().toString();
-			Instant timestamp = Instant.parse(inputValue);
-			ZonedDateTime indianTimeZone = timestamp.atZone(ZoneId.of("Asia/Kolkata"));
-			String loginDateTime = DateTimeFormatter.ofPattern("dd MMMM yyyy - hh:mm:ss").format(indianTimeZone);
-			loginObj.setLoginTime(loginDateTime);
+				String inputValue = obj.getLoginDateTime().toString();
+				Instant timestamp = Instant.parse(inputValue);
+				ZonedDateTime indianTimeZone = timestamp.atZone(ZoneId.of("Asia/Kolkata"));
+				String loginDateTime = DateTimeFormatter.ofPattern("dd MMMM yyyy - hh:mm:ss").format(indianTimeZone);
+				loginObj.setLoginTime(loginDateTime);
 
-			if(obj.getLogoutDateTime()!=null) {
-				String inputValue1 = obj.getLogoutDateTime().toString();
-				Instant timestamp1 = Instant.parse(inputValue1);
-				ZonedDateTime indianTimeZone1 = timestamp1.atZone(ZoneId.of("Asia/Kolkata"));
-				String logoutTime = DateTimeFormatter.ofPattern("dd MMMM yyyy - hh:mm:ss").format(indianTimeZone1);
-				loginObj.setLogOutTime(logoutTime);
+				if(obj.getLogoutDateTime()!=null) {
+					String inputValue1 = obj.getLogoutDateTime().toString();
+					Instant timestamp1 = Instant.parse(inputValue1);
+					ZonedDateTime indianTimeZone1 = timestamp1.atZone(ZoneId.of("Asia/Kolkata"));
+					String logoutTime = DateTimeFormatter.ofPattern("dd MMMM yyyy - hh:mm:ss").format(indianTimeZone1);
+					loginObj.setLogOutTime(logoutTime);
+				}
+
+				listObj.add(loginObj);
 			}
+			if (listObj.isEmpty()) {
+				return new LoginResponse(HttpStatus.BAD_REQUEST.value(), "Failed");
+			}
+			return new LoginResponse(HttpStatus.OK.value(), "Success", listObj);
 
-			listObj.add(loginObj);
 		}
-		if (listObj.isEmpty()) {
-			return new LoginResponse(HttpStatus.BAD_REQUEST.value(), "Failed");
+		else {
+			return new  LoginResponse(HttpStatus.BAD_REQUEST.value(), "Maimum day is 7 and maxium day is 30");
 		}
-		return new LoginResponse(HttpStatus.OK.value(), "Success", listObj);
-
 	}
 
 }

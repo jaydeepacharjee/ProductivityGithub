@@ -44,19 +44,19 @@ import org.springframework.http.HttpStatus;
 public class DomainController {
 
     @Autowired
-    FunctionService functionService;
+    private FunctionService functionService;
 
     @Autowired
-    DomainService domainService;
+    private DomainService domainService;
 
     @Autowired
-    ScenarioService scenarioService;
+    private ScenarioService scenarioService;
 
     @Autowired
-    QuestionService questionService;
+    private QuestionService questionService;
 
     @Autowired
-    DBService dbService;
+    private DBService dbService;
 
     private static final Logger logger = LoggerFactory.getLogger(DomainController.class);
 

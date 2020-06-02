@@ -109,8 +109,8 @@ public class AuthController {
 
     @PostMapping("/showlatestlearnerloginDetails")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MENTOR')")
-    public ResponseEntity<?> getLatestLoginDetailsOfUser(@RequestParam("userId") Long userId) {
-        return ResponseEntity.ok(loginLogoutService.showLoginDetails(userId));
+    public ResponseEntity<?> getLatestLoginDetailsOfUser(@RequestParam("userId") Long userId,@RequestParam("historyDay")int days) {
+        return ResponseEntity.ok(loginLogoutService.showLoginDetails(userId,days));
     }
 
     @PostMapping("/signup")
