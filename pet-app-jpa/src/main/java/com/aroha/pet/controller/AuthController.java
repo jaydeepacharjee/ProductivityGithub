@@ -93,7 +93,14 @@ public class AuthController {
         if (roleId == 1) {
             loginLogoutService.saveLoginTime(getUser.getId());
         }
-        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+//        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+        JwtAuthenticationResponse jsonResponse=new JwtAuthenticationResponse();
+        jsonResponse.setAccessToken(jwt);
+        jsonResponse.setId(getUser.getId());
+        jsonResponse.setUsername(getUser.getEmail());
+        jsonResponse.setName(getUser.getName());
+        jsonResponse.setRoles(authentication.getAuthorities());
+        return ResponseEntity.ok(jsonResponse);
     }
 
     @PostMapping("/logout")
@@ -191,12 +198,12 @@ public class AuthController {
                     + "\n\n"
                     + "Warm Regards,<br>\n"
                     + "\n"
-                    + "ArohaTechnologies", true);
+                    + "Aroha Technologies", true);
             javaMailSender.send(msg);
         } catch (Exception ex) {
             sendEmail = false;
-            logger.info("--------Email failed to sent to User-------" + ex.getMessage());
-        }
+           logger.info("--------Email failed to sent to User-------" + ex.getMessage());
+        }   
 
         if (sendEmail) {
             return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully\n" + "Successfully sent email"));

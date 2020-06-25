@@ -13,8 +13,8 @@ import com.aroha.pet.model.QueryInfo;
 public interface DomainTableRepository extends JpaRepository<QueryInfo, Long> {
 
     @Query(value = " SELECT\r\n" + 
-    		" 		  a.tech_id,\r\n" + 
-    		" 		  a.technology_name,\r\n" + 
+    		"        a.tech_id,\r\n" + 
+    		"        a.technology_name,\r\n" + 
     		"        b.question_id,\r\n" + 
     		"        a.domain_name,\r\n" + 
     		"        a.function_name,\r\n" + 

@@ -556,14 +556,6 @@ public class DBService {
 	}
 
 	public List getJsonArrayAsList(JSONArray jsona) {
-		System.out.println("---Before Inside \n"+jsona);
-		List temp=jsona.toList();
-//		List<Object> temp=new ArrayList<>();
-//		for(int i=0;i<jsona.length();i++) {
-//			temp.add(jsona.get(i));
-//		}
-		System.out.println("-----After \n"+temp);
-//		return jsona.toList();
-		return temp;
+		return jsona.toList();
 	}
 }

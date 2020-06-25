@@ -1,13 +1,14 @@
 package com.aroha.pet.payload;
 
 public class DomainTable {
-	
+
     private int questionId;
     private int technologyId;
     private String technologyName;
     private String domainName;
     private String functionName;
     private String scenarioTitle;
+    private int scenarioId;
     private String questionDesc;
     private String image;
 
@@ -59,21 +60,28 @@ public class DomainTable {
         this.image = image;
     }
 
-	public int getTechnologyId() {
-		return technologyId;
-	}
+    public int getTechnologyId() {
+        return technologyId;
+    }
 
-	public void setTechnologyId(int technologyId) {
-		this.technologyId = technologyId;
-	}
+    public void setTechnologyId(int technologyId) {
+        this.technologyId = technologyId;
+    }
 
-	public String getTechnologyName() {
-		return technologyName;
-	}
+    public String getTechnologyName() {
+        return technologyName;
+    }
 
-	public void setTechnologyName(String technologyName) {
-		this.technologyName = technologyName;
-	}
+    public void setTechnologyName(String technologyName) {
+        this.technologyName = technologyName;
+    }
 
-    
+    public int getScenarioId() {
+        return scenarioId;
+    }
+
+    public void setScenarioId(int scenarioId) {
+        this.scenarioId = scenarioId;
+    }
+
 }

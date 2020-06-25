@@ -13,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.Table;
 
@@ -99,6 +98,11 @@ public class Function implements Serializable {
 
     public void setScenario(Set<Scenario> scenario) {
         this.scenario = scenario;
+    }
+
+    @Override
+    public String toString() {
+        return "Function{" + "functionId=" + functionId + ", businessSize=" + businessSize + ", businessValue=" + businessValue + ", functionDesc=" + functionDesc + ", functionName=" + functionName + ", domain=" + domain + ", scenario=" + scenario + '}';
     }
 
 }

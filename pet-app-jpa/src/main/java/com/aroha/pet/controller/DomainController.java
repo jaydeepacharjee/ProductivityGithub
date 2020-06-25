@@ -93,7 +93,7 @@ public class DomainController {
     public ResponseEntity<?> getAllFunctions(@RequestBody DomainRequest domainData) {
         int domainId = domainData.getDomainId();
         return ResponseEntity.ok(functionService.getAllFunctions(domainId));
-    }
+    }   
 
     @PostMapping("/cehckDuplicateScenario")
     public ResponseEntity<?> checkDuplicateScenario(@RequestBody DomainRequest domainData) {

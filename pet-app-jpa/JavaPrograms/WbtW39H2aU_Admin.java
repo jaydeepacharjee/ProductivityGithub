@@ -1,0 +1,16 @@
+import java.util.*;
+import java.io.*;
+import java.text.*;
+import java.util.regex.*;
+import java.sql.*;
+public class WbtW39H2aU_Admin{
+     public static void main(String[] args){
+          System.out.println("Hello Jaydeep today");
+          new Disp().demo();
+     }
+}
+class Disp{
+     public void demo(){
+          System.out.println("demo() is called");
+     }
+}

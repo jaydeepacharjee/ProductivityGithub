@@ -2,7 +2,11 @@ package com.aroha.pet.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,11 +14,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import org.json.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.MailException;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import com.aroha.pet.model.CPojo;
 import com.aroha.pet.model.FeedBack;
@@ -40,9 +50,6 @@ import com.aroha.pet.repository.FeedBackRepository;
 import com.aroha.pet.repository.MentorFeedbackRepository;
 import com.aroha.pet.repository.QuestionQueryInfoRepository;
 import com.aroha.pet.security.UserPrincipal;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 
 @Service
 public class FeedBackService {
@@ -77,6 +84,9 @@ public class FeedBackService {
     @Autowired
     private JavascriptService javaScriptService;
 
+    @Autowired
+    private JavaMailSender javaMailSender;
+
     private final Logger logger = LoggerFactory.getLogger(FeedBackService.class);
 
     public GetDomainDataPayload getData() {
@@ -90,7 +100,7 @@ public class FeedBackService {
             String name = (String) obj[1];
             load.setName(name);
 
-//                        load.setCreated_at(i.toString());
+            //                        load.setCreated_at(i.toString());
             Date date = null;
             try {
                 date = new SimpleDateFormat("yyyy-MM-dd").parse(i.toString());
@@ -313,7 +323,7 @@ public class FeedBackService {
         feedback.setResulstr(query.getResultStr());
         feedback.setExceptionStr(query.getExceptionStr());
         feedback.setSqlStr(query.getSqlStr());
-//        feedback.setQuery_date(query.getCreatedAt().toString().replaceAll("T", " ").replaceAll("Z", " ").trim());
+        //        feedback.setQuery_date(query.getCreatedAt().toString().replaceAll("T", " ").replaceAll("Z", " ").trim());
         feedback.setQuery_date(fTime);
         Integer getNotify = mentorFeedbackRepo.getLastNotification(learnerId, technology.getTechnologyName());
         if (getNotify == null || getNotify == 0) {
@@ -367,7 +377,7 @@ public class FeedBackService {
         feedback.setProgrammingResult(cpojo.getResultstr());
         feedback.setError(cpojo.getError());
         feedback.setProgramingStr(cpojo.getCstr());
-//        feedback.setQuery_date(cpojo.getCreatedAt().toString().replaceAll("T", " ").replaceAll("Z", " ").trim());
+        //        feedback.setQuery_date(cpojo.getCreatedAt().toString().replaceAll("T", " ").replaceAll("Z", " ").trim());
         feedback.setQuery_date(fTime);
         Integer getNotify = mentorFeedbackRepo.getLastNotification(learnerId, technology.getTechnologyName());
         if (getNotify == null || getNotify == 0) {
@@ -418,7 +428,7 @@ public class FeedBackService {
         feedback.setProgrammingResult(javapojo.getResultstr());
         feedback.setError(javapojo.getExceptionstr());
         feedback.setProgramingStr(javapojo.getJavastr());
-//        feedback.setQuery_date(javapojo.getCreatedAt().toString().replaceAll("T", " ").replaceAll("Z", " ").trim());
+        //        feedback.setQuery_date(javapojo.getCreatedAt().toString().replaceAll("T", " ").replaceAll("Z", " ").trim());
 
         feedback.setQuery_date(fTime);
         Integer getNotify = mentorFeedbackRepo.getLastNotification(learnerId, technology.getTechnologyName());
@@ -472,7 +482,7 @@ public class FeedBackService {
         feedback.setProgrammingResult(javaScriptPojo.getResultstr());
         feedback.setError(javaScriptPojo.getError());
         feedback.setProgramingStr(javaScriptPojo.getJavascriptstr());
-//        feedback.setQuery_date(javaScriptPojo.getCreatedAt().toString().replaceAll("T", " ").replaceAll("Z", " ").trim());
+        //        feedback.setQuery_date(javaScriptPojo.getCreatedAt().toString().replaceAll("T", " ").replaceAll("Z", " ").trim());
         feedback.setQuery_date(fTime);
 
         Integer getNotify = mentorFeedbackRepo.getLastNotification(learnerId, technology.getTechnologyName());
@@ -627,20 +637,77 @@ public class FeedBackService {
         });
     }
 
-    //    public GetDomainDataPayload findTechnology(Long userId) {
-    //        List<Technology> listObj = techService.findTechnology(userId);
-    //        Set<Technology> set = new HashSet<>();
-    //        Iterator<Technology> itr = listObj.iterator();
-    //        while (itr.hasNext()) {
-    //            Technology tech = itr.next();
-    //            tech.setTechId(tech.getTechId());
-    //            tech.setTechnologyName(tech.getTechnologyName());
-    //            set.add(tech);
-    //        }
-    //        if (set.isEmpty()) {
-    //            return new GetDomainDataPayload(HttpStatus.NO_CONTENT.value(), "Sorry!! No TEST Is Found");
-    //        } else {
-    //            return new GetDomainDataPayload(HttpStatus.OK.value(), new ArrayList<>(set), "SUCCESS");
-    //        }
-    //    }
+    public DeleteDomainPayload showReportSQLInEmail(long created_by, String createdAt, int domainId) {
+        Optional<User> userObj = userService.findByLearnerId(created_by);
+        if (!userObj.isPresent()) {
+            return new DeleteDomainPayload("User not found", HttpStatus.BAD_REQUEST.value());
+        }
+        User user = userObj.get();
+        Date date = null;
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd").parse(createdAt.toString());
+        } catch (ParseException ex) {
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");
+
+        //    	Send report from email\
+        MimeMessage msg = javaMailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(msg, true);
+            helper.setTo(user.getEmail());
+            helper.setSubject("Report " + formatter.format(date));
+            List<Object[]> list = quesRepo.getReport(created_by, createdAt, domainId);
+            StringBuffer sb = new StringBuffer("<html><body>");
+            for (Object[] object : list) {
+                sb.append("<h3 style=\"color:green\">" + "Domain Name: " + "</h3>" + (String) object[0]);
+                sb.append("<h3 style=\"color:green\">" + "Function Name: " + "</h3>" + (String) object[1]);
+                sb.append("<h3 style=\"color:green\">" + "Question : " + "</h3>" + (String) object[2]);
+                sb.append("<h3 style=\"color:green\">" + "Your SQL query: " + "</h3>" + (String) object[3]);
+                if ((String) object[4] != null) {
+                    sb.append("<h3 style=\"color:red\">" + "Exception: " + "</h3>" + (String) object[4]);
+                }
+                if ((String) object[7] != null) {
+                    sb.append("<h3 style=\"color:green\">" + "Feedback: " + "</h3>" + (String) object[7]);
+                }
+                if (object[9] != null) {
+                    Date date1 = null;
+                    try {
+                        java.sql.Timestamp obj = (java.sql.Timestamp) object[9];
+                        date1 = new SimpleDateFormat("yyyy-MM-dd").parse(obj.toString());
+                    } catch (ParseException ex) {
+                    }
+                    SimpleDateFormat formatter2 = new SimpleDateFormat("dd MMMM yyyy");
+                    sb.append("<h3 style=\"color:green\">" + "Feedback Date: " + "</h3>" + formatter2.format(date1));
+                }
+                if ((String) object[8] != null) {
+                    sb.append("<h3 style=\"color:green\">" + "Mentor Name: " + "</h3>" + (String) object[8]);
+                }
+                if ((String) object[11] != null) {
+                    sb.append("<h3 style=\"color:blue\">" + "Result: " + "</h3>");
+                    String data = ((String) object[11]);
+                    JSONArray jsona = new JSONArray(data);
+                    for (int i = 0; i < jsona.length(); i++) {
+                        org.json.JSONObject jsonObj = jsona.getJSONObject(i);
+                        Set<String> set = jsonObj.keySet();
+                        for (String s : set) {
+                            sb.append("<table style=\"width:100%\";\"border:1px solid black\">" + "<tr>" + "<th style=\"color:grey\";\"border:1px solid black\">" + s + "</th>" + "</tr>"
+                                    + "<tr>" + "<td style=\"border:1px solid black\">" + jsonObj.get(s) + "</td>" + "</tr>" + "</table>");
+                        }
+                    }
+                }
+
+                sb.append("<hr style=\"color:blue\">");
+            }
+            sb.append("</body></html>");
+            helper.setText("Plain message", sb.toString());
+            javaMailSender.send(msg);
+            return new DeleteDomainPayload("Mail sent successfully", HttpStatus.OK.value());
+
+        } catch (MessagingException | MailException ex) {
+            logger.error("Failed to send mail " + ex.getMessage());
+            return new DeleteDomainPayload("Mail failed to sent", HttpStatus.BAD_REQUEST.value());
+        }
+
+    }
+
 }

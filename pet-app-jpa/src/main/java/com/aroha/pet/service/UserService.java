@@ -39,20 +39,19 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 public class UserService {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
     private JavaMailSender javaMailSender;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-//    String unique_password = "";
     Map<String, ForgetPasswordCheck> map = null;
 
     public User save(User user) {
@@ -172,33 +171,6 @@ public class UserService {
 
     //	Send Email With unique OTP
     public boolean sendEmail(Long unique_password, String userOrEmail,String name) {
-        //logger.info("OTP Password is "+unique_password);
-/*        SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo(userOrEmail);
-        msg.setSubject("Forget Password");
-        
-        msg.setText("Dear User ,\n"
-                + "\n"
-                + "The OTP generated for your Account with ID " + userOrEmail + "  is: " + unique_password
-                + "\n\n"
-                + "\nUse this OTP to change the password, OTP will expire in 3 minutes.\n"
-                + "In case of any queries, kindly contact our customer service desk at the details below\n"
-                + "\n"
-                + "\n"
-                + "Warm Regards,\n"
-                + "\n"
-                + "ArohaTechnologies");
-        try {
-            javaMailSender.send(msg);
-            logger.info("Email sent to registered email");
-            return true;
-        } catch (MailException ex) {
-            logger.error("Failed to send mail " + ex.getMessage());
-
-        }
-        return false;
-         */
-
         MimeMessage msg = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(msg, true);
@@ -232,19 +204,14 @@ public class UserService {
     }
 
     public Object updatePassword(ForgetPassword object) {
-        logger.info("----I am here------ 1 ");
         if(map==null){
             return new ForgetPasswordPayload(HttpStatus.CONFLICT.value(),Boolean.FALSE,"Something went wrong,try again later");
         }
         ForgetPasswordCheck code = map.get(object.getUsernameOrEmail());
-        logger.info("----I am here------ 2 ");
         String getOtpFromUser = object.getOneTimePass();
         logger.info("--------Generated OTP with object-----" + code.getCode());
-        //logger.info("------ OTP PASWORD " + unique_password);
         logger.info("eNTERED PASSWORD IS: " + getOtpFromUser);
-        
-        
-    
+         
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         
@@ -274,20 +241,15 @@ public class UserService {
                 User user = obj.get();
                 if (passwordEncoder.matches(object.getPassword(), user.getPassword())) {
                     logger.info("Error You can not give previous password, please enter a new password");
-                    //                return "You can not give previous password, please enter a new password";
-//                return new ApiResponse(Boolean.FALSE, "Password is same as the old one,please enter new password");
                     return new ForgetPasswordPayload(HttpStatus.CONFLICT.value(), Boolean.FALSE, "Password is same as the old one,please enter new password");
                 } else {
                     user.setPassword(passwordEncoder.encode(object.getPassword()));
                     userRepository.save(user);
                     logger.info("password changed for :" + user.getName());
-                    //                return "Password updated successfully, please login with your new password";
-//                return new ApiResponse(Boolean.TRUE, "Password updated successfully, please login with your new password");
                     return new ForgetPasswordPayload(HttpStatus.OK.value(), Boolean.TRUE, "Password updated successfully, please login with your new password");
                 }
             } else {
                 logger.error("OTP didn't matched");
-//            return new ApiResponse(Boolean.FALSE, "OTP didn't matched");
                 return new ForgetPasswordPayload(HttpStatus.CONFLICT.value(), Boolean.FALSE, "OTP didn't match");
             }
         }
