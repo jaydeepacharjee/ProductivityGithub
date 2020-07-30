@@ -37,12 +37,6 @@ public class DomainService {
     private DomainTableRepository domainTableRepo;
 
     @Autowired
-    private FunctionRepository functionRepository;
-
-    @Autowired
-    private ScenarioRepository scenarioRepository;
-
-    @Autowired
     private QuestionRepository questionRepository;
 
     @Autowired
@@ -51,8 +45,6 @@ public class DomainService {
     @Autowired
     private TechnologyService techService;
 
-    @Autowired
-    private FunctionService functionService;
 
     private static final Logger logger = LoggerFactory.getLogger(DomainService.class);
 
@@ -66,7 +58,6 @@ public class DomainService {
         List<Domain> list = domainRepository.getDomainOntechnology(techId);
         Iterator<Domain> itr = list.iterator();
         List<DomainDataRequest> DomainList = new ArrayList<>();
-        GetDomainDataPayload data = new GetDomainDataPayload();
         while (itr.hasNext()) {
             Domain d = itr.next();
             DomainDataRequest domainData = new DomainDataRequest();

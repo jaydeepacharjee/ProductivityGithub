@@ -195,5 +195,5 @@ public class LoginLogoutService {
             return new LoginResponse(HttpStatus.BAD_REQUEST.value(), "Maimum day is 7 and maxium day is 30");
         }
     }
-
+    
 }

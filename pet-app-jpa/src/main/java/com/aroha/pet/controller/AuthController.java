@@ -93,7 +93,7 @@ public class AuthController {
         if (roleId == 1) {
             loginLogoutService.saveLoginTime(getUser.getId());
         }
-//        return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
+
         JwtAuthenticationResponse jsonResponse=new JwtAuthenticationResponse();
         jsonResponse.setAccessToken(jwt);
         jsonResponse.setId(getUser.getId());
@@ -103,7 +103,7 @@ public class AuthController {
         return ResponseEntity.ok(jsonResponse);
     }
 
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public ResponseEntity<?> logoutApi(@CurrentUser UserPrincipal user) {
         return ResponseEntity.ok(loginLogoutService.logout(user));
     }
@@ -113,7 +113,8 @@ public class AuthController {
     public ResponseEntity<?> getLoginDetails() {
         return ResponseEntity.ok(loginLogoutService.showLoginDetails());
     }
-
+    
+ 
     @PostMapping("/showlatestlearnerloginDetails")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_MENTOR')")
     public ResponseEntity<?> getLatestLoginDetailsOfUser(@RequestParam("userId") Long userId,@RequestParam("historyDay")int days) {
@@ -193,9 +194,9 @@ public class AuthController {
                     + "<b>Username:</b>&nbsp;&nbsp;<i style=\"color:#6600ff\">" + signUpRequest.getEmail() + "</i><br>\n"
                     + "<b>Password:</b>&nbsp;&nbsp;<i style=\"color:#6600ff\">" + signUpRequest.getPassword() + "</i><br><br>\n\n"
                     + "Please visit the link to SignIn:<b> http://productivity.aroha.co.in/  </b><br>\n"
-                    + "<b style=\"color:#ff0066\">You can reset the password using ForgetPassword option from Signin menu</b><br> "
+                    + "<b style=\"color:#ff0066\">You can reset the password using ForgetPassword option from Signin menu</b> "
                     + "In case of any queries, kindly contact our customer service desk at the details below\n<br><br>"
-                    + "\n\n"
+                    + "<b style=\"color:blue\">support@aroha.co.in/08064545829</b>\n\n<br><br>"
                     + "Warm Regards,<br>\n"
                     + "\n"
                     + "Aroha Technologies", true);

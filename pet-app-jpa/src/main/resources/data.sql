@@ -16,3 +16,12 @@ INSERT IGNORE INTO `technology` (`tech_id`,`technology_name`) VALUES
         (3,'JAVA'),
         (4,'JAVASCRIPT'),
         (5,'PYTHON');
+
+INSERT IGNORE INTO `price_model` (`price_id`, `course_category`, `course_description`, `course_image`, `course_name`, `course_price`, `course_rated_number_count`, `course_rating`) VALUES
+	(1, 'Productivity', 'RDBMS Concepts + Oracle SQL + Access to test your capability in SQL', NULL, 'SQL Programming', 1000, '15', 4.5),
+	(2, 'Productivity', 'RDBMS Concepts + Oracle SQL + Oracle PL/SQL + Access to test capability', NULL, 'Database Programming', 1500, '20', 4.5),
+	(3, 'Productivity', 'SQL', NULL, 'SQL Programming', 300, '13', 4),
+	(4, 'Productivity', 'Java', NULL, 'JAVA Programming', 300, '16', 4.5),
+	(5, 'Productivity', 'C', NULL, 'C Programming', 300, '14', 4.5),
+	(6, 'Productivity', 'Python', NULL, 'Python Programming', 300, '15', 4.5),
+	(7, 'Productivity', 'JavaScript', NULL, 'JavaScript Programming', 300, '18', 4.5);

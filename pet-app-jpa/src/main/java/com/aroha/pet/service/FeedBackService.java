@@ -1,5 +1,8 @@
 package com.aroha.pet.service;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -16,6 +19,7 @@ import java.util.Optional;
 import java.util.Set;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+
 import org.json.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -94,8 +98,9 @@ public class FeedBackService {
         List<FeedBackStatusPayload> listObj = new ArrayList<>();
         list.stream().map((obj) -> {
             FeedBackStatusPayload load = new FeedBackStatusPayload();
-            java.sql.Timestamp i = (java.sql.Timestamp) obj[2];
-            java.math.BigInteger id = (java.math.BigInteger) obj[0];
+            System.out.println("---------------Time before-------"+obj[2]);
+            Timestamp i = (Timestamp) obj[2];
+            BigInteger id = (BigInteger) obj[0];
             load.setCreated_by(id);
             String name = (String) obj[1];
             load.setName(name);
@@ -107,15 +112,16 @@ public class FeedBackService {
             } catch (Exception ex) {
             }
             SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");
+            System.out.println("---------Time after---------"+formatter.format(date));
             load.setCreated_at(formatter.format(date));
 
-            java.math.BigInteger j = (java.math.BigInteger) obj[3];
+            BigInteger j = (BigInteger) obj[3];
             load.setNoOfException(j);
-            java.math.BigInteger k = (java.math.BigInteger) obj[4];
+            BigInteger k = (BigInteger) obj[4];
             load.setNoOfScenario(k);
-            java.math.BigInteger l = (java.math.BigInteger) obj[5];
+            BigInteger l = (BigInteger) obj[5];
             load.setNoOfSqlStr(l);
-            java.math.BigDecimal m = (java.math.BigDecimal) obj[6];
+            BigDecimal m = (BigDecimal) obj[6];
             load.setProductivity(m);
             return load;
         }).forEachOrdered((load) -> {
@@ -128,7 +134,7 @@ public class FeedBackService {
     }
 
     public GetDomainDataPayload showAnalysis(long created_by, String createdAt, int domainId) {
-
+        System.out.println("-----------Created Before----------"+createdAt);
         Date date2 = null;
         try {
             date2 = new SimpleDateFormat("dd MMMM yyyy").parse(createdAt);
@@ -136,7 +142,7 @@ public class FeedBackService {
         }
         SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd hh:MM:ss");
         createdAt = formatter.format(date2);
-        logger.info("----createdAt---" + createdAt);
+        System.out.println("-----------------createdAt After-------------" + createdAt);
         List<Object[]> list = quesRepo.getReport(created_by, createdAt, domainId);
         List<QueryObject> queryList = new ArrayList<>();
         list.stream().map((object) -> {
@@ -150,7 +156,7 @@ public class FeedBackService {
             } else {
                 query.setExceptionStr((String) object[4]);
             }
-            java.sql.Timestamp j = (java.sql.Timestamp) object[5];
+            Timestamp j = (Timestamp) object[5];
             query.setCreatedAt(j.toString());
             query.setQuestionId((int) object[6]);
             query.setFeedback((String) object[7]);
@@ -158,8 +164,24 @@ public class FeedBackService {
             if (object[9] != null) {
                 Date date = null;
                 try {
-                    java.sql.Timestamp obj = (java.sql.Timestamp) object[9];
-                    date = new SimpleDateFormat("yyyy-MM-dd").parse(obj.toString());
+
+                    /*
+                        Demo
+                     */
+                    System.out.println("-------------Feedback Time-------"+object[9]);
+                    Timestamp timeObj = (Timestamp) object[9];
+                    ZonedDateTime indianTimeZone=ZonedDateTime.ofInstant(timeObj.toInstant(),ZoneId.of("Asia/Kolkata"));
+                    String qTime = indianTimeZone.toString().replaceAll("T", " ");
+//                    String dateObj=(String)object[9];
+//                    Instant timestamp = Instant.parse(dateObj);
+//                    ZonedDateTime indianTimeZone = timestamp.atZone(ZoneId.of("Asia/Kolkata"));
+//                    String qTime = indianTimeZone.toString().replaceAll("T", " ");
+                    /*
+                      Demo
+                     */
+                    //System.out.println("------------------Qtime is:-----------"+qTime);
+                   // Timestamp obj = (Timestamp) object[9];
+                    date = new SimpleDateFormat("yyyy-MM-dd").parse(qTime.toString());
                 } catch (ParseException ex) {
                 }
                 SimpleDateFormat formatter2 = new SimpleDateFormat("dd MMMM yyyy");
@@ -183,7 +205,7 @@ public class FeedBackService {
 
     public Set<DomainResponsePayload> getDomainResponse(long created_by, String createdAt) {
         Set<DomainResponsePayload> domainName = new HashSet<>();
-        logger.info("--------createdAt before---" + createdAt);
+        System.out.println("--------createdAt before---" + createdAt);
         Date date = null;
         try {
             date = new SimpleDateFormat("dd MMMM yyyy").parse(createdAt);
@@ -191,7 +213,7 @@ public class FeedBackService {
         }
         SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd hh:MM:ss");
         createdAt = formatter.format(date);
-        logger.info("----------createdAt---" + createdAt);
+        System.out.println("----------createdAt---" + createdAt);
         List<Object[]> getDomain = fedRepo.getDomainRepo(created_by, createdAt);
         getDomain.stream().map((object) -> {
             DomainResponsePayload dLoad = new DomainResponsePayload();
@@ -291,14 +313,16 @@ public class FeedBackService {
     //    Mentor FeedbackService
     public DeleteDomainPayload saveFeedback(MentorFeedback feed, UserPrincipal user) {
         int count = 1;
+        System.out.println("-----------Created At Before-----------"+feed.getCreatedAt());
         QueryInfo query = fedRepo.getFeedback(feed.getCreatedAt(), feed.getQuestionId(), feed.getCreatedBy());
-
+        System.out.println("-----------Query Date Before ---------" + query.getCreatedAt());
         String inputValue = query.getCreatedAt().toString();
-        Instant timestamp = Instant.parse(inputValue);
-        ZonedDateTime indianTimeZone = timestamp.atZone(ZoneId.of("Asia/Kolkata"));
-        String qTime = indianTimeZone.toString().replaceAll("T", " ");
-        String fTime = qTime.substring(0, qTime.indexOf("+"));
-
+//        Instant timestamp = Instant.parse(inputValue);
+//        ZonedDateTime indianTimeZone = timestamp.atZone(ZoneId.of("Asia/Kolkata"));
+//        String qTime = indianTimeZone.toString().replaceAll("T", " ");
+//        String fTime = qTime.substring(0, qTime.indexOf("+"));
+        String fTime=inputValue.replaceAll("T"," ").replaceAll("Z"," ");
+        System.out.println("---------------Final time-----------" + fTime);
         long learnerId = query.getCreatedBy();
         Optional<User> userData = userService.findByLearnerId(learnerId);
         Optional<Technology> tech = techService.findById(feed.getTechnologyId());

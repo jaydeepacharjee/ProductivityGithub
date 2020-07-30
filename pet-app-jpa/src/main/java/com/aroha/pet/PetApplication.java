@@ -16,7 +16,7 @@ public class PetApplication {
 
     @PostConstruct
     void init() {
-        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Kolkata"));
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         try {
             Class.forName("org.mariadb.jdbc.Driver");
             Class.forName("com.mysql.cj.jdbc.Driver");
